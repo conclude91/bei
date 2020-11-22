@@ -1,27 +1,26 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/themes/app_font.dart';
-import 'package:bei/values/app_dimen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SecondarySmallText extends StatefulWidget {
+class SecondaryText extends StatefulWidget {
   final String text;
+  final double size;
 
-  SecondarySmallText(this.text);
+  SecondaryText({@required this.text, @required this.size});
 
   @override
-  _SecondarySmallTextState createState() => _SecondarySmallTextState();
+  _SecondaryTextState createState() => _SecondaryTextState();
 }
 
-class _SecondarySmallTextState extends State<SecondarySmallText> {
+class _SecondaryTextState extends State<SecondaryText> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      this.widget.text,
+      widget.text,
       style: GoogleFonts.poppins(
         color: AppColor.secondaryTextColor,
-        fontSize: AppDimen.small,
+        fontSize: widget.size,
         fontWeight: AppFont.light,
       ),
     );

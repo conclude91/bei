@@ -1,6 +1,6 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/secondary_small_text.dart';
+import 'package:bei/widgets/secondary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,10 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             ),
           ),
         ),
-        label: SecondarySmallText(widget.text),
+        label: SecondaryText(
+          text: widget.text,
+          size: AppDimen.small,
+        ),
         onPressed: widget.onPressed,
       );
     } else {
@@ -53,7 +56,10 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           borderRadius: BorderRadius.circular(AppDimen.buttonRadius),
         ),
         color: AppColor.primaryColor,
-        child: SecondarySmallText(widget.text),
+        child: SecondaryText(
+          text: widget.text,
+          size: AppDimen.small,
+        ),
         onPressed: widget.onPressed,
       );
     }

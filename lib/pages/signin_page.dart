@@ -2,9 +2,7 @@ import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/primary_button.dart';
-import 'package:bei/widgets/primary_large_text.dart';
-import 'package:bei/widgets/primary_medium_text.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bei/widgets/primary_text.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -25,10 +23,10 @@ class _SignInState extends State<SignIn> {
           ),
         ),
         padding: EdgeInsets.only(
-          top: AppDimen.paddingLong,
-          bottom: AppDimen.paddingShort,
-          left: AppDimen.paddingShort,
-          right: AppDimen.paddingShort,
+          top: AppDimen.paddingMedium,
+          bottom: AppDimen.paddingNormal,
+          left: AppDimen.paddingNormal,
+          right: AppDimen.paddingNormal,
         ),
         width: double.infinity,
         child: Column(
@@ -38,8 +36,14 @@ class _SignInState extends State<SignIn> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PrimaryMediumText(AppString.welcomeHi),
-                PrimaryLargeText(AppString.welcomeMessage),
+                PrimaryText(
+                  text: AppString.welcomeHi,
+                  size: AppDimen.medium,
+                ),
+                PrimaryText(
+                  text: AppString.welcomeMessage,
+                  size: AppDimen.large,
+                ),
               ],
             ),
             PrimaryButton(

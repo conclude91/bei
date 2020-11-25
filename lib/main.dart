@@ -1,3 +1,4 @@
+import 'package:bei/pages/bookshelf_page.dart';
 import 'package:bei/pages/explore_page.dart';
 import 'package:bei/pages/home_page.dart';
 import 'package:bei/pages/setting_page.dart';
@@ -49,50 +50,58 @@ class _MyAppState extends State<MyApp> {
           primaryColor: AppColor.primaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Scaffold(
-          body: SizedBox.expand(
-            child: PageView(
-              controller: pageController,
-              onPageChanged: (index) {
+        home: Consumer<BookProvider>(
+          builder: (context, bookProvider, _) => Scaffold(
+            body: SizedBox.expand(
+              child: PageView(
+                controller: pageController,
+                onPageChanged: (index) {
+                  setState(() => currentIndex = index);
+                },
+                children: <Widget>[
+                  HomePage(),
+                  ExplorePage(),
+                  BookShelfPage(),
+                  SettingPage(),
+                ],
+              ),
+            ),
+            bottomNavigationBar: BottomNavyBar(
+              backgroundColor: AppColor.secondaryColor,
+              selectedIndex: currentIndex,
+              onItemSelected: (index) {
                 setState(() => currentIndex = index);
+                pageController.jumpToPage(index);
               },
-              children: <Widget>[
-                HomePage(),
-                ExplorePage(),
-                Container(
-                  color: Colors.blueAccent,
+              showElevation: true,
+              items: [
+                BottomNavyBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text(bookProvider.isSwitch
+                        ? 'Beranda'
+                        : 'Home'),
+                  activeColor: AppColor.primaryLevel,
                 ),
-                SettingPage(),
+                BottomNavyBarItem(
+                    icon: Icon(Icons.explore),
+                    title: Text(bookProvider.isSwitch
+                        ? 'Jelajahi'
+                        : 'Explore'),
+                    activeColor: AppColor.juniorLevel),
+                BottomNavyBarItem(
+                    icon: Icon(Icons.menu_book_rounded),
+                    title: Text(bookProvider.isSwitch
+                        ? 'Rak Buku'
+                        : 'Bookshelf'),
+                    activeColor: AppColor.seniorLevel),
+                BottomNavyBarItem(
+                    icon: Icon(Icons.settings),
+                    title: Text(bookProvider.isSwitch
+                        ? 'Pengaturan'
+                        : 'Settings'),
+                    activeColor: AppColor.primaryTextColor),
               ],
             ),
-          ),
-          bottomNavigationBar: BottomNavyBar(
-            backgroundColor: AppColor.secondaryColor,
-            selectedIndex: currentIndex,
-            onItemSelected: (index) {
-              setState(() => currentIndex = index);
-              pageController.jumpToPage(index);
-            },
-            showElevation: true,
-            items: [
-              BottomNavyBarItem(
-                icon: Icon(Icons.home),
-                title: Text('Home'),
-                activeColor: Colors.red,
-              ),
-              BottomNavyBarItem(
-                  icon: Icon(Icons.explore),
-                  title: Text('Explore'),
-                  activeColor: Colors.purpleAccent),
-              BottomNavyBarItem(
-                  icon: Icon(Icons.account_circle),
-                  title: Text('Account'),
-                  activeColor: AppColor.primaryColor),
-              BottomNavyBarItem(
-                  icon: Icon(Icons.settings),
-                  title: Text('Settings'),
-                  activeColor: Colors.green),
-            ],
           ),
         ),
       ),

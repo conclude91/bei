@@ -1,6 +1,5 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class PlaceHolder extends StatefulWidget {
@@ -35,9 +34,9 @@ class _PlaceHolderState extends State<PlaceHolder> {
               padding: EdgeInsets.only(
                 left: AppDimen.paddingSmall,
               ),
-              child: SecondaryText(
-                text: 'Your\nBookshelf',
-                size: AppDimen.medium,
+              child: Image.asset(
+                'assets/images/sibi-white.png',
+                width: 175,
               ),
             ),
           ),
@@ -46,15 +45,10 @@ class _PlaceHolderState extends State<PlaceHolder> {
             child: Padding(
               padding: EdgeInsets.only(
                 right: AppDimen.paddingSmall,
-                bottom: AppDimen.paddingNormal + 5,
               ),
               child: CircleAvatar(
-                backgroundColor: AppColor.primaryColor,
-                radius: AppDimen.radiusMedium,
-                child: CircleAvatar(
-                  radius: AppDimen.radiusMedium - 0.5,
-                  backgroundColor: AppColor.secondaryColor,
-                ),
+                radius: AppDimen.radiusMedium - 0.5,
+                backgroundColor: AppColor.secondaryColor,
               ),
             ),
           ),
@@ -62,10 +56,10 @@ class _PlaceHolderState extends State<PlaceHolder> {
             alignment: Alignment.centerRight,
             child: Padding(
               padding: EdgeInsets.only(
-                right: AppDimen.paddingSmall,
+                right: AppDimen.paddingSmall + 7,
               ),
               child: Image.asset(
-                'assets/images/people-read.png',
+                'assets/images/tutwuri.png',
                 height: 75,
               ),
             ),

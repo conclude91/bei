@@ -24,7 +24,7 @@ class _CardBookState extends State<CardBook> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Card(
-              color: AppColor.secondaryColor,
+              color: AppColor.secondaryBackgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppDimen.radiusSmall),
@@ -73,7 +73,8 @@ class _CardBookState extends State<CardBook> {
                 children: [
                   PrimaryText(
                     text: widget.book.title,
-                    size: AppDimen.normal,
+                    size: AppDimen.small,
+                    maxLine: 2,
                   ),
                   Divider(),
                   Container(
@@ -91,12 +92,18 @@ class _CardBookState extends State<CardBook> {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: EdgeInsets.all(
-                AppDimen.paddingTiny,
+              padding: EdgeInsets.only(
+                bottom: AppDimen.paddingTiny,
+                right: AppDimen.small,
               ),
               child: PrimaryText(
-                text: 'More',
+                text: widget.book.level,
                 size: AppDimen.tiny,
+                color: (widget.book.level == 'SD')
+                    ? AppColor.primaryLevel
+                    : (widget.book.level == 'SMP')
+                        ? AppColor.juniorLevel
+                        : AppColor.seniorLevel,
               ),
             ),
           ),

@@ -16,6 +16,7 @@ class AppDimen {
   static const double iconPadding = 4;
   static const double avatarMedium = 30;
   static const double radiusMedium = 45;
+  static const double radiusRegular = 10;
   static const double radiusNormal = 7;
   static const double radiusSmall = 5;
   static const double appBarHeight = 50;

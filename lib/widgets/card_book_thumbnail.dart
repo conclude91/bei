@@ -1,4 +1,5 @@
 import 'package:bei/model/book.dart';
+import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/primary_text.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 class CardBookThumbnail extends StatefulWidget {
   final Book book;
 
-  CardBookThumbnail({this.book});
+  CardBookThumbnail({@required this.book});
 
   @override
   _CardBookThumbnailState createState() => _CardBookThumbnailState();
@@ -18,6 +19,7 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
     return Container(
       width: 125,
       child: Card(
+        color: AppColor.secondaryBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(AppDimen.radiusSmall),
@@ -61,6 +63,11 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
                   PrimaryText(
                     text: widget.book.level,
                     size: AppDimen.tiny,
+                    color: (widget.book.level == 'SD')
+                        ? AppColor.primaryLevel
+                        : (widget.book.level == 'SMP')
+                            ? AppColor.juniorLevel
+                            : AppColor.seniorLevel,
                   ),
                 ],
               ),

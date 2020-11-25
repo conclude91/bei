@@ -1,4 +1,5 @@
-import 'package:bei/pages/list_book_page.dart';
+import 'package:bei/pages/detail_book_page.dart';
+import 'package:bei/pages/search_book_page.dart';
 import 'package:bei/provider/book_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -25,9 +26,13 @@ class _CardSchoolState extends State<CardSchool> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 40,
+              height: 35,
               width: double.infinity,
-              color: AppColor.primaryColor,
+              color: (widget.level == 'SD')
+                  ? AppColor.primaryLevel
+                  : (widget.level == 'SMP')
+                      ? AppColor.juniorLevel
+                      : AppColor.seniorLevel,
               padding: EdgeInsets.only(
                 left: AppDimen.paddingSmall,
                 right: AppDimen.paddingSmall,
@@ -42,17 +47,17 @@ class _CardSchoolState extends State<CardSchool> {
                   ),
                   GestureDetector(
                     child: PrimaryText(
-                      text: 'See All',
+                      text: bookProvider.isSwitch ? 'Lihat Semua' : 'See All',
                       size: AppDimen.small,
                       color: AppColor.secondaryTextColor,
                     ),
                     onTap: () {
+                      bookProvider.level = widget.level;
+                      bookProvider.subject = 'All';
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListBookPage(
-                            level: widget.level,
-                          ),
+                          builder: (context) => SearchPage(),
                         ),
                       );
                     },
@@ -65,15 +70,26 @@ class _CardSchoolState extends State<CardSchool> {
               padding: EdgeInsets.only(
                 top: AppDimen.paddingTiny,
                 bottom: AppDimen.paddingTiny,
-                left: AppDimen.paddingSmall,
-                right: AppDimen.paddingSmall,
               ),
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: bookProvider.getSampleByLevel(widget.level).length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CardBookGallery(
-                    book: bookProvider.getSampleByLevel(widget.level)[index],
+                  return GestureDetector(
+                    child: CardBookGallery(
+                      book: bookProvider.getSampleByLevel(widget.level)[index],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailBookPage(
+                            book: bookProvider
+                                .getSampleByLevel(widget.level)[index],
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {

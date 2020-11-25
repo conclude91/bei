@@ -33,7 +33,7 @@ class _CardBookListState extends State<CardBookList> {
                 bottom: AppDimen.paddingSmall,
               ),
               child: Card(
-                color: AppColor.secondaryColor,
+                color: AppColor.secondaryBackgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(AppDimen.radiusSmall),

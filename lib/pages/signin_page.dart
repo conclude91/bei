@@ -2,7 +2,7 @@ import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/primary_button.dart';
-import 'package:bei/widgets/primary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -16,17 +16,17 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: AppColor.secondaryColor,
+          color: secondaryColor,
           image: DecorationImage(
             image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
         padding: EdgeInsets.only(
-          top: AppDimen.paddingMedium,
-          bottom: AppDimen.paddingNormal,
-          left: AppDimen.paddingNormal,
-          right: AppDimen.paddingNormal,
+          top: paddingMedium,
+          bottom: paddingNormal,
+          left: paddingNormal,
+          right: paddingNormal,
         ),
         width: double.infinity,
         child: Column(
@@ -36,19 +36,19 @@ class _SignInState extends State<SignIn> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PrimaryText(
-                  text: AppString.welcomeHi,
-                  size: AppDimen.medium,
+                CustomText(
+                  text: welcomeHi,
+                  size: medium,
                 ),
-                PrimaryText(
-                  text: AppString.welcomeMessage,
-                  size: AppDimen.large,
+                CustomText(
+                  text: welcomeMessage,
+                  size: large,
                 ),
               ],
             ),
             PrimaryButton(
               icon: 'assets/images/google.webp',
-              text: AppString.connectWithGoogle,
+              text: connectWithGoogle,
               onPressed: () {
                 showAction();
               },

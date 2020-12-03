@@ -1,6 +1,6 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/secondary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class PlaceHolder extends StatefulWidget {
@@ -22,9 +22,9 @@ class _PlaceHolderState extends State<PlaceHolder> {
               width: double.infinity,
               height: 100,
               decoration: BoxDecoration(
-                color: AppColor.primaryColor,
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(
-                  AppDimen.radiusSmall,
+                  radiusSmall,
                 ),
               ),
             ),
@@ -33,43 +33,39 @@ class _PlaceHolderState extends State<PlaceHolder> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(
-                left: AppDimen.paddingSmall,
-              ),
-              child: SecondaryText(
-                text: 'Your\nBookshelf',
-                size: AppDimen.medium,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(
-                right: AppDimen.paddingSmall,
-                bottom: AppDimen.paddingNormal + 5,
+                left: paddingSmall,
               ),
               child: CircleAvatar(
-                backgroundColor: AppColor.primaryColor,
-                radius: AppDimen.radiusMedium,
-                child: CircleAvatar(
-                  radius: AppDimen.radiusMedium - 0.5,
-                  backgroundColor: AppColor.secondaryColor,
-                ),
+                radius: radiusMedium - 0.5,
+                backgroundColor: secondaryColor,
               ),
             ),
           ),
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(
-                right: AppDimen.paddingSmall,
+                left: paddingSmall + 7,
               ),
               child: Image.asset(
-                'assets/images/people-read.png',
+                'assets/images/tutwuri.png',
                 height: 75,
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: paddingSmall + 90 + paddingSmall,
+              ),
+              child: CustomText(
+                text: 'Pusat Kurikulum dan Perbukuan\nKEMDIKBUD',
+                color: secondaryTextColor,
+                size: regular,
+              ),
+            ),
+          )
         ],
       ),
     );

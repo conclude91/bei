@@ -6,45 +6,40 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ChapterProvider extends ChangeNotifier {
-  List<Chapter> _chapters = new List<Chapter>();
-  int _idCatalogue = 0;
+  List<Chapter> _listChapter = new List<Chapter>();
 
-  List<Chapter> get listChapter => _chapters;
-  int get idCatalogue => _idCatalogue;
+  List<Chapter> get listChapter => _listChapter;
 
-  set idCatalogue(int value) {
-    _idCatalogue = value;
+  set listChapter(List<Chapter> listChapter) {
+    _listChapter = listChapter;
     notifyListeners();
   }
 
-  set listChapter(List<Chapter> chapters) {
-    this._chapters = chapters;
-    notifyListeners();
-  }
-
-  Future<List<Chapter>> fecthData() async {
-    final response = await http.get(Constanta.GET_BOOKS);
+  Future<List<Chapter>> fetchAll() async {
+    _listChapter = new List<Chapter>();
+    final response = await http.get(Constanta.GET_CHAPTERS);
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> result = map['result'];
     if (result.length > 0) {
-      if (result.length > 0) {
-        for (int i = 0; i < result.length; i++) {
-          if (result[i] != null) {
-            Map<String, dynamic> map = result[i];
-            _chapters.add(Chapter.fromJson(map));
-          }
+      for (int i = 0; i < result.length; i++) {
+        if (result[i] != null) {
+          Map<String, dynamic> map = result[i];
+          _listChapter.add(Chapter.fromJson(map));
         }
       }
     }
-    listChapter = _chapters;
+    listChapter = _listChapter;
     return listChapter;
   }
 
-  List<Chapter> get getChapterByIdCatalogue => listChapter
-      .where((element) => element.idCatalogue == idCatalogue)
-      .toList();
-
-  List<Chapter> getAll() {
-    return listChapter;
+  List<Chapter> getChapterByIdCatalogue(idCatalogue) {
+    listChapter.sort((a, b) {
+      return a.titleChapter
+          .toLowerCase()
+          .compareTo(b.titleChapter.toLowerCase());
+    });
+    return listChapter
+        .where((element) => element.idCatalogue == idCatalogue)
+        .toList();
   }
 }

@@ -2,7 +2,7 @@ import 'package:bei/model/book.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/card_book_gallery.dart';
-import 'package:bei/widgets/primary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CardBookList extends StatefulWidget {
@@ -21,8 +21,8 @@ class _CardBookListState extends State<CardBookList> {
       height: 210,
       width: double.infinity,
       padding: EdgeInsets.only(
-        left: AppDimen.paddingSmall,
-        right: AppDimen.paddingSmall,
+        left: paddingSmall,
+        right: paddingSmall,
       ),
       child: Stack(
         children: [
@@ -30,43 +30,43 @@ class _CardBookListState extends State<CardBookList> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                bottom: AppDimen.paddingSmall,
+                bottom: paddingSmall,
               ),
               child: Card(
-                color: AppColor.secondaryColor,
+                color: backgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(AppDimen.radiusSmall),
+                    Radius.circular(radiusSmall),
                   ),
                 ),
-                elevation: AppDimen.elevation,
+                elevation: elevation,
                 child: Container(
                   height: 150,
                   width: double.infinity,
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: 125 + AppDimen.paddingTiny,
-                      right: AppDimen.paddingTiny,
-                      top: AppDimen.paddingTiny,
-                      bottom: AppDimen.paddingTiny,
+                      left: 125 + paddingTiny,
+                      right: paddingTiny,
+                      top: paddingTiny,
+                      bottom: paddingTiny,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        PrimaryText(
+                        CustomText(
                           text: widget.book.title,
-                          size: AppDimen.normal,
+                          size: normal,
                           maxLine: 2,
                         ),
-                        PrimaryText(
+                        CustomText(
                           text: widget.book.writer,
-                          size: AppDimen.small,
+                          size: small,
                           maxLine: 2,
                         ),
-                        PrimaryText(
+                        CustomText(
                           text: widget.book.description,
-                          size: AppDimen.tiny,
+                          size: tiny,
                           maxLine: 3,
                         ),
                       ],
@@ -81,7 +81,7 @@ class _CardBookListState extends State<CardBookList> {
             child: Container(
               height: 180,
               margin: EdgeInsets.only(
-                bottom: AppDimen.paddingSmall + 4,
+                bottom: paddingSmall + 4,
               ),
               child: Padding(
                 padding: EdgeInsets.only(

@@ -64,16 +64,4 @@ class Book {
       type: json['type'],
     );
   }
-
-  // Map<String, dynamic> toJson() => {
-  //       "id": id,
-  //       "title": title,
-  //       "image": image,
-  //     };
-
-  // List<Book> bookFromJson(String str) =>
-  //     List<Book>.from(json.decode(str).map((x) => Book.fromJson(x)));
-
-  // String bookToJson(List<Book> data) =>
-  //     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 }

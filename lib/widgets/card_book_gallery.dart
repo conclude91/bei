@@ -1,6 +1,7 @@
 import 'package:bei/model/book.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class CardBookGallery extends StatefulWidget {
   final Book book;
@@ -20,17 +21,17 @@ class _CardBookGalleryState extends State<CardBookGallery> {
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(AppDimen.radiusSmall),
+            Radius.circular(radiusSmall),
           ),
         ),
-        elevation: AppDimen.elevation,
+        elevation: elevation,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
-              AppDimen.radiusNormal,
+              radiusNormal,
             ),
             image: DecorationImage(
-              image: NetworkImage(
+              image: NetworkImageWithRetry(
                 widget.book.image,
               ),
               fit: BoxFit.cover,

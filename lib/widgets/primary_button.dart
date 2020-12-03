@@ -1,6 +1,6 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/secondary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,41 +24,41 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   Widget showButton() {
     if (widget.icon != null) {
       return FlatButton.icon(
-        height: AppDimen.buttonHeight,
+        height: buttonHeight,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDimen.buttonRadius),
+          borderRadius: BorderRadius.circular(buttonRadius),
         ),
-        color: AppColor.primaryColor,
+        color: primaryColor,
         icon: ClipRRect(
-          borderRadius: BorderRadius.circular(AppDimen.iconRadius),
+          borderRadius: BorderRadius.circular(iconRadius),
           child: Container(
-            color: AppColor.secondaryTextColor,
+            color: secondaryTextColor,
             child: Padding(
               padding: const EdgeInsets.all(4),
               child: Image.asset(
                 widget.icon,
-                width: AppDimen.medium,
-                height: AppDimen.medium,
+                width: medium,
+                height: medium,
               ),
             ),
           ),
         ),
-        label: SecondaryText(
+        label: CustomText(
           text: widget.text,
-          size: AppDimen.small,
+          size: small,
         ),
         onPressed: widget.onPressed,
       );
     } else {
       return FlatButton(
-        height: AppDimen.buttonHeight,
+        height: buttonHeight,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDimen.buttonRadius),
+          borderRadius: BorderRadius.circular(buttonRadius),
         ),
-        color: AppColor.primaryColor,
-        child: SecondaryText(
+        color: primaryColor,
+        child: CustomText(
           text: widget.text,
-          size: AppDimen.small,
+          size: small,
         ),
         onPressed: widget.onPressed,
       );

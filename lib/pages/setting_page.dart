@@ -1,7 +1,7 @@
 import 'package:bei/provider/book_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/primary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,76 +16,50 @@ class _SettingPageState extends State<SettingPage> {
     return Consumer<BookProvider>(
       builder: (context, bookProvider, _) => Scaffold(
         body: Container(
-          color: AppColor.backgroundColor,
+          color: backgroundColor,
           padding: EdgeInsets.only(
-            top: AppDimen.paddingNormal,
+            top: paddingNormal,
           ),
           child: Material(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  height: AppDimen.appBarHeight,
-                  color: AppColor.backgroundColor,
+                  height: appBarHeight,
+                  color: backgroundColor,
                   child: Center(
-                    child: PrimaryText(
+                    child: CustomText(
                       text: bookProvider.isSwitch ? 'Pengaturan' : 'Settings',
-                      size: AppDimen.regular,
+                      size: regular,
                     ),
                   ),
                 ),
                 Divider(
                   height: 1,
-                  color: AppColor.primaryColor,
+                  color: primaryColor,
                 ),
                 Column(
                   children: [
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(
-                          left: AppDimen.paddingSmall,
-                          right: AppDimen.paddingSmall,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.account_circle),
-                            SizedBox(
-                              width: AppDimen.paddingNormal,
-                            ),
-                            PrimaryText(
-                              text: bookProvider.isSwitch ? 'Akun' : 'Profile',
-                              size: AppDimen.normal,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    Divider(
-                      height: 1,
-                      color: AppColor.disableTextColor,
-                    ),
                     Container(
                       height: 50,
                       padding: EdgeInsets.only(
-                        left: AppDimen.paddingSmall,
-                        right: AppDimen.paddingSmall,
+                        left: paddingSmall,
+                        right: paddingSmall,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.language),
+                              Icon(Icons.language, size: regular),
                               SizedBox(
-                                width: AppDimen.paddingNormal,
+                                width: paddingSmall,
                               ),
-                              PrimaryText(
+                              CustomText(
                                 text: bookProvider.isSwitch
                                     ? 'Bahasa'
                                     : 'Language',
-                                size: AppDimen.normal,
+                                size: small,
                               ),
                             ],
                           ),
@@ -96,59 +70,32 @@ class _SettingPageState extends State<SettingPage> {
                                 bookProvider.isSwitch = value;
                               });
                             },
-                            activeTrackColor: AppColor.disableColor,
-                            activeColor: AppColor.primaryColor,
+                            activeTrackColor: Colors.greenAccent[700],
+                            activeColor: secondaryColor,
                           ),
                         ],
                       ),
                     ),
                     Divider(
                       height: 1,
-                      color: AppColor.disableTextColor,
+                      color: disableTextColor,
                     ),
                     InkWell(
                       child: Container(
                         height: 50,
                         padding: EdgeInsets.only(
-                          left: AppDimen.paddingSmall,
-                          right: AppDimen.paddingSmall,
+                          left: paddingSmall,
+                          right: paddingSmall,
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.bookmark_outline),
+                            Icon(Icons.announcement_outlined, size: regular),
                             SizedBox(
-                              width: AppDimen.paddingNormal,
+                              width: paddingSmall,
                             ),
-                            PrimaryText(
-                              text:
-                                  bookProvider.isSwitch ? 'Tandai' : 'Bookmark',
-                              size: AppDimen.normal,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    Divider(
-                      height: 1,
-                      color: AppColor.disableTextColor,
-                    ),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(
-                          left: AppDimen.paddingSmall,
-                          right: AppDimen.paddingSmall,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.announcement_outlined),
-                            SizedBox(
-                              width: AppDimen.paddingNormal,
-                            ),
-                            PrimaryText(
+                            CustomText(
                               text: 'FAQ',
-                              size: AppDimen.normal,
+                              size: small,
                             ),
                           ],
                         ),
@@ -157,26 +104,26 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     Divider(
                       height: 1,
-                      color: AppColor.disableTextColor,
+                      color: disableTextColor,
                     ),
                     InkWell(
                       child: Container(
                         height: 50,
                         padding: EdgeInsets.only(
-                          left: AppDimen.paddingSmall,
-                          right: AppDimen.paddingSmall,
+                          left: paddingSmall,
+                          right: paddingSmall,
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.info_outline),
+                            Icon(Icons.info_outline, size: regular),
                             SizedBox(
-                              width: AppDimen.paddingNormal,
+                              width: paddingSmall,
                             ),
-                            PrimaryText(
+                            CustomText(
                               text: bookProvider.isSwitch
                                   ? 'Tentang Aplikasi '
                                   : 'About',
-                              size: AppDimen.normal,
+                              size: small,
                             ),
                           ],
                         ),
@@ -185,24 +132,24 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     Divider(
                       height: 1,
-                      color: AppColor.disableTextColor,
+                      color: disableTextColor,
                     ),
                     InkWell(
                       child: Container(
                         height: 50,
                         padding: EdgeInsets.only(
-                          left: AppDimen.paddingSmall,
-                          right: AppDimen.paddingSmall,
+                          left: paddingSmall,
+                          right: paddingSmall,
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.article_outlined),
+                            Icon(Icons.article_outlined, size: regular),
                             SizedBox(
-                              width: AppDimen.paddingNormal,
+                              width: paddingSmall,
                             ),
-                            PrimaryText(
+                            CustomText(
                               text: 'Licenses',
-                              size: AppDimen.normal,
+                              size: small,
                             ),
                           ],
                         ),
@@ -211,7 +158,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     Divider(
                       height: 1,
-                      color: AppColor.disableTextColor,
+                      color: disableTextColor,
                     ),
                   ],
                 )

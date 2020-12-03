@@ -1,6 +1,6 @@
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
-import 'package:bei/widgets/primary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,22 +20,22 @@ class _HeaderState extends State<Header> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PrimaryText(
-                text: AppString.welcomeHi,
-                size: AppDimen.normal,
+              CustomText(
+                text: welcomeHi,
+                size: normal,
               ),
-              PrimaryText(
-                text: AppString.welcomeBack,
-                size: AppDimen.normal,
+              CustomText(
+                text: welcomeBack,
+                size: normal,
               ),
-              PrimaryText(
-                text: AppString.appName,
-                size: AppDimen.medium,
+              CustomText(
+                text: appName,
+                size: medium,
               ),
             ],
           ),
           CircleAvatar(
-            radius: AppDimen.avatarMedium,
+            radius: avatarMedium,
             backgroundImage: AssetImage(
               'assets/images/profile.jpg',
             ),

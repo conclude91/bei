@@ -15,7 +15,7 @@ class ChapterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Chapter>> fecthData() async {
+  Future<List<Chapter>> fetchAll() async {
     _listChapter = new List<Chapter>();
     final response = await http.get(Constanta.GET_CHAPTERS);
     Map<String, dynamic> map = json.decode(response.body);
@@ -34,7 +34,9 @@ class ChapterProvider extends ChangeNotifier {
 
   List<Chapter> getChapterByIdCatalogue(idCatalogue) {
     listChapter.sort((a, b) {
-      return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      return a.titleChapter
+          .toLowerCase()
+          .compareTo(b.titleChapter.toLowerCase());
     });
     return listChapter
         .where((element) => element.idCatalogue == idCatalogue)

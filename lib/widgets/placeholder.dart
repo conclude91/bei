@@ -1,5 +1,6 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class PlaceHolder extends StatefulWidget {
@@ -21,9 +22,9 @@ class _PlaceHolderState extends State<PlaceHolder> {
               width: double.infinity,
               height: 100,
               decoration: BoxDecoration(
-                color: AppColor.primaryColor,
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(
-                  AppDimen.radiusSmall,
+                  radiusSmall,
                 ),
               ),
             ),
@@ -32,31 +33,19 @@ class _PlaceHolderState extends State<PlaceHolder> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(
-                left: AppDimen.paddingSmall,
-              ),
-              child: Image.asset(
-                'assets/images/sibi-white.png',
-                width: 175,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(
-                right: AppDimen.paddingSmall,
+                left: paddingSmall,
               ),
               child: CircleAvatar(
-                radius: AppDimen.radiusMedium - 0.5,
-                backgroundColor: AppColor.secondaryColor,
+                radius: radiusMedium - 0.5,
+                backgroundColor: secondaryColor,
               ),
             ),
           ),
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(
-                right: AppDimen.paddingSmall + 7,
+                left: paddingSmall + 7,
               ),
               child: Image.asset(
                 'assets/images/tutwuri.png',
@@ -64,6 +53,19 @@ class _PlaceHolderState extends State<PlaceHolder> {
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: paddingSmall + 90 + paddingSmall,
+              ),
+              child: CustomText(
+                text: 'Pusat Kurikulum dan Perbukuan\nKEMDIKBUD',
+                color: secondaryTextColor,
+                size: regular,
+              ),
+            ),
+          )
         ],
       ),
     );

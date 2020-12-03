@@ -1,13 +1,16 @@
 import 'package:bei/model/book.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/primary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class CardBookThumbnail extends StatefulWidget {
   final Book book;
 
-  CardBookThumbnail({@required this.book});
+  CardBookThumbnail({
+    @required this.book,
+  });
 
   @override
   _CardBookThumbnailState createState() => _CardBookThumbnailState();
@@ -19,13 +22,17 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
     return Container(
       width: 125,
       child: Card(
-        color: AppColor.secondaryBackgroundColor,
+        color: backgroundColor,
         shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: primaryColor,
+            width: 0.1,
+          ),
           borderRadius: BorderRadius.all(
-            Radius.circular(AppDimen.radiusSmall),
+            Radius.circular(radiusSmall),
           ),
         ),
-        elevation: AppDimen.elevation,
+        elevation: elevation,
         child: Column(
           children: [
             Container(
@@ -33,19 +40,19 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
               width: 125,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
+                  image: NetworkImageWithRetry(
                     widget.book.image,
                   ),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(AppDimen.radiusSmall),
-                  topRight: Radius.circular(AppDimen.radiusSmall),
+                  topLeft: Radius.circular(radiusSmall),
+                  topRight: Radius.circular(radiusSmall),
                 ),
               ),
             ),
             SizedBox(
-              height: AppDimen.paddingTiny,
+              height: paddingTiny,
             ),
             Container(
               height: 60,
@@ -55,19 +62,19 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PrimaryText(
+                  CustomText(
                     text: widget.book.title,
-                    size: AppDimen.tiny,
+                    size: tiny,
                     maxLine: 2,
                   ),
-                  PrimaryText(
+                  CustomText(
                     text: widget.book.level,
-                    size: AppDimen.tiny,
+                    size: tiny,
                     color: (widget.book.level == 'SD')
-                        ? AppColor.primaryLevel
+                        ? primaryLevelColor
                         : (widget.book.level == 'SMP')
-                            ? AppColor.juniorLevel
-                            : AppColor.seniorLevel,
+                            ? juniorLevelColor
+                            : seniorLevelColor,
                   ),
                 ],
               ),

@@ -1,13 +1,16 @@
 import 'package:bei/model/book.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/primary_text.dart';
+import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class CardBook extends StatefulWidget {
   final Book book;
 
-  CardBook({this.book});
+  CardBook({
+    this.book,
+  });
 
   @override
   _CardBookState createState() => _CardBookState();
@@ -24,13 +27,17 @@ class _CardBookState extends State<CardBook> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Card(
-              color: AppColor.secondaryBackgroundColor,
+              color: backgroundColor,
               shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: primaryColor,
+                  width: 0.1,
+                ),
                 borderRadius: BorderRadius.all(
-                  Radius.circular(AppDimen.radiusSmall),
+                  Radius.circular(radiusSmall),
                 ),
               ),
-              elevation: AppDimen.elevation,
+              elevation: elevation,
               child: Container(
                 height: 125,
               ),
@@ -40,20 +47,20 @@ class _CardBookState extends State<CardBook> {
             alignment: Alignment.bottomLeft,
             child: Container(
               margin: EdgeInsets.only(
-                bottom: AppDimen.paddingTiny,
-                left: AppDimen.paddingTiny,
+                bottom: paddingTiny,
+                left: paddingTiny,
               ),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
+                  image: NetworkImageWithRetry(
                     widget.book.image,
                   ),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(
-                  AppDimen.radiusSmall,
+                  radiusSmall,
                 ),
               ),
             ),
@@ -65,23 +72,25 @@ class _CardBookState extends State<CardBook> {
               width: double.infinity,
               margin: EdgeInsets.only(
                 left: 116,
-                bottom: AppDimen.paddingTiny,
-                right: AppDimen.paddingTiny,
+                bottom: paddingTiny,
+                right: paddingTiny,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PrimaryText(
+                  CustomText(
                     text: widget.book.title,
-                    size: AppDimen.small,
+                    size: small,
                     maxLine: 2,
                   ),
-                  Divider(),
+                  Divider(
+                    color: primaryColor,
+                  ),
                   Container(
                     height: 50,
-                    child: PrimaryText(
+                    child: CustomText(
                       text: widget.book.description,
-                      size: AppDimen.tiny,
+                      size: tiny,
                       maxLine: 3,
                     ),
                   ),
@@ -93,17 +102,17 @@ class _CardBookState extends State<CardBook> {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.only(
-                bottom: AppDimen.paddingTiny,
-                right: AppDimen.small,
+                bottom: paddingTiny,
+                right: small,
               ),
-              child: PrimaryText(
+              child: CustomText(
                 text: widget.book.level,
-                size: AppDimen.tiny,
+                size: tiny,
                 color: (widget.book.level == 'SD')
-                    ? AppColor.primaryLevel
+                    ? primaryLevelColor
                     : (widget.book.level == 'SMP')
-                        ? AppColor.juniorLevel
-                        : AppColor.seniorLevel,
+                        ? juniorLevelColor
+                        : seniorLevelColor,
               ),
             ),
           ),

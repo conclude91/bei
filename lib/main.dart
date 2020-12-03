@@ -1,13 +1,18 @@
-import 'package:bei/pages/bookshelf_page.dart';
-import 'package:bei/pages/explore_page.dart';
+import 'package:bei/pages/account_page.dart';
 import 'package:bei/pages/home_page.dart';
 import 'package:bei/pages/setting_page.dart';
 import 'package:bei/provider/book_provider.dart';
+import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/provider/chapter_provider.dart';
+import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
+import 'package:bei/themes/app_font.dart';
+import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -38,16 +43,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BookProvider()),
         ChangeNotifierProvider(create: (context) => ChapterProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => BookmarkProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: AppString.appName,
+        title: appName,
         theme: ThemeData(
-          primaryColor: AppColor.primaryColor,
+          primaryColor: primaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Consumer<BookProvider>(
@@ -60,14 +73,13 @@ class _MyAppState extends State<MyApp> {
                 },
                 children: <Widget>[
                   HomePage(),
-                  ExplorePage(),
-                  BookShelfPage(),
+                  AccountPage(),
                   SettingPage(),
                 ],
               ),
             ),
             bottomNavigationBar: BottomNavyBar(
-              backgroundColor: AppColor.secondaryColor,
+              backgroundColor: secondaryColor,
               selectedIndex: currentIndex,
               onItemSelected: (index) {
                 setState(() => currentIndex = index);
@@ -76,30 +88,46 @@ class _MyAppState extends State<MyApp> {
               showElevation: true,
               items: [
                 BottomNavyBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text(bookProvider.isSwitch
-                        ? 'Beranda'
-                        : 'Home'),
-                  activeColor: AppColor.primaryLevel,
+                  icon: Icon(
+                    Icons.home_outlined,
+                    size: medium,
+                  ),
+                  title: Text(
+                    bookProvider.isSwitch ? 'Beranda' : 'Home',
+                    style: GoogleFonts.roboto(
+                      fontWeight: fontRegular,
+                      fontSize: small,
+                    ),
+                  ),
+                  activeColor: primaryLevelColor,
                 ),
                 BottomNavyBarItem(
-                    icon: Icon(Icons.explore),
-                    title: Text(bookProvider.isSwitch
-                        ? 'Jelajahi'
-                        : 'Explore'),
-                    activeColor: AppColor.juniorLevel),
+                  icon: Icon(
+                    Icons.account_circle_outlined,
+                    size: medium,
+                  ),
+                  title: Text(
+                    bookProvider.isSwitch ? 'Akun' : 'Account',
+                    style: GoogleFonts.roboto(
+                      fontWeight: fontRegular,
+                      fontSize: small,
+                    ),
+                  ),
+                  activeColor: juniorLevelColor,
+                ),
                 BottomNavyBarItem(
-                    icon: Icon(Icons.menu_book_rounded),
-                    title: Text(bookProvider.isSwitch
-                        ? 'Rak Buku'
-                        : 'Bookshelf'),
-                    activeColor: AppColor.seniorLevel),
-                BottomNavyBarItem(
-                    icon: Icon(Icons.settings),
-                    title: Text(bookProvider.isSwitch
-                        ? 'Pengaturan'
-                        : 'Settings'),
-                    activeColor: AppColor.primaryTextColor),
+                    icon: Icon(
+                      Icons.settings_outlined,
+                      size: medium,
+                    ),
+                    title: Text(
+                      bookProvider.isSwitch ? 'Pengaturan' : 'Settings',
+                      style: GoogleFonts.roboto(
+                        fontWeight: fontRegular,
+                        fontSize: small,
+                      ),
+                    ),
+                    activeColor: primaryTextColor),
               ],
             ),
           ),

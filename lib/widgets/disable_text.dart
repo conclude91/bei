@@ -19,9 +19,9 @@ class _DisableTextState extends State<DisableText> {
     return Text(
       widget.text,
       style: GoogleFonts.poppins(
-        color: AppColor.disableTextColor,
+        color: disableTextColor,
         fontSize: widget.size,
-        fontWeight: AppFont.light,
+        fontWeight: fontlight,
       ),
     );
   }

@@ -1,9 +1,11 @@
+import 'package:bei/pages/splashscreen_page.dart';
 import 'package:bei/provider/book_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -155,6 +157,43 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                       ),
                       onTap: () {},
+                    ),
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.exit_to_app_outlined, size: regular),
+                            SizedBox(
+                              width: paddingSmall,
+                            ),
+                            CustomText(
+                              text: 'Sign Out',
+                              size: small,
+                            ),
+                          ],
+                        ),
+                      ),
+                      onTap: () async {
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
+                        await preferences.clear().then(
+                              (value) => Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SplashScreenPage(),
+                                ),
+                              ),
+                            );
+                      },
                     ),
                     Divider(
                       height: 1,

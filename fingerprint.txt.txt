@@ -1,0 +1,64 @@
+> Task :app:signingReport
+Variant: debug
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------
+Variant: debugUnitTest
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------
+Variant: profileUnitTest
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------
+Variant: debugAndroidTest
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------
+Variant: release
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------
+Variant: releaseUnitTest
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------
+Variant: profile
+Config: debug
+Store: C:\Users\acenios\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: DD:F0:E1:C4:87:00:FB:2A:71:9D:E4:98:C7:08:39:EF
+SHA1: 03:E2:76:EC:25:56:4F:59:E4:6F:99:E9:52:6E:90:F6:F9:8E:45:FD
+SHA-256: D6:AE:C4:82:50:A2:C6:B2:F9:08:CC:25:88:F3:4B:EE:C0:C2:A4:3C:DA:5A:F7:74:E6:0A:35:9C:7D:7F:D6:E2
+Valid until: Monday, October 25, 2049
+----------

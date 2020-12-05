@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "801871280436",
+    "project_id": "aplikasi-buku-indonesia-355e3",
+    "storage_bucket": "aplikasi-buku-indonesia-355e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801871280436:android:5a11d1a45d2ba487f7cd61",
+        "android_client_info": {
+          "package_name": "go.id.kemendikbud.perbukuan.abi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801871280436-9kraib8624kl4i472fjaiailnt58jg83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnOaxXA9osttsjYnhCONeyvsJtKvzbBes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801871280436-9kraib8624kl4i472fjaiailnt58jg83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

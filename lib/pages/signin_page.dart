@@ -1,10 +1,15 @@
+import 'package:bei/consts/constanta.dart';
+import 'package:bei/pages/dashboard_page.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_button.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -23,7 +28,7 @@ class _SignInPageState extends State<SignInPage> {
               Colors.white,
               BlendMode.colorBurn,
             ),
-            image: AssetImage('assets/images/background-vector.jpg'),
+            image: AssetImage('assets/images/background.jpg'),
             fit: BoxFit.cover,
             alignment: Alignment.center,
           ),
@@ -59,7 +64,14 @@ class _SignInPageState extends State<SignInPage> {
               icon: 'assets/images/google.webp',
               text: connectWithGoogle,
               onPressed: () {
-                signIn();
+                signInGoogle();
+                // signInWithGoogle().whenComplete(() {
+                //   Navigator.of(context).push(
+                //     MaterialPageRoute(
+                //       builder: (context) => DashboardPage(),
+                //     ),
+                //   );
+                // });
               },
             ),
           ],
@@ -68,12 +80,10 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void signIn() async {
+  signInGoogle() async {
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
         'email',
-        'https://www.googleapis.com/auth/cloud-platform	',
-        'https://www.googleapis.com/auth/contacts.readonly',
       ],
     );
 
@@ -87,7 +97,46 @@ class _SignInPageState extends State<SignInPage> {
       acc.authentication.then((GoogleSignInAuthentication auth) async {
         print(auth.idToken);
         print(auth.accessToken);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('email', acc.email);
+        await prefs.setBool('isLogin', true).then(
+              (value) => loginUser(acc.email),
+            );
       });
     });
+  }
+
+  loginUser(String email) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse(Constanta.LOGIN_USER));
+    request.fields.addAll({
+      'email': email,
+    });
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(response);
+      Fluttertoast.showToast(
+        msg: 'Login successfull',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DashboardPage(),
+        ),
+      );
+    } else {
+      print(response.reasonPhrase);
+      Fluttertoast.showToast(
+        msg: 'Login data failed',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+      );
+    }
   }
 }

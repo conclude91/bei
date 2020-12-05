@@ -33,7 +33,6 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
 
   @override
   void initState() {
-    super.initState();
     selectedDate = DateTime.now();
     dateFormat = DateFormat('yyyy-MM-dd');
     nameController = TextEditingController();
@@ -43,17 +42,29 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
     cityController = TextEditingController();
     addressController = TextEditingController();
     phoneController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userProvider, _) {
-      emailController.text = userProvider.currentUser.email ?? '';
-      nameController.text = userProvider.currentUser.name ?? '';
-      usernameController.text = userProvider.currentUser.username ?? '';
-      cityController.text = userProvider.currentUser.city ?? '';
-      addressController.text = userProvider.currentUser.address ?? '';
-      phoneController.text = userProvider.currentUser.phone ?? '';
+      if (nameController.text.isEmpty)
+        nameController.text = userProvider.currentUser.name ?? '';
+      if (emailController.text.isEmpty)
+        emailController.text = userProvider.currentUser.email ?? '';
+      if (usernameController.text.isEmpty)
+        usernameController.text = userProvider.currentUser.username ?? '';
+      if (cityController.text.isEmpty)
+        cityController.text = userProvider.currentUser.city ?? '';
+      if (addressController.text.isEmpty)
+        addressController.text = userProvider.currentUser.address ?? '';
+      if (phoneController.text.isEmpty)
+        phoneController.text = userProvider.currentUser.phone ?? '';
       if (userProvider.currentUser.gender != null && gender == null) {
         if (userProvider.currentUser.gender == 'L') {
           gender = Gender.L;
@@ -469,11 +480,11 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
     var request =
         http.MultipartRequest('POST', Uri.parse(Constanta.UPDATE_USER));
     request.fields.addAll({
-      'id': '413',
+      'id': '481',
       'email': emailController.text,
       'name': nameController.text,
       'username': usernameController.text,
-      'avatar': 'avatar',
+      'avatar': '',
       'phone': phoneController.text,
       'address': addressController.text,
       'birthday': dateFormat.format(selectedDate),
@@ -484,14 +495,12 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      // print(await response.stream.bytesToString());
       Fluttertoast.showToast(
         msg: 'User data has been updated',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
       );
-      // Hardcode
       Provider.of<UserProvider>(context, listen: false).fecthAll();
       Provider.of<UserProvider>(context, listen: false).currentUser;
       Navigator.pop(context);

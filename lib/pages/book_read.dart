@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:bei/model/bookmark.dart';
-import 'package:bei/model/chapter.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -86,7 +87,7 @@ class _BookReadState extends State<BookRead> {
                         child: Container(
                           margin: EdgeInsets.only(
                             left: paddingTiny,
-                            right: paddingTiny,
+                            right: paddingTiny + 50,
                           ),
                           child: InkWell(
                             child: Padding(
@@ -110,6 +111,29 @@ class _BookReadState extends State<BookRead> {
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
                               );
+                            },
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            left: paddingTiny,
+                            right: paddingTiny,
+                          ),
+                          child: InkWell(
+                            child: Padding(
+                              padding: EdgeInsets.all(paddingTiny),
+                              child: Icon(
+                                Icons.local_print_shop_outlined,
+                              ),
+                            ),
+                            onTap: () async {
+                              final pdf =
+                                  await rootBundle.load(widget.filePath);
+                              await Printing.layoutPdf(
+                                  onLayout: (_) => pdf.buffer.asUint8List());
                             },
                           ),
                         ),

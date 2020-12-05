@@ -535,6 +535,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
             ),
             onPressed: () {
               Navigator.pop(context);
+              Navigator.pop(context);
               downloadFile(filename, attachment);
             },
           ),

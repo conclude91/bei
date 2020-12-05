@@ -4,18 +4,18 @@ import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PrimaryButton extends StatefulWidget {
+class CustomButton extends StatefulWidget {
   final String text;
   final GestureTapCallback onPressed;
   final String icon;
 
-  PrimaryButton({@required this.text, @required this.onPressed, this.icon});
+  CustomButton({@required this.text, @required this.onPressed, this.icon});
 
   @override
-  _PrimaryButtonState createState() => _PrimaryButtonState();
+  _CustomButtonState createState() => _CustomButtonState();
 }
 
-class _PrimaryButtonState extends State<PrimaryButton> {
+class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return showButton();
@@ -45,7 +45,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         ),
         label: CustomText(
           text: widget.text,
-          size: small,
+          size: normal,
+          color: secondaryTextColor,
         ),
         onPressed: widget.onPressed,
       );
@@ -58,7 +59,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         color: primaryColor,
         child: CustomText(
           text: widget.text,
-          size: small,
+          size: normal,
+          color: secondaryTextColor,
         ),
         onPressed: widget.onPressed,
       );

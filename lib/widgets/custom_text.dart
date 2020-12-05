@@ -9,6 +9,7 @@ class CustomText extends StatefulWidget {
   final int maxLine;
   final Color color;
   final FontWeight weight;
+  final TextAlign align;
 
   CustomText({
     @required this.text,
@@ -16,6 +17,7 @@ class CustomText extends StatefulWidget {
     this.maxLine,
     this.color,
     this.weight,
+    this.align,
   });
 
   @override
@@ -34,6 +36,7 @@ class _CustomTextState extends State<CustomText> {
       ),
       maxLines: (widget.maxLine != null) ? widget.maxLine : null,
       overflow: (widget.maxLine != null) ? TextOverflow.ellipsis : null,
+      textAlign: (widget.align != null) ? widget.align : null,
     );
   }
 }

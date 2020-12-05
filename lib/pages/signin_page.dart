@@ -1,16 +1,17 @@
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
-import 'package:bei/widgets/primary_button.dart';
+import 'package:bei/widgets/custom_button.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class SignIn extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +19,13 @@ class _SignInState extends State<SignIn> {
         decoration: BoxDecoration(
           color: secondaryColor,
           image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
+            colorFilter: ColorFilter.mode(
+              Colors.white,
+              BlendMode.colorBurn,
+            ),
+            image: AssetImage('assets/images/background-vector.jpg'),
             fit: BoxFit.cover,
+            alignment: Alignment.center,
           ),
         ),
         padding: EdgeInsets.only(
@@ -40,17 +46,20 @@ class _SignInState extends State<SignIn> {
                   text: welcomeHi,
                   size: medium,
                 ),
+                SizedBox(
+                  height: paddingSmall,
+                ),
                 CustomText(
                   text: welcomeMessage,
                   size: large,
                 ),
               ],
             ),
-            PrimaryButton(
+            CustomButton(
               icon: 'assets/images/google.webp',
               text: connectWithGoogle,
               onPressed: () {
-                showAction();
+                signIn();
               },
             ),
           ],
@@ -59,7 +68,26 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  showAction() {
-    print('Clicked');
+  void signIn() async {
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/cloud-platform	',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    );
+
+    _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
+      GoogleSignInAuthentication auth = await acc.authentication;
+      print(acc.id);
+      print(acc.email);
+      print(acc.displayName);
+      print(acc.photoUrl);
+
+      acc.authentication.then((GoogleSignInAuthentication auth) async {
+        print(auth.idToken);
+        print(auth.accessToken);
+      });
+    });
   }
 }

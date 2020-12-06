@@ -44,8 +44,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 child: Image(
                   image: AssetImage('assets/images/logo.png'),
                   fit: BoxFit.fitHeight,
-                  height: 150,
-                  width: 150,
+                  height: 100,
+                  width: 100,
                 ),
               ),
             ),
@@ -58,7 +58,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 child: CustomText(
                   text: 'Copyright © 2020',
                   color: primaryTextColor,
-                  size: normal,
+                  size: small,
                 ),
               ),
             ),

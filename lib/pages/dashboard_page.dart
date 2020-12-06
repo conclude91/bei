@@ -2,9 +2,14 @@ import 'package:bei/pages/account_page.dart';
 import 'package:bei/pages/home_page.dart';
 import 'package:bei/pages/setting_page.dart';
 import 'package:bei/provider/book_provider.dart';
+import 'package:bei/provider/bookmark_provider.dart';
+import 'package:bei/provider/chapter_provider.dart';
+import 'package:bei/provider/language_provider.dart';
+import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/themes/app_font.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,10 +23,19 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   int currentIndex;
   PageController pageController;
+
   @override
   void initState() {
     currentIndex = 0;
     pageController = PageController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<BookProvider>(context, listen: false).fecthAll();
+      Provider.of<BookProvider>(context, listen: false).fecthPopular();
+      Provider.of<ChapterProvider>(context, listen: false).fetchAll();
+      Provider.of<UserProvider>(context, listen: false).fecthAll();
+      Provider.of<BookmarkProvider>(context, listen: false).fecthAll();
+      Provider.of<LanguageProvider>(context, listen: false).fecthAll();
+    });
     super.initState();
   }
 
@@ -33,8 +47,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BookProvider>(
-      builder: (context, bookProvider, _) => Scaffold(
+    return Consumer2<BookProvider, LanguageProvider>(
+      builder: (context, bookProvider, languageProvider, _) => Scaffold(
         body: SizedBox.expand(
           child: PageView(
             controller: pageController,
@@ -63,7 +77,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 size: medium,
               ),
               title: Text(
-                bookProvider.isSwitch ? 'Beranda' : 'Home',
+                languageProvider.language ? enHome : inaHome,
                 style: GoogleFonts.roboto(
                   fontWeight: fontRegular,
                   fontSize: small,
@@ -77,7 +91,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 size: medium,
               ),
               title: Text(
-                bookProvider.isSwitch ? 'Akun' : 'Account',
+                languageProvider.language ? enAccount : inaAccount,
                 style: GoogleFonts.roboto(
                   fontWeight: fontRegular,
                   fontSize: small,
@@ -91,7 +105,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   size: medium,
                 ),
                 title: Text(
-                  bookProvider.isSwitch ? 'Pengaturan' : 'Settings',
+                  languageProvider.language ? enSetting : inaSetting,
                   style: GoogleFonts.roboto(
                     fontWeight: fontRegular,
                     fontSize: small,

@@ -1,7 +1,9 @@
 import 'package:bei/pages/book_read.dart';
 import 'package:bei/provider/bookmark_provider.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +15,14 @@ class BookmarkPage extends StatefulWidget {
 
 class _BookmarkPageState extends State<BookmarkPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Consumer<BookmarkProvider>(
-      builder: (context, bookmarkProvider, _) => Scaffold(
+    return Consumer2<BookmarkProvider, LanguageProvider>(
+      builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
             top: paddingNormal,
@@ -52,7 +59,9 @@ class _BookmarkPageState extends State<BookmarkPage> {
                         ),
                         Center(
                           child: CustomText(
-                            text: 'Bookmark List',
+                            text: languageProvider.language
+                                ? enBookmarkList
+                                : inaBookmarkList,
                             size: regular,
                           ),
                         ),

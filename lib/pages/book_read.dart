@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bei/model/bookmark.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class BookRead extends StatefulWidget {
@@ -76,10 +78,16 @@ class _BookReadState extends State<BookRead> {
                           ),
                         ),
                       ),
-                      Center(
-                        child: CustomText(
-                          text: widget.titleChapter,
-                          size: regular,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 50,
+                          ),
+                          child: CustomText(
+                            text: widget.titleChapter,
+                            size: regular,
+                          ),
                         ),
                       ),
                       Align(
@@ -96,7 +104,7 @@ class _BookReadState extends State<BookRead> {
                                 Icons.bookmark_outline,
                               ),
                             ),
-                            onTap: () {
+                            onTap: () async {
                               bookmarkProvider.listBookmark.add(
                                 Bookmark(
                                   titleCatalogue: widget.titleCatalogue,
@@ -104,6 +112,14 @@ class _BookReadState extends State<BookRead> {
                                   filePath: widget.filePath,
                                   page: pdfViewerController.pageNumber,
                                 ),
+                              );
+                              print('Provider : ' +
+                                  bookmarkProvider.listBookmark.toString().toString());
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString(
+                                'listBookmark',
+                                json.encode(bookmarkProvider.listBookmark),
                               );
                               Fluttertoast.showToast(
                                 msg: 'Bookmark has been added',

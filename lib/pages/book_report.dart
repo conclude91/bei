@@ -1,5 +1,6 @@
 import 'package:bei/consts/constanta.dart';
 import 'package:bei/model/book.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -33,8 +34,8 @@ class _BookReportState extends State<BookReport> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-      builder: (context, userProvider, _) => Scaffold(
+    return Consumer2<UserProvider, LanguageProvider>(
+      builder: (context, userProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
             top: paddingNormal,
@@ -69,7 +70,9 @@ class _BookReportState extends State<BookReport> {
                       ),
                       Center(
                         child: CustomText(
-                          text: 'Book Report',
+                          text: languageProvider.language
+                              ? enBookReport
+                              : inaBookReport,
                           size: regular,
                         ),
                       ),
@@ -151,7 +154,9 @@ class _BookReportState extends State<BookReport> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           CustomText(
-                            text: 'Report Data :',
+                            text: languageProvider.language
+                                ? enReportData
+                                : inaReportData,
                             color: primaryTextColor,
                             size: normal,
                           ),
@@ -168,7 +173,9 @@ class _BookReportState extends State<BookReport> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: disableColor,
-                              hintText: 'Subject',
+                              hintText: languageProvider.language
+                                  ? enSubjectReport
+                                  : inaSubjectReport,
                               contentPadding: const EdgeInsets.only(
                                 left: paddingSmall,
                                 bottom: 8.0,
@@ -195,7 +202,9 @@ class _BookReportState extends State<BookReport> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: disableColor,
-                              hintText: 'Messages',
+                              hintText: languageProvider.language
+                                  ? enMessage
+                                  : inaMessage,
                               contentPadding: const EdgeInsets.only(
                                 left: paddingSmall,
                                 bottom: paddingSmall,
@@ -219,7 +228,8 @@ class _BookReportState extends State<BookReport> {
                               borderRadius: BorderRadius.circular(radiusSmall),
                             ),
                             child: CustomText(
-                              text: 'Send',
+                              text:
+                                  languageProvider.language ? enSend : inaSend,
                               color: secondaryTextColor,
                               size: small,
                             ),
@@ -267,16 +277,19 @@ class _BookReportState extends State<BookReport> {
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
       Fluttertoast.showToast(
-        msg: 'Report has been sent',
+        msg: Provider.of<LanguageProvider>(context, listen: false).language
+            ? enSuccessReport
+            : inaSuccessReport,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-      );
-      Navigator.pop(context);
+      ).then((value) => Navigator.pop(context));
     } else {
       print(response.reasonPhrase);
       Fluttertoast.showToast(
-        msg: 'Unable to send report',
+        msg: Provider.of<LanguageProvider>(context, listen: false).language
+            ? enFailedReport
+            : inaFailedReport,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,

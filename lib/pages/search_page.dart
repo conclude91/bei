@@ -1,6 +1,7 @@
 import 'package:bei/model/book.dart';
 import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/provider/book_provider.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/themes/app_font.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -39,8 +40,8 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
 
-    return Consumer<BookProvider>(
-      builder: (context, bookProvider, _) => Scaffold(
+    return Consumer2<BookProvider, LanguageProvider>(
+      builder: (context, bookProvider, languageProvider, _) => Scaffold(
         body: Container(
           color: greyLightColor,
           padding: EdgeInsets.only(
@@ -95,7 +96,9 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                                 onPressed: () => searchController.clear(),
                               ),
-                              hintText: enSearch,
+                              hintText: languageProvider.language
+                                  ? enSearch
+                                  : inaSearch,
                               hintStyle: GoogleFonts.roboto(
                                 color: primaryTextColor,
                                 fontWeight: fontlight,
@@ -179,9 +182,9 @@ class _SearchPageState extends State<SearchPage> {
                         child: Row(
                           children: [
                             CustomText(
-                              text: bookProvider.isSwitch
-                                  ? 'Jenjang :'
-                                  : 'Level :',
+                              text: languageProvider.language
+                                  ? enLevel
+                                  : inaLevel,
                               size: small,
                             ),
                             SizedBox(
@@ -230,8 +233,9 @@ class _SearchPageState extends State<SearchPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CustomText(
-                              text:
-                                  bookProvider.isSwitch ? 'Kelas :' : 'Class :',
+                              text: languageProvider.language
+                                  ? enClass
+                                  : inaClass,
                               size: small,
                             ),
                             SizedBox(
@@ -282,9 +286,9 @@ class _SearchPageState extends State<SearchPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CustomText(
-                              text: bookProvider.isSwitch
-                                  ? 'Bidang :'
-                                  : 'Subject :',
+                              text: languageProvider.language
+                                  ? enSubject
+                                  : inaSubject,
                               size: small,
                             ),
                             SizedBox(

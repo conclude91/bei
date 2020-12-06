@@ -12,4 +12,17 @@ class Bookmark {
     @required this.filePath,
     @required this.page,
   });
+
+  Map<String, dynamic> toJson() => {
+        'titleCatalogue': titleCatalogue,
+        'titleChapter': titleChapter,
+        'filePath': filePath,
+        'page': page,
+      };
+
+  Bookmark.fromJson(Map<String, dynamic> json)
+      : titleCatalogue = json['titleCatalogue'],
+        titleChapter = json['titleChapter'],
+        filePath = json['filePath'],
+        page = json['page'];
 }

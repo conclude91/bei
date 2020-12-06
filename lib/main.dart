@@ -2,6 +2,7 @@ import 'package:bei/pages/splashscreen_page.dart';
 import 'package:bei/provider/book_provider.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/provider/chapter_provider.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_string.dart';
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => ChapterProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => BookmarkProvider()),
+        ChangeNotifierProvider(create: (context) => LanguageProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

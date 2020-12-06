@@ -1,9 +1,14 @@
-import 'package:bei/provider/book_provider.dart';
+import 'package:bei/pages/splashscreen_page.dart';
+import 'package:bei/provider/language_provider.dart';
+import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -13,8 +18,8 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<BookProvider>(
-      builder: (context, bookProvider, _) => Scaffold(
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, _) => Scaffold(
         body: Container(
           color: backgroundColor,
           padding: EdgeInsets.only(
@@ -29,7 +34,7 @@ class _SettingPageState extends State<SettingPage> {
                   color: backgroundColor,
                   child: Center(
                     child: CustomText(
-                      text: bookProvider.isSwitch ? 'Pengaturan' : 'Settings',
+                      text: languageProvider.language ? enSetting : inaSetting,
                       size: regular,
                     ),
                   ),
@@ -56,18 +61,18 @@ class _SettingPageState extends State<SettingPage> {
                                 width: paddingSmall,
                               ),
                               CustomText(
-                                text: bookProvider.isSwitch
-                                    ? 'Bahasa'
-                                    : 'Language',
+                                text: languageProvider.language
+                                    ? enLanguage
+                                    : inaLanguage,
                                 size: small,
                               ),
                             ],
                           ),
                           Switch(
-                            value: bookProvider.isSwitch,
+                            value: languageProvider.language,
                             onChanged: (value) {
                               setState(() {
-                                bookProvider.isSwitch = value;
+                                languageProvider.language = value;
                               });
                             },
                             activeTrackColor: Colors.greenAccent[700],
@@ -94,7 +99,7 @@ class _SettingPageState extends State<SettingPage> {
                               width: paddingSmall,
                             ),
                             CustomText(
-                              text: 'FAQ',
+                              text: languageProvider.language ? enFAQ : inaFAQ,
                               size: small,
                             ),
                           ],
@@ -120,9 +125,9 @@ class _SettingPageState extends State<SettingPage> {
                               width: paddingSmall,
                             ),
                             CustomText(
-                              text: bookProvider.isSwitch
-                                  ? 'Tentang Aplikasi '
-                                  : 'About',
+                              text: languageProvider.language
+                                  ? enAbout
+                                  : inaAbout,
                               size: small,
                             ),
                           ],
@@ -148,7 +153,9 @@ class _SettingPageState extends State<SettingPage> {
                               width: paddingSmall,
                             ),
                             CustomText(
-                              text: 'Licenses',
+                              text: languageProvider.language
+                                  ? enLicense
+                                  : inaLicense,
                               size: small,
                             ),
                           ],
@@ -160,11 +167,99 @@ class _SettingPageState extends State<SettingPage> {
                       height: 1,
                       color: disableTextColor,
                     ),
+                    InkWell(
+                      child: Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.exit_to_app_outlined, size: regular),
+                            SizedBox(
+                              width: paddingSmall,
+                            ),
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enSignOut
+                                  : inaSignOut,
+                              size: small,
+                            ),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        showAlertSignOut();
+                      },
+                    ),
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
                   ],
                 )
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  showAlertSignOut() {
+    showDialog(
+      context: context,
+      builder: (_) => Consumer<LanguageProvider>(
+        builder: (context, languageProvider, _) => AlertDialog(
+          title: CustomText(
+            text: languageProvider.language ? enSignOut : inaSignOut,
+            size: regular,
+            color: primaryColor,
+          ),
+          content: CustomText(
+            text: languageProvider.language ? enNotifSignOut : inaNotifSignOut,
+            maxLine: 2,
+            size: normal,
+          ),
+          actions: [
+            FlatButton(
+              child: CustomText(
+                text: languageProvider.language ? enNo : inaNo,
+                size: normal,
+                color: primaryColor,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: CustomText(
+                text: languageProvider.language ? enYes : inaYes,
+                size: normal,
+                color: primaryColor,
+              ),
+              onPressed: () {
+                GoogleSignIn _googleSignIn = GoogleSignIn(
+                  scopes: [
+                    'email',
+                  ],
+                );
+                _googleSignIn.disconnect().then((value) async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.clear().then(
+                        (value) => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SplashScreenPage(),
+                          ),
+                        ),
+                      );
+                });
+              },
+            ),
+          ],
         ),
       ),
     );

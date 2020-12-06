@@ -1,19 +1,25 @@
 import 'dart:io';
 import 'dart:io' as io;
 
+import 'package:bei/consts/constanta.dart';
 import 'package:bei/model/book.dart';
 import 'package:bei/model/chapter.dart';
 import 'package:bei/pages/book_read.dart';
 import 'package:bei/pages/book_report.dart';
 import 'package:bei/provider/book_provider.dart';
 import 'package:bei/provider/chapter_provider.dart';
+import 'package:bei/provider/language_provider.dart';
+import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/card_book_gallery.dart';
 import 'package:bei/widgets/card_book_thumbnail.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -42,8 +48,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BookProvider>(
-      builder: (context, bookProvider, _) => Scaffold(
+    return Consumer2<BookProvider, LanguageProvider>(
+      builder: (context, bookProvider, languageProvider, _) => Scaffold(
         body: Container(
           color: backgroundColor,
           height: double.infinity,
@@ -78,9 +84,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         ),
                       ),
                       CustomText(
-                        text: bookProvider.isSwitch
-                            ? 'Detail Buku'
-                            : 'Book Detail',
+                        text: languageProvider.language
+                            ? enBookDetail
+                            : inaBookDetail,
                         size: regular,
                       ),
                       Container(
@@ -162,8 +168,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                 FlatButton(
                                   color: primaryColor,
                                   child: CustomText(
-                                    text:
-                                        bookProvider.isSwitch ? 'Baca' : 'Read',
+                                    text: languageProvider.language
+                                        ? enRead
+                                        : inaRead,
                                     size: small,
                                     color: secondaryTextColor,
                                   ),
@@ -195,7 +202,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         child: Column(
                           children: [
                             CustomText(
-                                text: 'Downloading : $downloadProgress',
+                                text: languageProvider.language
+                                    ? enDownloading + ' : $downloadProgress'
+                                    : inaDownloading + ' : $downloadProgress',
                                 size: tiny),
                             SizedBox(
                               height: 5,
@@ -221,9 +230,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           CustomText(
-                            text: bookProvider.isSwitch
-                                ? 'Deskripsi Buku'
-                                : 'Book Description',
+                            text: languageProvider.language
+                                ? enBookDescription
+                                : inaBookDescription,
                             size: normal,
                           ),
                           Divider(
@@ -249,9 +258,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           CustomText(
-                            text: bookProvider.isSwitch
-                                ? 'Buku lainnya'
-                                : 'Another books',
+                            text: languageProvider.language
+                                ? enAnotherBook
+                                : inaAnotherBook,
                             size: normal,
                           ),
                           Divider(
@@ -339,8 +348,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
       backgroundColor: Colors.white,
       context: context,
       builder: (builder) {
-        return Consumer2<ChapterProvider, BookProvider>(
-            builder: (context, chapterProvider, bookProvider, _) {
+        return Consumer3<ChapterProvider, BookProvider, LanguageProvider>(
+            builder:
+                (context, chapterProvider, bookProvider, languageProvider, _) {
           List<Chapter> listChapter =
               chapterProvider.getChapterByIdCatalogue(widget.book.id);
           listChapter.add(
@@ -378,9 +388,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: CustomText(
-                      text: bookProvider.isSwitch
-                          ? 'Isi Konten :'
-                          : 'List Content : ',
+                      text: languageProvider.language
+                          ? enListContent
+                          : inaListContent,
                       size: normal,
                       color: secondaryTextColor,
                     ),
@@ -451,7 +461,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                     '${dir.path}/${widget.book.id.toString()}/' +
                                         listChapter[index].idDetail.toString() +
                                         '.pdf';
-                                if (await File(filePath).exists()) {
+                                http.Response r = await http
+                                    .head(listChapter[index].attachment);
+                                int origin =
+                                    int.parse(r.headers['content-length']);
+                                int local = File(filePath).lengthSync();
+                                if (await File(filePath).exists() &&
+                                    local == origin) {
                                   Navigator.pop(context);
                                   Navigator.push(
                                     context,
@@ -505,46 +521,55 @@ class _BookDetailPageState extends State<BookDetailPage> {
   showAlertDownload(title, filename, attachment) {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: CustomText(
-          text: 'Download',
-          size: regular,
-          color: primaryColor,
-        ),
-        content: CustomText(
-          text: 'Do you want to download this $title ?',
-          maxLine: 2,
-          size: normal,
-        ),
-        actions: [
-          FlatButton(
-            child: CustomText(
-              text: 'No',
-              size: normal,
-              color: primaryColor,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+      builder: (_) => Consumer2<UserProvider, LanguageProvider>(
+        builder: (context, userProvider, languageProvider, _) => AlertDialog(
+          title: CustomText(
+            text: languageProvider.language ? enDownload : inaDownload,
+            size: regular,
+            color: primaryColor,
           ),
-          FlatButton(
-            child: CustomText(
-              text: 'Yes',
-              size: normal,
-              color: primaryColor,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              downloadFile(filename, attachment);
-            },
+          content: CustomText(
+            text: languageProvider.language
+                ? enNotifDownload + ' $title ?'
+                : inaNotifDownload + ' $title ?',
+            maxLine: 2,
+            size: normal,
           ),
-        ],
+          actions: [
+            FlatButton(
+              child: CustomText(
+                text: languageProvider.language ? enNo : inaNo,
+                size: normal,
+                color: primaryColor,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: CustomText(
+                text: languageProvider.language ? enYes : inaYes,
+                size: normal,
+                color: primaryColor,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                downloadFile(
+                  filename,
+                  attachment,
+                  userProvider.currentUser.id,
+                  widget.book.id,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  downloadFile(filename, attachment) async {
+  downloadFile(filename, attachment, int idUser, int idCatalogue) async {
     setState(() {
       isDownloading = !isDownloading;
     });
@@ -564,27 +589,64 @@ class _BookDetailPageState extends State<BookDetailPage> {
           isDownloading = !isDownloading;
         });
       }
-    });
+    }).then(
+      (value) => updateDownloadBook(idUser, idCatalogue),
+    );
   }
 
   getListFile(idCatalogue) async {
     var directory = (await getExternalStorageDirectory()).path;
-    setState(() {
-      listFile =
-          io.Directory(directory.toString() + '/$idCatalogue').listSync();
-    });
+    if (await io.Directory(directory.toString() + '/$idCatalogue').exists()) {
+      setState(() {
+        listFile =
+            io.Directory(directory.toString() + '/$idCatalogue').listSync();
+      });
+    }
   }
 
   bool checkStatusDownloaded(idDetail) {
     bool result = false;
-    for (int i = 0; i < listFile.length; i++) {
-      String filename =
-          listFile[i].toString().split("/").last.replaceAll("'", "");
-      String tempIdDetail = filename.substring(0, filename.indexOf('.'));
-      if (tempIdDetail == idDetail) {
-        result = true;
+    if (listFile.length > 0) {
+      for (int i = 0; i < listFile.length; i++) {
+        String filename =
+            listFile[i].toString().split("/").last.replaceAll("'", "");
+        String tempIdDetail = filename.substring(0, filename.indexOf('.'));
+        if (tempIdDetail == idDetail) {
+          result = true;
+        }
       }
     }
     return result;
+  }
+
+  updateDownloadBook(int idUser, int idCatalogue) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(Constanta.UPDATE_DOWNLOAD_BOOK));
+    request.fields.addAll({
+      'id_user': idUser.toString(),
+      'id_catalogue': idCatalogue.toString(),
+    });
+    await request.send().then((response) {
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+          msg: Provider.of<LanguageProvider>(context, listen: false).language
+              ? enSuccessDownload
+              : inaSuccessDownload,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+        );
+      } else {
+        print(response.reasonPhrase);
+        Fluttertoast.showToast(
+          msg: Provider.of<LanguageProvider>(context, listen: false).language
+              ? enFailedDownload
+              : inaFailedDownload,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+        );
+      }
+    });
   }
 }

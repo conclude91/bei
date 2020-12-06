@@ -6,9 +6,11 @@ import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/pages/bookmark_page.dart';
 import 'package:bei/provider/book_provider.dart';
 import 'package:bei/provider/bookmark_provider.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/card_book_thumbnail.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +35,10 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<BookProvider, UserProvider, BookmarkProvider>(
-      builder: (context, bookProvider, userProvider, bookmarkProvider, _) {
+    return Consumer4<BookProvider, UserProvider, BookmarkProvider,
+        LanguageProvider>(
+      builder: (context, bookProvider, userProvider, bookmarkProvider,
+          languageProvider, _) {
         if (listMyBook.length == 0) {
           for (int i = 0; i < bookProvider.listBook.length; i++) {
             for (int y = 0; y < listFolder.length; y++) {
@@ -110,7 +114,7 @@ class _AccountPageState extends State<AccountPage> {
                                       ? userProvider.currentUser.gender == 'L'
                                           ? MdiIcons.genderMale
                                           : MdiIcons.genderFemale
-                                      : Icons.not_interested,
+                                      : null,
                                   size: regular,
                                   color: userProvider.currentUser.gender != null
                                       ? userProvider.currentUser.gender == 'L'
@@ -159,11 +163,13 @@ class _AccountPageState extends State<AccountPage> {
                               children: [
                                 Icon(Icons.location_on_outlined, size: small),
                                 CustomText(
-                                  text: userProvider.currentUser.address ??
-                                      '' +
-                                          ', ' +
-                                          userProvider.currentUser.city ??
-                                      '',
+                                  text: userProvider.currentUser.address ?? '',
+                                  color: primaryTextColor,
+                                  size: small,
+                                  maxLine: 2,
+                                ),
+                                CustomText(
+                                  text: userProvider.currentUser.city ?? '',
                                   color: primaryTextColor,
                                   size: small,
                                   maxLine: 2,
@@ -183,7 +189,9 @@ class _AccountPageState extends State<AccountPage> {
                                 bottom: 10,
                               ),
                               child: CustomText(
-                                text: 'My Book',
+                                text: languageProvider.language
+                                    ? enMyBook
+                                    : inaMyBook,
                                 color: primaryTextColor,
                                 size: normal,
                               ),
@@ -194,10 +202,9 @@ class _AccountPageState extends State<AccountPage> {
                             ),
                             Expanded(
                               child: Container(
-                                padding: EdgeInsets.only(left: 0),
                                 child: GridView.count(
                                   crossAxisCount: 3,
-                                  childAspectRatio: 0.55,
+                                  childAspectRatio: 0.5,
                                   padding: EdgeInsets.all(paddingTiny),
                                   children:
                                       List.generate(listMyBook.length, (index) {

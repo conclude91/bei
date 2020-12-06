@@ -33,17 +33,20 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
           ),
         ),
         elevation: elevation,
-        child: Column(
+        child: ListView(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          padding: EdgeInsets.only(top: 0),
           children: [
             Container(
-              height: 150,
+              height: 145,
               width: 125,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImageWithRetry(
                     widget.book.image,
                   ),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(radiusSmall),
@@ -52,10 +55,10 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
               ),
             ),
             SizedBox(
-              height: paddingTiny,
+              height: 5,
             ),
             Container(
-              height: 60,
+              height: 45,
               width: double.infinity,
               padding: EdgeInsets.all(5),
               child: Column(

@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:bei/pages/dashboard_page.dart';
 import 'package:bei/pages/onboarding_page.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreenPage extends StatefulWidget {
   @override
@@ -17,7 +19,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
-    nextScreen();
+    nextPage();
   }
 
   @override
@@ -42,8 +44,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 child: Image(
                   image: AssetImage('assets/images/logo.png'),
                   fit: BoxFit.fitHeight,
-                  height: 150,
-                  width: 150,
+                  height: 100,
+                  width: 100,
                 ),
               ),
             ),
@@ -56,7 +58,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 child: CustomText(
                   text: 'Copyright © 2020',
                   color: primaryTextColor,
-                  size: normal,
+                  size: small,
                 ),
               ),
             ),
@@ -66,14 +68,24 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     );
   }
 
-  nextScreen() {
-    return timer = Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OnboardingPage(),
-        ),
-      );
+  nextPage() {
+    return timer = Timer(Duration(seconds: 3), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool('isLogin') ?? false) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DashboardPage(),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OnboardingPage(),
+          ),
+        );
+      }
     });
   }
 }

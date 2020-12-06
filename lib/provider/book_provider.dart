@@ -10,12 +10,6 @@ class BookProvider extends ChangeNotifier {
   String _level = 'All';
   String _group = 'All';
   String _subject = 'All';
-  bool _isSwitch = false;
-
-  set isSwitch(bool isSwitch) {
-    _isSwitch = isSwitch;
-    notifyListeners();
-  }
 
   set level(String level) {
     _level = level;
@@ -47,7 +41,6 @@ class BookProvider extends ChangeNotifier {
   String get level => _level;
   String get group => _group;
   String get subject => _subject;
-  bool get isSwitch => _isSwitch;
 
   List<Book> getAll() {
     return listBook;

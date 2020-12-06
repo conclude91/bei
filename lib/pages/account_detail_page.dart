@@ -1,8 +1,10 @@
 import 'package:bei/consts/constanta.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/themes/app_font.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,7 +35,6 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
 
   @override
   void initState() {
-    super.initState();
     selectedDate = DateTime.now();
     dateFormat = DateFormat('yyyy-MM-dd');
     nameController = TextEditingController();
@@ -43,17 +44,30 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
     cityController = TextEditingController();
     addressController = TextEditingController();
     phoneController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userProvider, _) {
-      emailController.text = userProvider.currentUser.email ?? '';
-      nameController.text = userProvider.currentUser.name ?? '';
-      usernameController.text = userProvider.currentUser.username ?? '';
-      cityController.text = userProvider.currentUser.city ?? '';
-      addressController.text = userProvider.currentUser.address ?? '';
-      phoneController.text = userProvider.currentUser.phone ?? '';
+    return Consumer2<UserProvider, LanguageProvider>(
+        builder: (context, userProvider, languageProvider, _) {
+      if (nameController.text.isEmpty)
+        nameController.text = userProvider.currentUser.name ?? '';
+      if (emailController.text.isEmpty)
+        emailController.text = userProvider.currentUser.email ?? '';
+      if (usernameController.text.isEmpty)
+        usernameController.text = userProvider.currentUser.username ?? '';
+      if (cityController.text.isEmpty)
+        cityController.text = userProvider.currentUser.city ?? '';
+      if (addressController.text.isEmpty)
+        addressController.text = userProvider.currentUser.address ?? '';
+      if (phoneController.text.isEmpty)
+        phoneController.text = userProvider.currentUser.phone ?? '';
       if (userProvider.currentUser.gender != null && gender == null) {
         if (userProvider.currentUser.gender == 'L') {
           gender = Gender.L;
@@ -95,7 +109,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                       },
                     ),
                     CustomText(
-                      text: 'Account',
+                      text: languageProvider.language ? enAccount : inaAccount,
                       color: primaryTextColor,
                       size: regular,
                     ),
@@ -108,7 +122,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                         ),
                       ),
                       onTap: () {
-                        updateUser();
+                        updateUser(userProvider.currentUser.id);
                       },
                     ),
                   ],
@@ -153,7 +167,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           CustomText(
-                            text: 'Name',
+                            text: languageProvider.language ? enName : inaName,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -188,7 +202,9 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingSmall,
                           ),
                           CustomText(
-                            text: 'Username',
+                            text: languageProvider.language
+                                ? enUsername
+                                : inaUsername,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -223,7 +239,8 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingSmall,
                           ),
                           CustomText(
-                            text: 'Email',
+                            text:
+                                languageProvider.language ? enEmail : inaEmail,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -259,7 +276,9 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingSmall,
                           ),
                           CustomText(
-                            text: 'Gender',
+                            text: languageProvider.language
+                                ? enGender
+                                : inaGender,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -277,7 +296,9 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                                   },
                                 ),
                                 CustomText(
-                                  text: 'Male',
+                                  text: languageProvider.language
+                                      ? enMale
+                                      : inaMale,
                                   color: primaryTextColor,
                                   size: small,
                                 ),
@@ -291,7 +312,9 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                                   },
                                 ),
                                 CustomText(
-                                  text: 'Female',
+                                  text: languageProvider.language
+                                      ? enFemale
+                                      : inaFemale,
                                   color: primaryTextColor,
                                   size: small,
                                 ),
@@ -302,7 +325,9 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingTiny,
                           ),
                           CustomText(
-                            text: 'Birthday',
+                            text: languageProvider.language
+                                ? enBirthday
+                                : inaBirthday,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -331,7 +356,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingSmall,
                           ),
                           CustomText(
-                            text: 'City',
+                            text: languageProvider.language ? enCity : inaCity,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -366,7 +391,9 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingSmall,
                           ),
                           CustomText(
-                            text: 'Address',
+                            text: languageProvider.language
+                                ? enAddress
+                                : inaAddress,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -401,7 +428,8 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                             height: paddingSmall,
                           ),
                           CustomText(
-                            text: 'Phone',
+                            text:
+                                languageProvider.language ? enPhone : inaPhone,
                             color: primaryColor,
                             size: tiny,
                           ),
@@ -459,17 +487,16 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
 
     if (datePick != null) {
       setState(() {
-        print(datePick);
         selectedDate = datePick;
       });
     }
   }
 
-  updateUser() async {
+  updateUser(int id) async {
     var request =
         http.MultipartRequest('POST', Uri.parse(Constanta.UPDATE_USER));
     request.fields.addAll({
-      'id': '413',
+      'id': id.toString(),
       'email': emailController.text,
       'name': nameController.text,
       'username': usernameController.text,
@@ -481,28 +508,30 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
       'gender': gender.toString().split('.').last,
     });
 
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      // print(await response.stream.bytesToString());
-      Fluttertoast.showToast(
-        msg: 'User data has been updated',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-      );
-      // Hardcode
-      Provider.of<UserProvider>(context, listen: false).fecthAll();
-      Provider.of<UserProvider>(context, listen: false).currentUser;
-      Navigator.pop(context);
-    } else {
-      print(response.reasonPhrase);
-      Fluttertoast.showToast(
-        msg: 'Update data failed',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-      );
-    }
+    await request.send().then((response) {
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+          msg: Provider.of<LanguageProvider>(context, listen: false).language
+              ? enSuccessUpdateUser
+              : inaSuccessUpdateUser,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+        );
+        Provider.of<UserProvider>(context, listen: false).fecthAll();
+        Provider.of<UserProvider>(context, listen: false).currentUser;
+        Navigator.pop(context);
+      } else {
+        print(response.reasonPhrase);
+        Fluttertoast.showToast(
+          msg: Provider.of<LanguageProvider>(context, listen: false).language
+              ? enFailedUpdateUser
+              : inaFailedUpdateUser,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+        );
+      }
+    });
   }
 }

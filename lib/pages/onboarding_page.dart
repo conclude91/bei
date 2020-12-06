@@ -84,8 +84,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     padding: EdgeInsets.only(
                       left: paddingSmall,
                       right: paddingSmall,
-                      top: paddingTiny,
-                      bottom: paddingTiny,
+                      top: paddingSmall,
+                      bottom: paddingSmall,
                     ),
                     margin: EdgeInsets.only(
                       bottom: paddingTiny,
@@ -113,8 +113,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     padding: EdgeInsets.only(
                       left: paddingSmall,
                       right: paddingSmall,
-                      top: paddingTiny,
-                      bottom: paddingTiny,
+                      top: paddingSmall,
+                      bottom: paddingSmall,
                     ),
                     margin: EdgeInsets.only(
                       bottom: paddingTiny,

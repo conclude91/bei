@@ -3,7 +3,7 @@ String lorem =
     'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 String inaWelcomeHi = 'Hai, Kawan !';
-String inaWelcomeMessage = 'Berapa banyak buku\nyang kmau baca hari ini ?';
+String inaWelcomeMessage = 'Berapa banyak buku\nyang kamu baca hari ini ?';
 String inaConnectWithGoogle = 'Sambungkan Dengan Akun Google';
 String inaSuccessSignIn = 'Berhasil masuk aplikasi';
 String inaSearch = 'Cari...';
@@ -49,7 +49,7 @@ String inaListContent = 'Isi Konten :';
 String inaDownload = 'Unduh';
 String inaNotifDownload = 'Apakah anda ingin mengunduh';
 String inaSuccessDownload = 'Data telah berhasil diunduh';
-String inaFailedDownload = 'Gagal untuk menunduh data';
+String inaFailedDownload = 'Gagal untuk mengunduh data';
 String inaSuccessUpdateUser = 'Data akun berhasil diperbarui';
 String inaFailedUpdateUser = 'Gagal perbarui data akun';
 String inaBookReport = 'Pengaduan Buku';
@@ -60,6 +60,7 @@ String inaSend = 'Kirim';
 String inaSuccessReport = 'Pengaduan berhasil dikirim';
 String inaFailedReport = 'Gagal mengirim pengaduan';
 String inaHome = 'Beranda';
+String inaPage = 'Hal : ';
 
 String enWelcomeHi = 'Hi, Friend !';
 String enWelcomeMessage = 'How many\nbook have you read today ?';
@@ -119,4 +120,4 @@ String enSend = 'Send';
 String enSuccessReport = 'Report has been sent';
 String enFailedReport = 'Unable to send report';
 String enHome = 'Home';
-
+String enPage = 'Page : ';

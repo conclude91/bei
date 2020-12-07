@@ -1,6 +1,5 @@
 import 'package:bei/pages/splashscreen_page.dart';
 import 'package:bei/provider/language_provider.dart';
-import 'package:bei/provider/user_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
@@ -43,161 +42,168 @@ class _SettingPageState extends State<SettingPage> {
                   height: 1,
                   color: primaryColor,
                 ),
-                Column(
-                  children: [
-                    Container(
-                      height: 50,
-                      padding: EdgeInsets.only(
-                        left: paddingSmall,
-                        right: paddingSmall,
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.only(
+                      top: 0,
+                    ),
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.language, size: regular),
+                                SizedBox(
+                                  width: paddingSmall,
+                                ),
+                                CustomText(
+                                  text: languageProvider.language
+                                      ? enLanguage
+                                      : inaLanguage,
+                                  size: small,
+                                ),
+                              ],
+                            ),
+                            Switch(
+                              value: languageProvider.language,
+                              onChanged: (value) {
+                                setState(() {
+                                  languageProvider.language = value;
+                                });
+                              },
+                              activeTrackColor: Colors.greenAccent[700],
+                              activeColor: secondaryColor,
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
+                      Divider(
+                        height: 1,
+                        color: disableTextColor,
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 50,
+                          padding: EdgeInsets.only(
+                            left: paddingSmall,
+                            right: paddingSmall,
+                          ),
+                          child: Row(
                             children: [
-                              Icon(Icons.language, size: regular),
+                              Icon(Icons.announcement_outlined, size: regular),
+                              SizedBox(
+                                width: paddingSmall,
+                              ),
+                              CustomText(
+                                text:
+                                    languageProvider.language ? enFAQ : inaFAQ,
+                                size: small,
+                              ),
+                            ],
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                      Divider(
+                        height: 1,
+                        color: disableTextColor,
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 50,
+                          padding: EdgeInsets.only(
+                            left: paddingSmall,
+                            right: paddingSmall,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.info_outline, size: regular),
                               SizedBox(
                                 width: paddingSmall,
                               ),
                               CustomText(
                                 text: languageProvider.language
-                                    ? enLanguage
-                                    : inaLanguage,
+                                    ? enAbout
+                                    : inaAbout,
                                 size: small,
                               ),
                             ],
                           ),
-                          Switch(
-                            value: languageProvider.language,
-                            onChanged: (value) {
-                              setState(() {
-                                languageProvider.language = value;
-                              });
-                            },
-                            activeTrackColor: Colors.greenAccent[700],
-                            activeColor: secondaryColor,
+                        ),
+                        onTap: () {},
+                      ),
+                      Divider(
+                        height: 1,
+                        color: disableTextColor,
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 50,
+                          padding: EdgeInsets.only(
+                            left: paddingSmall,
+                            right: paddingSmall,
                           ),
-                        ],
+                          child: Row(
+                            children: [
+                              Icon(Icons.article_outlined, size: regular),
+                              SizedBox(
+                                width: paddingSmall,
+                              ),
+                              CustomText(
+                                text: languageProvider.language
+                                    ? enLicense
+                                    : inaLicense,
+                                size: small,
+                              ),
+                            ],
+                          ),
+                        ),
+                        onTap: () {},
                       ),
-                    ),
-                    Divider(
-                      height: 1,
-                      color: disableTextColor,
-                    ),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.announcement_outlined, size: regular),
-                            SizedBox(
-                              width: paddingSmall,
-                            ),
-                            CustomText(
-                              text: languageProvider.language ? enFAQ : inaFAQ,
-                              size: small,
-                            ),
-                          ],
-                        ),
+                      Divider(
+                        height: 1,
+                        color: disableTextColor,
                       ),
-                      onTap: () {},
-                    ),
-                    Divider(
-                      height: 1,
-                      color: disableTextColor,
-                    ),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
+                      InkWell(
+                        child: Container(
+                          height: 50,
+                          padding: EdgeInsets.only(
+                            left: paddingSmall,
+                            right: paddingSmall,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.exit_to_app_outlined, size: regular),
+                              SizedBox(
+                                width: paddingSmall,
+                              ),
+                              CustomText(
+                                text: languageProvider.language
+                                    ? enSignOut
+                                    : inaSignOut,
+                                size: small,
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.info_outline, size: regular),
-                            SizedBox(
-                              width: paddingSmall,
-                            ),
-                            CustomText(
-                              text: languageProvider.language
-                                  ? enAbout
-                                  : inaAbout,
-                              size: small,
-                            ),
-                          ],
-                        ),
+                        onTap: () {
+                          showAlertSignOut();
+                        },
                       ),
-                      onTap: () {},
-                    ),
-                    Divider(
-                      height: 1,
-                      color: disableTextColor,
-                    ),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.article_outlined, size: regular),
-                            SizedBox(
-                              width: paddingSmall,
-                            ),
-                            CustomText(
-                              text: languageProvider.language
-                                  ? enLicense
-                                  : inaLicense,
-                              size: small,
-                            ),
-                          ],
-                        ),
+                      Divider(
+                        height: 1,
+                        color: disableTextColor,
                       ),
-                      onTap: () {},
-                    ),
-                    Divider(
-                      height: 1,
-                      color: disableTextColor,
-                    ),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.exit_to_app_outlined, size: regular),
-                            SizedBox(
-                              width: paddingSmall,
-                            ),
-                            CustomText(
-                              text: languageProvider.language
-                                  ? enSignOut
-                                  : inaSignOut,
-                              size: small,
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        showAlertSignOut();
-                      },
-                    ),
-                    Divider(
-                      height: 1,
-                      color: disableTextColor,
-                    ),
-                  ],
+                    ],
+                  ),
                 )
               ],
             ),
@@ -239,13 +245,13 @@ class _SettingPageState extends State<SettingPage> {
                 size: normal,
                 color: primaryColor,
               ),
-              onPressed: () {
+              onPressed: () async {
                 GoogleSignIn _googleSignIn = GoogleSignIn(
                   scopes: [
                     'email',
                   ],
                 );
-                _googleSignIn.disconnect().then((value) async {
+                await _googleSignIn.disconnect().then((value) async {
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
                   await preferences.clear().then(

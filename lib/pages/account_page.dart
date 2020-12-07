@@ -66,15 +66,14 @@ class _AccountPageState extends State<AccountPage> {
                       : Colors.blue,
                   BlendMode.colorBurn,
                 ),
-                image: AssetImage('assets/images/background-vector.jpg'),
-                fit: BoxFit.contain,
-                alignment: Alignment.topLeft,
+                image: AssetImage('assets/images/background-landscape.jpg'),
+                fit: BoxFit.fill,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
@@ -95,8 +94,8 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                           color: backgroundColor,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          padding: EdgeInsets.only(top: 0),
                           children: [
                             Row(
                               children: [
@@ -200,32 +199,27 @@ class _AccountPageState extends State<AccountPage> {
                               height: 1,
                               color: primaryColor,
                             ),
-                            Expanded(
-                              child: Container(
-                                child: GridView.count(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 0.5,
-                                  padding: EdgeInsets.all(paddingTiny),
-                                  children:
-                                      List.generate(listMyBook.length, (index) {
-                                    return InkWell(
-                                      child: CardBookThumbnail(
-                                        book: listMyBook[index],
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                BookDetailPage(
-                                              book: listMyBook[index],
-                                            ),
+                            Center(
+                              child: Wrap(
+                                spacing: 2,
+                                children:
+                                    List.generate(listMyBook.length, (index) {
+                                  return InkWell(
+                                    child: CardBookThumbnail(
+                                      book: listMyBook[index],
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BookDetailPage(
+                                            book: listMyBook[index],
                                           ),
-                                        );
-                                      },
-                                    );
-                                  }),
-                                ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }),
                               ),
                             ),
                           ],
@@ -236,7 +230,7 @@ class _AccountPageState extends State<AccountPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height / 5.35,
+                    top: (MediaQuery.of(context).size.height / 4) - 50,
                     left: paddingNormal,
                   ),
                   child: CircleAvatar(

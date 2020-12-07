@@ -465,9 +465,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                     .head(listChapter[index].attachment);
                                 int origin =
                                     int.parse(r.headers['content-length']);
-                                int local = File(filePath).lengthSync();
-                                if (await File(filePath).exists() &&
-                                    local == origin) {
+                                int local = await File(filePath).exists()
+                                    ? File(filePath).lengthSync()
+                                    : 0;
+                                if (local == origin) {
                                   Navigator.pop(context);
                                   Navigator.push(
                                     context,

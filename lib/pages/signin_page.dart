@@ -31,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
                 Colors.white,
                 BlendMode.colorBurn,
               ),
-              image: AssetImage('assets/images/background.jpg'),
+              image: AssetImage('assets/images/background-potrait.jpg'),
               fit: BoxFit.cover,
               alignment: Alignment.center,
             ),
@@ -98,12 +98,12 @@ class _SignInPageState extends State<SignInPage> {
 
     _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
       // GoogleSignInAuthentication auth = await acc.authentication;
-      print(acc.id);
-      print(acc.email);
-      print(acc.displayName);
-      print(acc.photoUrl);
+      // print(acc.id);
+      // print(acc.email);
+      // print(acc.displayName);
+      // print(acc.photoUrl);
 
-      acc.authentication.then((GoogleSignInAuthentication auth) async {
+      await acc.authentication.then((GoogleSignInAuthentication auth) async {
         print(auth.idToken);
         print(auth.accessToken);
         SharedPreferences prefs = await SharedPreferences.getInstance();

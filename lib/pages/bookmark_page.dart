@@ -96,13 +96,23 @@ class _BookmarkPageState extends State<BookmarkPage> {
                               size: normal,
                             ),
                             subtitle: CustomText(
-                              text: 'Chapter : ' +
-                                  bookmarkProvider
-                                      .listBookmark[index].titleChapter +
-                                  ' [Page : ' +
-                                  bookmarkProvider.listBookmark[index].page
-                                      .toString() +
-                                  ']',
+                              text: languageProvider.language
+                                  ? bookmarkProvider
+                                          .listBookmark[index].titleChapter +
+                                      ' [' +
+                                      enPage +
+                                      ' ' +
+                                      bookmarkProvider.listBookmark[index].page
+                                          .toString() +
+                                      ']'
+                                  : bookmarkProvider
+                                          .listBookmark[index].titleChapter +
+                                      ' [' +
+                                      inaPage +
+                                      ' ' +
+                                      bookmarkProvider.listBookmark[index].page
+                                          .toString() +
+                                      ']',
                               color: Colors.black54,
                               size: small,
                             ),

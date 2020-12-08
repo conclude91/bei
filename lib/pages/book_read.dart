@@ -5,9 +5,7 @@ import 'package:bei/model/bookmark.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
-import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
@@ -78,18 +76,18 @@ class _BookReadState extends State<BookRead> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 50,
-                          ),
-                          child: CustomText(
-                            text: widget.titleChapter,
-                            size: regular,
-                          ),
-                        ),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Padding(
+                      //     padding: EdgeInsets.only(
+                      //       left: 50,
+                      //     ),
+                      //     child: CustomText(
+                      //       text: widget.titleChapter,
+                      //       size: regular,
+                      //     ),
+                      //   ),
+                      // ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -113,8 +111,6 @@ class _BookReadState extends State<BookRead> {
                                   page: pdfViewerController.pageNumber,
                                 ),
                               );
-                              print('Provider : ' +
-                                  bookmarkProvider.listBookmark.toString().toString());
                               final prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setString(
@@ -146,10 +142,9 @@ class _BookReadState extends State<BookRead> {
                               ),
                             ),
                             onTap: () async {
-                              final pdf =
-                                  await rootBundle.load(widget.filePath);
                               await Printing.layoutPdf(
-                                  onLayout: (_) => pdf.buffer.asUint8List());
+                                  onLayout: (_) =>
+                                      File(widget.filePath).readAsBytesSync());
                             },
                           ),
                         ),

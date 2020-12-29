@@ -131,7 +131,7 @@ class _SignInPageState extends State<SignInPage> {
             ? enSuccessSignIn
             : inaSuccessSignIn,
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
+        gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
       );
       Navigator.pushReplacement(
@@ -139,13 +139,15 @@ class _SignInPageState extends State<SignInPage> {
         MaterialPageRoute(
           builder: (context) => DashboardPage(),
         ),
-      );
+      ); 
     } else {
       print(response.reasonPhrase);
       Fluttertoast.showToast(
-        msg: 'Login data failed',
+        msg: Provider.of<LanguageProvider>(context, listen: false).language
+            ? enFailedSignIn
+            : inaFailedSignIn,
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
+        gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
       );
     }

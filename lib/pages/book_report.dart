@@ -120,12 +120,14 @@ class _BookReportState extends State<BookReport> {
                                   maxLine: 2,
                                 ),
                                 CustomText(
-                                  text: widget.book.writer,
+                                  text: languageProvider.language
+                                      ? enWriter + ' :\n' + widget.book.writer
+                                      : inaWriter + ' :\n' + widget.book.writer,
                                   size: small,
                                   maxLine: 3,
                                 ),
                                 CustomText(
-                                  text: lorem,
+                                  text: widget.book.description,
                                   size: tiny,
                                   maxLine: 7,
                                 ),
@@ -223,7 +225,7 @@ class _BookReportState extends State<BookReport> {
                           ),
                           FlatButton(
                             height: 50,
-                            color: primaryLevelColor,
+                            color: primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(radiusSmall),
                             ),

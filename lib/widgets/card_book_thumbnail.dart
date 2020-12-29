@@ -3,7 +3,6 @@ import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image/network.dart';
 
 class CardBookThumbnail extends StatefulWidget {
   final Book book;
@@ -43,7 +42,7 @@ class _CardBookThumbnailState extends State<CardBookThumbnail> {
               width: 125,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImageWithRetry(
+                  image: NetworkImage(
                     widget.book.image,
                   ),
                   fit: BoxFit.fill,

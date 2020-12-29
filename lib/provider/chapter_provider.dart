@@ -33,11 +33,6 @@ class ChapterProvider extends ChangeNotifier {
   }
 
   List<Chapter> getChapterByIdCatalogue(idCatalogue) {
-    listChapter.sort((a, b) {
-      return a.titleChapter
-          .toLowerCase()
-          .compareTo(b.titleChapter.toLowerCase());
-    });
     return listChapter
         .where((element) => element.idCatalogue == idCatalogue)
         .toList();

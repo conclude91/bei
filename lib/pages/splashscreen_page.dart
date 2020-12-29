@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:bei/pages/dashboard_page.dart';
 import 'package:bei/pages/onboarding_page.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreenPage extends StatefulWidget {
@@ -18,8 +20,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   @override
   void initState() {
-    super.initState();
     nextPage();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<LanguageProvider>(context, listen: false).fetchAll();
+    });
+    super.initState();
   }
 
   @override

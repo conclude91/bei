@@ -9,6 +9,8 @@ class User {
   final String city;
   final String birthday;
   final String gender;
+  final String school;
+  final int roleId;
 
   User({
     this.id,
@@ -21,6 +23,8 @@ class User {
     this.city,
     this.birthday,
     this.gender,
+    this.school,
+    this.roleId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,8 @@ class User {
       city: json['city'],
       birthday: json['birthday'],
       gender: json['gender'],
+      school: json['school'],
+      roleId: json['role_id'],
     );
   }
 }

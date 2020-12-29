@@ -14,7 +14,7 @@ class BookmarkProvider extends ChangeNotifier {
 
   List<Bookmark> get listBookmark => _listBookmark;
 
-  Future<List<Bookmark>> fecthAll() async {
+  Future<List<Bookmark>> fetchAll() async {
     _listBookmark = List<Bookmark>();
     final prefs = await SharedPreferences.getInstance();
     String tempList = prefs.getString('listBookmark');

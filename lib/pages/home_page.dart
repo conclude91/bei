@@ -131,17 +131,26 @@ class _HomePageState extends State<HomePage> {
                                             radius: regular - 1,
                                             backgroundColor: disableColor,
                                             backgroundImage: userProvider
-                                                        .currentUser.gender !=
-                                                    null
-                                                ? userProvider.currentUser
-                                                            .gender ==
-                                                        'L'
-                                                    ? AssetImage(
-                                                        'assets/images/male.png')
+                                                            .currentUser
+                                                            .avatar !=
+                                                        null &&
+                                                    userProvider.currentUser
+                                                            .avatar !=
+                                                        'avatar'
+                                                ? NetworkImage(userProvider
+                                                    .currentUser.avatar)
+                                                : userProvider.currentUser
+                                                            .gender !=
+                                                        null
+                                                    ? userProvider.currentUser
+                                                                .gender ==
+                                                            'L'
+                                                        ? AssetImage(
+                                                            'assets/images/male.png')
+                                                        : AssetImage(
+                                                            'assets/images/female.png')
                                                     : AssetImage(
-                                                        'assets/images/female.png')
-                                                : AssetImage(
-                                                    'assets/images/male.png'),
+                                                        'assets/images/male.png'),
                                           ),
                                         ),
                                       ),

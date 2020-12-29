@@ -27,7 +27,7 @@ class UserProvider extends ChangeNotifier {
     return listUser;
   }
 
-  Future<List<User>> fecthAll() async {
+  Future<List<User>> fetchAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _listUser = List<User>();
     final response = await http.get(Constanta.GET_USERS);

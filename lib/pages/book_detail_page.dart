@@ -17,6 +17,7 @@ import 'package:bei/widgets/card_book_gallery.dart';
 import 'package:bei/widgets/card_book_thumbnail.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:dio/dio.dart';
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -49,287 +50,311 @@ class _BookDetailPageState extends State<BookDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer2<BookProvider, LanguageProvider>(
-      builder: (context, bookProvider, languageProvider, _) => Scaffold(
-        body: Container(
-          color: backgroundColor,
-          height: double.infinity,
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: appBarHeight,
-                color: backgroundColor,
-                child: Material(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      builder: (context, bookProvider, languageProvider, _) => WillPopScope(
+        onWillPop: isDownloading ? showCancelDownload : null,
+        child: Scaffold(
+          body: Container(
+            height: double.infinity,
+            padding: EdgeInsets.only(
+              top: paddingNormal,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  height: appBarHeight,
+                  color: backgroundColor,
+                  child: Material(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: paddingTiny,
+                            right: paddingTiny,
+                          ),
+                          child: InkWell(
+                            child: Padding(
+                              padding: EdgeInsets.all(paddingTiny),
+                              child: Icon(
+                                Icons.arrow_back,
+                              ),
+                            ),
+                            onTap: () {
+                              isDownloading
+                                  ? showCancelDownload()
+                                  : Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        CustomText(
+                          text: languageProvider.language
+                              ? enBookDetail
+                              : inaBookDetail,
+                          size: regular,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: paddingTiny,
+                            right: paddingTiny,
+                          ),
+                          child: InkWell(
+                            child: Padding(
+                              padding: EdgeInsets.all(paddingTiny),
+                              child: Icon(
+                                Icons.announcement_outlined,
+                                color: isDownloading
+                                    ? disableColor
+                                    : primaryTextColor,
+                              ),
+                            ),
+                            onTap: () {
+                              if (isDownloading == false)
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BookReport(
+                                      book: widget.book,
+                                    ),
+                                  ),
+                                );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 1,
+                  color: primaryColor,
+                ),
+                Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    padding: EdgeInsets.only(
+                      top: 0,
+                    ),
                     children: [
                       Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
+                        height: 210,
+                        padding: EdgeInsets.only(
+                          top: paddingTiny,
+                          bottom: paddingTiny,
+                          left: paddingSmall,
+                          right: paddingSmall,
                         ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.arrow_back,
+                        child: Stack(
+                          children: [
+                            CardBookGallery(
+                              book: widget.book,
                             ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
+                            Container(
+                              height: double.infinity,
+                              margin: EdgeInsets.only(
+                                left: 130 + tiny,
+                              ),
+                              padding: EdgeInsets.only(
+                                top: paddingTiny,
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  CustomText(
+                                    text: widget.book.title,
+                                    size: normal,
+                                    maxLine: 3,
+                                  ),
+                                  CustomText(
+                                    text: languageProvider.language
+                                        ? enWriter + ' :\n' + widget.book.writer
+                                        : inaWriter +
+                                            ' :\n' +
+                                            widget.book.writer,
+                                    size: small,
+                                    maxLine: 3,
+                                  ),
+                                  CustomText(
+                                    text: widget.book.description,
+                                    size: tiny,
+                                    maxLine: 5,
+                                  ),
+                                  FlatButton(
+                                    color: isDownloading
+                                        ? disableColor
+                                        : primaryColor,
+                                    child: CustomText(
+                                      text: languageProvider.language
+                                          ? enRead
+                                          : inaRead,
+                                      size: small,
+                                      color: secondaryTextColor,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        radiusNormal,
+                                      ),
+                                      side: BorderSide(
+                                        color: isDownloading
+                                            ? disableColor
+                                            : primaryColor,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      if (isDownloading == false) {
+                                        readBook();
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      CustomText(
-                        text: languageProvider.language
-                            ? enBookDetail
-                            : inaBookDetail,
-                        size: regular,
+                      Visibility(
+                        visible: (isDownloading) ? true : false,
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            left: paddingSmall,
+                            right: paddingSmall,
+                          ),
+                          child: Column(
+                            children: [
+                              CustomText(
+                                  text: languageProvider.language
+                                      ? enDownloading + ' : $downloadProgress'
+                                      : inaDownloading + ' : $downloadProgress',
+                                  size: tiny),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              LinearProgressIndicator(
+                                minHeight: 2,
+                                value: percentage,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: paddingSmall,
                       ),
                       Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
+                        height: 250,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
                         ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.report_outlined,
-                              color: primaryLevelColor,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enBookDescription
+                                  : inaBookDescription,
+                              size: normal,
                             ),
+                            Divider(
+                              color: primaryColor,
+                            ),
+                            CustomText(
+                              text: widget.book.description,
+                              size: small,
+                              maxLine: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: paddingSmall,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enAnotherBook
+                                  : inaAnotherBook,
+                              size: normal,
+                            ),
+                            Divider(
+                              color: primaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 225,
+                        padding: EdgeInsets.only(
+                          top: paddingTiny,
+                          bottom: paddingTiny,
+                        ),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(
+                            top: 0,
                           ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookReport(
-                                  book: widget.book,
+                          itemCount: bookProvider
+                              .getAnotherBookByLevelGroup(
+                                  widget.book.level, widget.book.group)
+                              .length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  left: index == 0 ? paddingSmall - 3 : 0,
+                                  right: index ==
+                                          bookProvider
+                                                  .getAnotherBookByLevelGroup(
+                                                      widget.book.level,
+                                                      widget.book.group)
+                                                  .length -
+                                              1
+                                      ? paddingSmall - 3
+                                      : 0,
+                                ),
+                                child: CardBookThumbnail(
+                                  book: bookProvider.getAnotherBookByLevelGroup(
+                                      widget.book.level,
+                                      widget.book.group)[index],
                                 ),
                               ),
+                              onTap: () {
+                                if (isDownloading == false)
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BookDetailPage(
+                                        book: bookProvider
+                                            .getAnotherBookByLevelGroup(
+                                                widget.book.level,
+                                                widget.book.group)[index],
+                                      ),
+                                    ),
+                                  );
+                              },
                             );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox.shrink();
                           },
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Divider(
-                height: 1,
-                color: primaryColor,
-              ),
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  padding: EdgeInsets.only(
-                    top: 0,
-                  ),
-                  children: [
-                    Container(
-                      height: 210,
-                      padding: EdgeInsets.only(
-                        top: paddingTiny,
-                        bottom: paddingTiny,
-                        left: paddingSmall,
-                        right: paddingSmall,
-                      ),
-                      child: Stack(
-                        children: [
-                          CardBookGallery(
-                            book: widget.book,
-                          ),
-                          Container(
-                            height: double.infinity,
-                            margin: EdgeInsets.only(
-                              left: 130 + tiny,
-                            ),
-                            padding: EdgeInsets.only(
-                              top: paddingTiny,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                CustomText(
-                                  text: widget.book.title,
-                                  size: normal,
-                                  maxLine: 3,
-                                ),
-                                CustomText(
-                                  text: widget.book.writer,
-                                  size: small,
-                                  maxLine: 3,
-                                ),
-                                FlatButton(
-                                  color: primaryColor,
-                                  child: CustomText(
-                                    text: languageProvider.language
-                                        ? enRead
-                                        : inaRead,
-                                    size: small,
-                                    color: secondaryTextColor,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      radiusNormal,
-                                    ),
-                                    side: BorderSide(
-                                      color: primaryColor,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    readBook();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: (isDownloading) ? true : false,
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Column(
-                          children: [
-                            CustomText(
-                                text: languageProvider.language
-                                    ? enDownloading + ' : $downloadProgress'
-                                    : inaDownloading + ' : $downloadProgress',
-                                size: tiny),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            LinearProgressIndicator(
-                              minHeight: 2,
-                              value: percentage,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: paddingSmall,
-                    ),
-                    Container(
-                      height: 250,
-                      padding: EdgeInsets.only(
-                        left: paddingSmall,
-                        right: paddingSmall,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          CustomText(
-                            text: languageProvider.language
-                                ? enBookDescription
-                                : inaBookDescription,
-                            size: normal,
-                          ),
-                          Divider(
-                            color: primaryColor,
-                          ),
-                          CustomText(
-                            text: widget.book.description,
-                            size: small,
-                            maxLine: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: paddingSmall,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: paddingSmall,
-                        right: paddingSmall,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          CustomText(
-                            text: languageProvider.language
-                                ? enAnotherBook
-                                : inaAnotherBook,
-                            size: normal,
-                          ),
-                          Divider(
-                            color: primaryColor,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 246,
-                      padding: EdgeInsets.only(
-                        top: paddingTiny,
-                        bottom: paddingTiny,
-                      ),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.only(
-                          top: 0,
-                        ),
-                        itemCount: bookProvider
-                            .getAnotherBookByLevelGroup(
-                                widget.book.level, widget.book.group)
-                            .length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                left: index == 0 ? paddingSmall - 3 : 0,
-                                right: index ==
-                                        bookProvider
-                                                .getAnotherBookByLevelGroup(
-                                                    widget.book.level,
-                                                    widget.book.group)
-                                                .length -
-                                            1
-                                    ? paddingSmall - 3
-                                    : 0,
-                              ),
-                              child: CardBookThumbnail(
-                                book: bookProvider.getAnotherBookByLevelGroup(
-                                    widget.book.level,
-                                    widget.book.group)[index],
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BookDetailPage(
-                                    book:
-                                        bookProvider.getAnotherBookByLevelGroup(
-                                            widget.book.level,
-                                            widget.book.group)[index],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox.shrink();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -356,7 +381,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
           listChapter.add(
             Chapter(
               attachment: widget.book.attachment,
-              titleChapter: widget.book.title,
+              titleChapter: languageProvider.language
+                  ? '[' + enFullBook + '] : ' + widget.book.title
+                  : '[' + inaFullBook + '] : ' + widget.book.title,
               titleCatalogue: widget.book.title,
               idDetail: widget.book.id.toString(),
               idCatalogue: widget.book.id,
@@ -400,7 +427,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   child: (listChapter.isEmpty)
                       ? Center(
                           child: CustomText(
-                            text: 'No data found',
+                            text: languageProvider.language
+                                ? enNoData
+                                : inaNoData,
                             size: normal,
                           ),
                         )
@@ -422,7 +451,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   children: [
                                     Icon(
                                       Icons.picture_as_pdf_outlined,
-                                      color: Colors.redAccent,
+                                      color: primaryTextColor,
                                       size: 20,
                                     ),
                                     SizedBox(
@@ -441,16 +470,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                     SizedBox(
                                       width: paddingSmall,
                                     ),
-                                    Icon(
-                                      checkStatusDownloaded(
-                                              listChapter[index].idDetail)
-                                          ? Icons.download_done_outlined
-                                          : Icons.download_outlined,
-                                      color: checkStatusDownloaded(
-                                              listChapter[index].idDetail)
-                                          ? Colors.green
-                                          : primaryTextColor,
-                                      size: 20,
+                                    FutureBuilder<Widget>(
+                                      future: showInfo(listChapter[index]),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<Widget> snapshot) {
+                                        if (snapshot.data != null) {
+                                          return snapshot.data;
+                                        } else {
+                                          return SizedBox();
+                                        }
+                                      },
                                     ),
                                   ],
                                 ),
@@ -461,10 +490,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                     '${dir.path}/${widget.book.id.toString()}/' +
                                         listChapter[index].idDetail.toString() +
                                         '.pdf';
-                                http.Response r = await http
-                                    .head(listChapter[index].attachment);
-                                int origin =
-                                    int.parse(r.headers['content-length']);
+                                int origin = await getFileSize(
+                                    listChapter[index].attachment);
                                 int local = await File(filePath).exists()
                                     ? File(filePath).lengthSync()
                                     : 0;
@@ -484,6 +511,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   );
                                 } else {
                                   showAlertDownload(
+                                      listChapter[index].titleCatalogue,
                                       listChapter[index].titleChapter,
                                       listChapter[index].idDetail,
                                       listChapter[index].attachment);
@@ -507,19 +535,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     );
   }
 
-  showText(List<Chapter> listChapter) {
-    List<Widget> list = List<Widget>();
-    for (int i = 0; i < listChapter.length; i++) {
-      if (listChapter[i].idCatalogue == 338) {
-        list.add(Text('Hello'));
-      } else {
-        list.add(Text('Nay'));
-      }
-    }
-    return ListView(children: list);
-  }
-
-  showAlertDownload(title, filename, attachment) {
+  showAlertDownload(titleCatalogue, titleChapter, filename, attachment) {
     showDialog(
       context: context,
       builder: (_) => Consumer2<UserProvider, LanguageProvider>(
@@ -531,8 +547,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
           ),
           content: CustomText(
             text: languageProvider.language
-                ? enNotifDownload + ' $title ?'
-                : inaNotifDownload + ' $title ?',
+                ? enNotifDownload + ' $titleChapter ?'
+                : inaNotifDownload + ' $titleChapter ?',
             maxLine: 2,
             size: normal,
           ),
@@ -557,6 +573,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Navigator.pop(context);
                 Navigator.pop(context);
                 downloadFile(
+                  titleCatalogue,
+                  titleChapter,
                   filename,
                   attachment,
                   userProvider.currentUser.id,
@@ -570,7 +588,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
     );
   }
 
-  downloadFile(filename, attachment, int idUser, int idCatalogue) async {
+  downloadFile(titleCatalogue, titleChapter, filename, attachment, int idUser,
+      int idCatalogue) async {
     setState(() {
       isDownloading = !isDownloading;
     });
@@ -589,6 +608,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
         setState(() {
           isDownloading = !isDownloading;
         });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookRead(
+              titleCatalogue: titleCatalogue,
+              titleChapter: titleChapter,
+              filePath: '${dir.path}/${widget.book.id}/$filename.pdf',
+            ),
+          ),
+        );
       }
     }).then(
       (value) => updateDownloadBook(idUser, idCatalogue),
@@ -605,14 +634,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
     }
   }
 
-  bool checkStatusDownloaded(idDetail) {
+  bool checkStatusDownloaded(Chapter chapter, origin, local) {
     bool result = false;
     if (listFile.length > 0) {
       for (int i = 0; i < listFile.length; i++) {
         String filename =
             listFile[i].toString().split("/").last.replaceAll("'", "");
         String tempIdDetail = filename.substring(0, filename.indexOf('.'));
-        if (tempIdDetail == idDetail) {
+        if (tempIdDetail == chapter.idDetail && origin == local) {
           result = true;
         }
       }
@@ -634,7 +663,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
               ? enSuccessDownload
               : inaSuccessDownload,
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
+          gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
         );
       } else {
@@ -644,10 +673,96 @@ class _BookDetailPageState extends State<BookDetailPage> {
               ? enFailedDownload
               : inaFailedDownload,
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
+          gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
         );
       }
     });
+  }
+
+  Future<int> getFileSize(String url) async {
+    http.Response r = await http.head(url);
+    int origin = int.parse(r.headers['content-length']);
+    return origin;
+  }
+
+  Future<Widget> showInfo(Chapter chapter) async {
+    var dir = await getExternalStorageDirectory();
+    String filePath = '${dir.path}/${widget.book.id.toString()}/' +
+        chapter.idDetail.toString() +
+        '.pdf';
+    int origin = await getFileSize(chapter.attachment);
+    int local = await File(filePath).exists() ? File(filePath).lengthSync() : 0;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Icon(
+          checkStatusDownloaded(chapter, origin, local)
+              ? Icons.download_done_outlined
+              : Icons.download_outlined,
+          color: checkStatusDownloaded(chapter, origin, local)
+              ? Colors.green
+              : primaryTextColor,
+          size: 20,
+        ),
+        SizedBox(
+          height: paddingMicro,
+        ),
+        CustomText(
+          text: filesize(origin),
+          size: tiny,
+          color: primaryTextColor,
+        )
+      ],
+    );
+  }
+
+  Future<bool> showCancelDownload() async {
+    return (await showDialog(
+            context: context,
+            builder: (_) => Consumer<LanguageProvider>(
+                  builder: (context, languageProvider, _) => AlertDialog(
+                    title: CustomText(
+                      text: languageProvider.language
+                          ? enDownloading
+                          : inaDownloading,
+                      size: regular,
+                      color: primaryColor,
+                    ),
+                    content: CustomText(
+                      text: languageProvider.language
+                          ? enNotifCancelDownload
+                          : inaNotifCancelDownload,
+                      maxLine: 2,
+                      size: normal,
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: CustomText(
+                          text: languageProvider.language ? enNo : inaNo,
+                          size: normal,
+                          color: primaryColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      FlatButton(
+                        child: CustomText(
+                          text: languageProvider.language ? enYes : inaYes,
+                          size: normal,
+                          color: primaryColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                )) ??
+        false);
   }
 }

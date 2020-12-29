@@ -1,10 +1,11 @@
-import 'package:bei/pages/splashscreen_page.dart';
+import 'package:bei/pages/faq_page.dart';
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,15 +73,25 @@ class _SettingPageState extends State<SettingPage> {
                                 ),
                               ],
                             ),
-                            Switch(
-                              value: languageProvider.language,
+                            DropdownButton<String>(
+                              items: <String>['English', 'Indonesian']
+                                  .map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: CustomText(
+                                    text: value,
+                                    size: small,
+                                  ),
+                                );
+                              }).toList(),
+                              underline: SizedBox(),
                               onChanged: (value) {
                                 setState(() {
-                                  languageProvider.language = value;
+                                  value == 'English'
+                                      ? languageProvider.language = true
+                                      : languageProvider.language = false;
                                 });
                               },
-                              activeTrackColor: Colors.greenAccent[700],
-                              activeColor: secondaryColor,
                             ),
                           ],
                         ),
@@ -110,7 +121,14 @@ class _SettingPageState extends State<SettingPage> {
                             ],
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FAQPage(),
+                            ),
+                          );
+                        },
                       ),
                       Divider(
                         height: 1,
@@ -255,13 +273,10 @@ class _SettingPageState extends State<SettingPage> {
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
                   await preferences.clear().then(
-                        (value) => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SplashScreenPage(),
-                          ),
-                        ),
-                      );
+                    (value) {
+                      Phoenix.rebirth(context);
+                    },
+                  );
                 });
               },
             ),

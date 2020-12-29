@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:bei/model/bookmark.dart';
 import 'package:bei/provider/bookmark_provider.dart';
+import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
@@ -42,8 +44,8 @@ class _BookReadState extends State<BookRead> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BookmarkProvider>(
-      builder: (context, bookmarkProvider, _) => Scaffold(
+    return Consumer2<BookmarkProvider, LanguageProvider>(
+      builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
             top: paddingNormal,
@@ -76,18 +78,6 @@ class _BookReadState extends State<BookRead> {
                           ),
                         ),
                       ),
-                      // Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Padding(
-                      //     padding: EdgeInsets.only(
-                      //       left: 50,
-                      //     ),
-                      //     child: CustomText(
-                      //       text: widget.titleChapter,
-                      //       size: regular,
-                      //     ),
-                      //   ),
-                      // ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -118,9 +108,11 @@ class _BookReadState extends State<BookRead> {
                                 json.encode(bookmarkProvider.listBookmark),
                               );
                               Fluttertoast.showToast(
-                                msg: 'Bookmark has been added',
+                                msg: languageProvider.language
+                                    ? enSuccessBookmark
+                                    : inaSuccessBookmark,
                                 toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
+                                gravity: ToastGravity.CENTER,
                                 timeInSecForIosWeb: 1,
                               );
                             },
@@ -143,8 +135,10 @@ class _BookReadState extends State<BookRead> {
                             ),
                             onTap: () async {
                               await Printing.layoutPdf(
-                                  onLayout: (_) =>
-                                      File(widget.filePath).readAsBytesSync());
+                                onLayout: (_) =>
+                                    File(widget.filePath).readAsBytesSync(),
+                                name: widget.titleChapter,
+                              );
                             },
                           ),
                         ),

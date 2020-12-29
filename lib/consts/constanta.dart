@@ -10,4 +10,6 @@ class Constanta {
   static const GET_USERS = 'http://sibi.cloudapp.web.id/api/user/list.php';
   static const UPDATE_USER = 'http://sibi.cloudapp.web.id/api/user/update.php';
   static const SIGNIN_USER = 'http://sibi.cloudapp.web.id/api/user/login.php';
+  static const UPLOAD_IMAGE_USER = 'http://sibi.cloudapp.web.id/api/user/upload.php';
+  static const GET_IMAGE_USER = 'http://sibi.cloudapp.web.id/upload/photo/';
 }

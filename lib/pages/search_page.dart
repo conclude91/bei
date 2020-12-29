@@ -25,11 +25,11 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
-    super.initState();
-    searchController = new TextEditingController();
-    filteredList = new List<Book>();
+    searchController = TextEditingController();
+    filteredList = List<Book>();
     keyword = '';
     advancedSearch = false;
+    super.initState();
   }
 
   @override
@@ -43,7 +43,6 @@ class _SearchPageState extends State<SearchPage> {
     return Consumer2<BookProvider, LanguageProvider>(
       builder: (context, bookProvider, languageProvider, _) => Scaffold(
         body: Container(
-          color: greyLightColor,
           padding: EdgeInsets.only(
             top: paddingNormal,
           ),
@@ -90,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                  Icons.backspace,
+                                  Icons.backspace_outlined,
                                   size: 20,
                                   color: primaryTextColor,
                                 ),
@@ -137,7 +136,7 @@ class _SearchPageState extends State<SearchPage> {
                           child: Padding(
                             padding: EdgeInsets.all(paddingTiny),
                             child: Icon(
-                              Icons.more_vert_outlined,
+                              Icons.filter_alt_outlined,
                               color: primaryTextColor,
                             ),
                           ),
@@ -159,10 +158,6 @@ class _SearchPageState extends State<SearchPage> {
               Visibility(
                 visible: (advancedSearch) ? true : false,
                 child: Container(
-                  padding: EdgeInsets.only(
-                    top: paddingTiny,
-                    bottom: tiny,
-                  ),
                   decoration: BoxDecoration(
                     color: backgroundColor,
                     border: Border(
@@ -175,7 +170,61 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Padding(
+                      Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enBookType
+                                  : inaBookType,
+                              size: small,
+                            ),
+                            SizedBox(
+                              width: paddingTiny,
+                            ),
+                            Expanded(
+                              child: ListView(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                children: bookProvider
+                                    .getAllBookType()
+                                    .map(
+                                      (e) => Padding(
+                                        padding: EdgeInsets.only(
+                                          right: paddingTiny,
+                                        ),
+                                        child: FilterChip(
+                                          backgroundColor: Colors.transparent,
+                                          shape: StadiumBorder(
+                                            side: BorderSide(
+                                              color: primaryTextColor,
+                                              width: 0.5,
+                                            ),
+                                          ),
+                                          selected: e == bookProvider.bookType,
+                                          label: CustomText(
+                                            text: e.toUpperCase(),
+                                            size: tiny,
+                                          ),
+                                          onSelected: (bool selected) {
+                                            bookProvider.bookType = e;
+                                          },
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 50,
                         padding: EdgeInsets.only(
                           left: paddingSmall,
                         ),
@@ -348,12 +397,11 @@ class _SearchPageState extends State<SearchPage> {
     filteredList = new List<Book>();
     for (int i = 0; i < bookProvider.getFiltered().length; i++) {
       Book item = bookProvider.getFiltered()[i];
-      if (item.title.toLowerCase().contains(keyword.toLowerCase()) ||
-          item.writer.toLowerCase().contains(keyword.toLowerCase())) {
+      if (item.title.toLowerCase().contains(keyword.toLowerCase())) {
         filteredList.add(item);
       }
     }
-    return showFilteredList(bookProvider);
+    return showFilteredList();
   }
 
   showOriginList(bookProvider) {
@@ -393,7 +441,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  showFilteredList(bookProvider) {
+  showFilteredList() {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(

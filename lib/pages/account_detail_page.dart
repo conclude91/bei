@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bei/consts/constanta.dart';
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/provider/user_provider.dart';
@@ -10,7 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 class AccountDetailPage extends StatefulWidget {
@@ -31,7 +37,12 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
   TextEditingController cityController;
   TextEditingController addressController;
   TextEditingController phoneController;
+  TextEditingController schoolController;
   Gender gender;
+  int roleId;
+  File image;
+  ImagePicker picker;
+  String base64Image;
 
   @override
   void initState() {
@@ -44,6 +55,8 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
     cityController = TextEditingController();
     addressController = TextEditingController();
     phoneController = TextEditingController();
+    schoolController = TextEditingController();
+    picker = ImagePicker();
     super.initState();
   }
 
@@ -68,11 +81,20 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
         addressController.text = userProvider.currentUser.address ?? '';
       if (phoneController.text.isEmpty)
         phoneController.text = userProvider.currentUser.phone ?? '';
+      if (schoolController.text.isEmpty)
+        schoolController.text = userProvider.currentUser.school ?? '';
       if (userProvider.currentUser.gender != null && gender == null) {
         if (userProvider.currentUser.gender == 'L') {
           gender = Gender.L;
         } else {
           gender = Gender.P;
+        }
+      }
+      if (userProvider.currentUser.roleId != null && roleId == null) {
+        if (userProvider.currentUser.roleId == 4) {
+          roleId = 4;
+        } else {
+          roleId = 6;
         }
       }
       if (userProvider.currentUser.birthday != null &&
@@ -83,6 +105,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
 
       return Scaffold(
         body: Container(
+          color: backgroundColor,
           padding: EdgeInsets.only(
             top: paddingNormal,
           ),
@@ -91,7 +114,6 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
             children: [
               Container(
                 height: appBarHeight,
-                color: backgroundColor,
                 padding: EdgeInsets.only(
                   left: paddingTiny - 6,
                   right: paddingTiny - 6,
@@ -142,19 +164,34 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                     Container(
                       height: 150,
                       child: Center(
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: backgroundColor,
+                        child: InkWell(
                           child: CircleAvatar(
-                            radius: 59,
-                            backgroundColor: disableColor,
-                            backgroundImage:
-                                userProvider.currentUser.gender != null
-                                    ? userProvider.currentUser.gender == 'L'
-                                        ? AssetImage('assets/images/male.png')
-                                        : AssetImage('assets/images/female.png')
-                                    : AssetImage('assets/images/male.png'),
+                            radius: 60,
+                            backgroundColor: backgroundColor,
+                            child: CircleAvatar(
+                              radius: 59,
+                              backgroundColor: disableColor,
+                              backgroundImage: image != null
+                                  ? FileImage(image)
+                                  : userProvider.currentUser.avatar != null &&
+                                          userProvider.currentUser.avatar !=
+                                              'avatar'
+                                      ? NetworkImage(
+                                          userProvider.currentUser.avatar)
+                                      : userProvider.currentUser.gender != null
+                                          ? userProvider.currentUser.gender ==
+                                                  'L'
+                                              ? AssetImage(
+                                                  'assets/images/male.png')
+                                              : AssetImage(
+                                                  'assets/images/female.png')
+                                          : AssetImage(
+                                              'assets/images/male.png'),
+                            ),
                           ),
+                          onTap: () {
+                            getImage();
+                          },
                         ),
                       ),
                     ),
@@ -464,6 +501,92 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                           SizedBox(
                             height: paddingSmall,
                           ),
+                          CustomText(
+                            text: languageProvider.language
+                                ? enUserType
+                                : inaUserType,
+                            color: primaryColor,
+                            size: tiny,
+                          ),
+                          Container(
+                            height: 45,
+                            child: Row(
+                              children: [
+                                Radio(
+                                  value: 4,
+                                  groupValue: roleId,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      roleId = value;
+                                    });
+                                  },
+                                ),
+                                CustomText(
+                                  text: languageProvider.language
+                                      ? enStudent
+                                      : inaStudent,
+                                  color: primaryTextColor,
+                                  size: small,
+                                ),
+                                Radio(
+                                  value: 6,
+                                  groupValue: roleId,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      roleId = value;
+                                    });
+                                  },
+                                ),
+                                CustomText(
+                                  text: languageProvider.language
+                                      ? enTeacher
+                                      : inaTeacher,
+                                  color: primaryTextColor,
+                                  size: small,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: paddingSmall,
+                          ),
+                          CustomText(
+                            text: languageProvider.language
+                                ? enSchool
+                                : inaSchool,
+                            color: primaryColor,
+                            size: tiny,
+                          ),
+                          Container(
+                            height: 30,
+                            child: TextField(
+                              controller: schoolController,
+                              style: GoogleFonts.roboto(
+                                color: primaryTextColor,
+                                fontWeight: fontlight,
+                                fontSize: normal,
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textAlign: TextAlign.left,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                  bottom: 18,
+                                ),
+                                border: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                            color: primaryTextColor,
+                          ),
+                          SizedBox(
+                            height: paddingSmall,
+                          ),
                         ],
                       ),
                     ),
@@ -495,17 +618,25 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
   updateUser(int id) async {
     var request =
         http.MultipartRequest('POST', Uri.parse(Constanta.UPDATE_USER));
+    uploadImage(id);
     request.fields.addAll({
       'id': id.toString(),
       'email': emailController.text,
       'name': nameController.text,
       'username': usernameController.text,
-      'avatar': 'avatar',
+      'avatar': image != null
+          ? Constanta.GET_IMAGE_USER +
+              id.toString() +
+              '.jpg?millis=' +
+              DateTime.now().millisecondsSinceEpoch.toString()
+          : 'avatar',
       'phone': phoneController.text,
       'address': addressController.text,
       'birthday': dateFormat.format(selectedDate),
       'city': cityController.text,
       'gender': gender.toString().split('.').last,
+      'role_id': roleId.toString(),
+      'school': schoolController.text,
     });
 
     await request.send().then((response) {
@@ -515,10 +646,11 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
               ? enSuccessUpdateUser
               : inaSuccessUpdateUser,
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
+          gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
         );
-        Provider.of<UserProvider>(context, listen: false).fecthAll();
+        deleteFile('Pictures');
+        Provider.of<UserProvider>(context, listen: false).fetchAll();
         Provider.of<UserProvider>(context, listen: false).currentUser;
         Navigator.pop(context);
       } else {
@@ -528,10 +660,102 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
               ? enFailedUpdateUser
               : inaFailedUpdateUser,
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
+          gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
         );
       }
     });
+  }
+
+  imgFromCamera() async {
+    PickedFile pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+        base64Image = base64Encode(image.readAsBytesSync());
+      });
+    }
+  }
+
+  imgFromGallery() async {
+    PickedFile pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+        base64Image = base64Encode(image.readAsBytesSync());
+      });
+    }
+  }
+
+  getImage() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Consumer<LanguageProvider>(
+          builder: (context, languageProvider, _) => SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(
+                        Icons.photo_library,
+                        color: primaryTextColor,
+                      ),
+                      title: CustomText(
+                          text: languageProvider.language
+                              ? enGallery
+                              : inaGallery,
+                          size: normal),
+                      onTap: () {
+                        imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(
+                      Icons.photo_camera,
+                      color: primaryTextColor,
+                    ),
+                    title: CustomText(
+                        text: languageProvider.language ? enCamera : inaCamera,
+                        size: normal),
+                    onTap: () {
+                      imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  deleteFile(String path) async {
+    Directory dir = await getExternalStorageDirectory();
+    final targetFile = Directory(dir.path + '/' + path);
+    if (targetFile.existsSync()) {
+      targetFile.deleteSync(recursive: true);
+    }
+  }
+
+  uploadImage(int userId) {
+    if (image != null) {
+      String extension = p.extension(image.path);
+      String fileName = userId.toString() + extension;
+      http.post(Constanta.UPLOAD_IMAGE_USER, body: {
+        "image": base64Image,
+        "name": fileName,
+      }).then((response) {
+        response.statusCode == 200
+            ? print(response.body)
+            : print('Error uploading file');
+      }).catchError((error) {
+        print(error);
+      });
+    }
   }
 }

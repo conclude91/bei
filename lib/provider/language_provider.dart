@@ -11,7 +11,7 @@ class LanguageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> fecthAll() async {
+  Future<bool> fetchAll() async {
     final prefs = await SharedPreferences.getInstance();
     bool tempLanguage = prefs.getBool('language');
     if (tempLanguage != null) {

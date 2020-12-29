@@ -10,6 +10,12 @@ class BookProvider extends ChangeNotifier {
   String _level = 'All';
   String _group = 'All';
   String _subject = 'All';
+  String _bookType = 'All';
+
+  set bookType(String bookType) {
+    _bookType = bookType;
+    notifyListeners();
+  }
 
   set level(String level) {
     _level = level;
@@ -41,9 +47,18 @@ class BookProvider extends ChangeNotifier {
   String get level => _level;
   String get group => _group;
   String get subject => _subject;
+  String get bookType => _bookType;
 
   List<Book> getAll() {
     return listBook;
+  }
+
+  List<String> getAllBookType() {
+    List<String> listBookType =
+        listBook.map<String>((row) => row.bookType).toSet().toList();
+    listBookType.add('All');
+    listBookType.sort();
+    return listBookType;
   }
 
   List<String> getAllLevel() {
@@ -106,35 +121,14 @@ class BookProvider extends ChangeNotifier {
   }
 
   List<Book> getFiltered() {
-    return level != 'All'
-        ? group != 'All'
-            ? subject != 'All'
-                ? listBook
-                    .where((element) =>
-                        element.level == level &&
-                        element.group == group &&
-                        element.subject == subject)
-                    .toList()
-                : listBook
-                    .where((element) =>
-                        element.level == level && element.group == group)
-                    .toList()
-            : subject != 'All'
-                ? listBook
-                    .where((element) =>
-                        element.level == level && element.subject == subject)
-                    .toList()
-                : listBook.where((element) => element.level == level).toList()
-        : group != 'All'
-            ? subject != 'All'
-                ? listBook.where((element) =>
-                    element.group == group && element.subject == subject)
-                : listBook.where((element) => element.group == group).toList()
-            : subject != 'All'
-                ? listBook
-                    .where((element) => element.subject == subject)
-                    .toList()
-                : listBook.toList();
+    return listBook
+        .where((element) => level != 'All' ? element.level == level : true)
+        .where((element) => group != 'All' ? element.group == group : true)
+        .where(
+            (element) => subject != 'All' ? element.subject == subject : true)
+        .where((element) =>
+            bookType != 'All' ? element.bookType == bookType : true)
+        .toList();
   }
 
   List<Book> getAnotherBookByLevelGroup(level, group) {
@@ -144,7 +138,7 @@ class BookProvider extends ChangeNotifier {
         .toList();
   }
 
-  Future<List<Book>> fecthAll() async {
+  Future<List<Book>> fetchAll() async {
     _listBook = new List<Book>();
     final response = await http.get(Constanta.GET_BOOKS);
     Map<String, dynamic> map = json.decode(response.body);
@@ -163,7 +157,7 @@ class BookProvider extends ChangeNotifier {
     return listBook;
   }
 
-  Future<List<Book>> fecthPopular() async {
+  Future<List<Book>> fetchPopular() async {
     _listBookPopular = new List<Book>();
     final response = await http.get(Constanta.GET_BOOKS_POPULAR);
     Map<String, dynamic> map = json.decode(response.body);

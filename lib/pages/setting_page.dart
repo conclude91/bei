@@ -1,4 +1,6 @@
+import 'package:bei/pages/about_page.dart';
 import 'package:bei/pages/faq_page.dart';
+import 'package:bei/pages/licenses_page.dart';
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -156,7 +158,14 @@ class _SettingPageState extends State<SettingPage> {
                             ],
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AboutPage(),
+                            ),
+                          );
+                        },
                       ),
                       Divider(
                         height: 1,
@@ -184,7 +193,14 @@ class _SettingPageState extends State<SettingPage> {
                             ],
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LicensesPage(),
+                            ),
+                          );
+                        },
                       ),
                       Divider(
                         height: 1,

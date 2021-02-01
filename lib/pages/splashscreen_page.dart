@@ -44,6 +44,20 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
         child: Stack(
           children: [
             Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: paddingLarge,
+                ),
+                child: CustomText(
+                  text: 'Selamat Datang Di Bukunesia',
+                  color: primaryTextColor,
+                  size: medium,
+                  align: TextAlign.center,
+                ),
+              ),
+            ),
+            Align(
               alignment: Alignment.center,
               child: SizedBox(
                 child: Image(
@@ -51,6 +65,20 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   fit: BoxFit.fitHeight,
                   height: 100,
                   width: 100,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: paddingLarge,
+                ),
+                child: CustomText(
+                  text: 'Pusat Kurikulum Dan Perbukuan\nKemendikbud',
+                  color: primaryTextColor,
+                  size: medium,
+                  align: TextAlign.center,
                 ),
               ),
             ),
@@ -74,7 +102,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   }
 
   nextPage() {
-    return timer = Timer(Duration(seconds: 3), () async {
+    return timer = Timer(Duration(seconds: 5), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (prefs.getBool('isLogin') ?? false) {
         Navigator.pushReplacement(

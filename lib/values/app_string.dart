@@ -79,6 +79,16 @@ String inaSkip = 'Lewati';
 String inaNoData = 'Tidak ada data';
 String inaStudent = 'Siswa';
 String inaTeacher = 'Guru';
+String inaLicenseContent =
+    '1. Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.\n\n2. Hak cipta buku ada pada Kementerian Pendidikan dan Kebudayaan Republik Indonesia. Setiap pelanggaran terhadap hak cipta dikenakan sanksi sesuai dengan Undang-Undang RI Nomor 28 Tahun 2014 Tentang Hak Cipta. Penggunaan buku secara komersial harus mendapat izin dari pemilik hak cipta.';
+String inaAboutContent =
+    '1. Aplikasi ini dikembangkan oleh Pusat Kurikulum dan Perbukuan, Badan Penelitian dan Pengembangan dan Perbukuan, Kemendikbud.\n\n2. Aplikasi ini berisi buku teks pelajaran yang diterbitkan oleh Kemendikbud.';
+String inaOnboarding1 =
+    'Kapanpun dan dimanapun kalian dapat mengunduh dan membaca buku yang diinginkan. Buku dapat diunduh secara utuh atau hanya bab yang dibutuhkan.';
+String inaOnboarding2 =
+    'Aplikasi ini dapat digunakan oleh siswa, guru, dan pengguna lainnya.';
+String inaOnboarding3 =
+    'Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.';
 
 String enWelcomeHi = 'Hi, Friend !';
 String enWelcomeMessage = 'How many\nbook have you read today ?';

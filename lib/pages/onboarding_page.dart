@@ -24,9 +24,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
     currentIndex = 0;
     pageController = PageController();
     slider = <Widget>[
-      showPage(AssetImage('assets/images/graphic-1.png'), 'Lorem Ipsum', lorem),
-      showPage(AssetImage('assets/images/graphic-2.png'), 'Lorem Ipsum', lorem),
-      showPage(AssetImage('assets/images/graphic-3.png'), 'Lorem Ipsum', lorem),
+      showPage(AssetImage('assets/images/graphic-1.png'), 'Bukunesia Selalu Ada', inaOnboarding1),
+      showPage(AssetImage('assets/images/graphic-2.png'), 'Bukunesia Untuk Semuanya', inaOnboarding2),
+      //showPage(AssetImage('assets/images/graphic-3.png'), 'Lorem Ipsum', lorem),
     ];
     super.initState();
   }

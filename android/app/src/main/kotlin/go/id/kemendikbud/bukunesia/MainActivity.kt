@@ -1,4 +1,4 @@
-package com.example.bei
+package go.id.kemendikbud.bukunesia
 
 import io.flutter.embedding.android.FlutterActivity
 

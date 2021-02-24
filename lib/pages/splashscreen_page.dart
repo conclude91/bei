@@ -5,6 +5,7 @@ import 'package:bei/pages/onboarding_page.dart';
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
+import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,13 +18,12 @@ class SplashScreenPage extends StatefulWidget {
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
   Timer timer;
+  bool language;
 
   @override
   void initState() {
     nextPage();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LanguageProvider>(context, listen: false).fetchAll();
-    });
+    language = context.read<LanguageProvider>().language;
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   top: paddingLarge,
                 ),
                 child: CustomText(
-                  text: 'Selamat Datang Di Bukunesia',
+                  text: language ? enWelcome : inaWelcome,
                   color: primaryTextColor,
                   size: medium,
                   align: TextAlign.center,

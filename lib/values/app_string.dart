@@ -83,12 +83,15 @@ String inaLicenseContent =
     '1. Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.\n\n2. Hak cipta buku ada pada Kementerian Pendidikan dan Kebudayaan Republik Indonesia. Setiap pelanggaran terhadap hak cipta dikenakan sanksi sesuai dengan Undang-Undang RI Nomor 28 Tahun 2014 Tentang Hak Cipta. Penggunaan buku secara komersial harus mendapat izin dari pemilik hak cipta.';
 String inaAboutContent =
     '1. Aplikasi ini dikembangkan oleh Pusat Kurikulum dan Perbukuan, Badan Penelitian dan Pengembangan dan Perbukuan, Kemendikbud.\n\n2. Aplikasi ini berisi buku teks pelajaran yang diterbitkan oleh Kemendikbud.';
+String inaTitleOnboarding1 = 'Bukunesia Selalu Ada Untukmu';
+String inaTitleOnboarding2 = 'Bukunesia Untuk Semuanya';
 String inaOnboarding1 =
     'Kapanpun dan dimanapun kalian dapat mengunduh dan membaca buku yang diinginkan. Buku dapat diunduh secara utuh atau hanya bab yang dibutuhkan.';
 String inaOnboarding2 =
     'Aplikasi ini dapat digunakan oleh siswa, guru, dan pengguna lainnya.';
 String inaOnboarding3 =
     'Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.';
+String inaWelcome = 'Selamat Datang Di Bukunesia';
 
 String enWelcomeHi = 'Hi, Friend !';
 String enWelcomeMessage = 'How many\nbook have you read today ?';
@@ -167,3 +170,10 @@ String enSkip = 'Skip';
 String enNoData = 'No data found';
 String enStudent = 'Student';
 String enTeacher = 'Teacher';
+String enTitleOnboarding1 = 'Bukunesia Always There For You';
+String enTitleOnboarding2 = 'Bukunesia For Everything';
+String enOnboarding1 =
+    'Whenever and wherever you can download and read the book you want. Books can be downloaded in their entirety or only the chapters are needed.';
+String enOnboarding2 =
+    'This application can be used by students, teachers, and other users.';
+String enWelcome = 'Welcome To Bukunesia';

@@ -73,13 +73,6 @@ class _SignInPageState extends State<SignInPage> {
                     : inaConnectWithGoogle,
                 onPressed: () {
                   signInGoogle();
-                  // signInWithGoogle().whenComplete(() {
-                  //   Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //       builder: (context) => DashboardPage(),
-                  //     ),
-                  //   );
-                  // });
                 },
               ),
             ],

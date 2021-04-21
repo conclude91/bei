@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/pages/account_detail_page.dart';
 import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/pages/search_page.dart';
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: backgroundColor,
                   body: Container(
                     padding: EdgeInsets.only(
-                      top: paddingNormal,
+                      top: Platform.isIOS ? paddingMedium : paddingNormal,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

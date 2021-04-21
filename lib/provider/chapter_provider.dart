@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ChapterProvider extends ChangeNotifier {
-  List<Chapter> _listChapter = new List<Chapter>();
+  List<Chapter> _listChapter = [];
 
   List<Chapter> get listChapter => _listChapter;
 
@@ -16,8 +16,8 @@ class ChapterProvider extends ChangeNotifier {
   }
 
   Future<List<Chapter>> fetchAll() async {
-    _listChapter = new List<Chapter>();
-    final response = await http.get(Constanta.GET_CHAPTERS);
+    _listChapter = [];
+    final response = await http.get(Uri.parse(Constanta.GET_CHAPTERS));
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> result = map['result'];
     if (result.length > 0) {

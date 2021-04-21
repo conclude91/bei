@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/widgets/custom_text.dart';
@@ -23,12 +25,13 @@ class _CustomButtonState extends State<CustomButton> {
 
   Widget showButton() {
     if (widget.icon != null) {
-      return FlatButton.icon(
-        height: buttonHeight,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonRadius),
+      return TextButton.icon(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(buttonRadius),
+          ),
+          backgroundColor: Platform.isIOS ? Colors.black : primaryColor,
         ),
-        color: primaryColor,
         icon: ClipRRect(
           borderRadius: BorderRadius.circular(iconRadius),
           child: Container(
@@ -51,12 +54,13 @@ class _CustomButtonState extends State<CustomButton> {
         onPressed: widget.onPressed,
       );
     } else {
-      return FlatButton(
-        height: buttonHeight,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(buttonRadius),
+      return TextButton(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(buttonRadius),
+          ),
+          backgroundColor: primaryColor,
         ),
-        color: primaryColor,
         child: CustomText(
           text: widget.text,
           size: normal,

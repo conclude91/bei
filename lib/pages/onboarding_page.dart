@@ -23,10 +23,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
   void initState() {
     currentIndex = 0;
     pageController = PageController();
+    bool language = context.read<LanguageProvider>().language;
     slider = <Widget>[
-      showPage(AssetImage('assets/images/graphic-1.png'), 'Bukunesia Selalu Ada', inaOnboarding1),
-      showPage(AssetImage('assets/images/graphic-2.png'), 'Bukunesia Untuk Semuanya', inaOnboarding2),
-      //showPage(AssetImage('assets/images/graphic-3.png'), 'Lorem Ipsum', lorem),
+      showPage(
+          AssetImage('assets/images/graphic-1.png'),
+          language ? enTitleOnboarding1 : inaTitleOnboarding1,
+          language ? enOnboarding1 : inaOnboarding1),
+      showPage(
+          AssetImage('assets/images/graphic-2.png'),
+          language ? enTitleOnboarding2 : inaTitleOnboarding2,
+          language ? enOnboarding2 : inaOnboarding2),
     ];
     super.initState();
   }
@@ -43,8 +49,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       builder: (context, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
+            top: paddingSmall,
             left: paddingSmall,
             right: paddingSmall,
+            bottom: paddingSmall,
           ),
           child: Stack(
             children: [
@@ -84,6 +92,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     child: Container(
+                      color: Colors.transparent,
                       padding: EdgeInsets.only(
                         left: paddingSmall,
                         right: paddingSmall,
@@ -113,6 +122,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     child: Container(
+                      color: Colors.transparent,
                       padding: EdgeInsets.only(
                         left: paddingSmall,
                         right: paddingSmall,

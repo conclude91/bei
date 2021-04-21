@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/model/book.dart';
 import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/provider/book_provider.dart';
@@ -26,7 +28,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     searchController = TextEditingController();
-    filteredList = List<Book>();
+    filteredList = [];
     keyword = '';
     advancedSearch = false;
     super.initState();
@@ -44,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
       builder: (context, bookProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: paddingNormal,
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
           ),
           child: Column(
             children: [
@@ -394,7 +396,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   searchData(bookProvider) {
-    filteredList = new List<Book>();
+    filteredList = [];
     for (int i = 0; i < bookProvider.getFiltered().length; i++) {
       Book item = bookProvider.getFiltered()[i];
       if (item.title.toLowerCase().contains(keyword.toLowerCase())) {

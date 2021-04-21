@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class BookProvider extends ChangeNotifier {
-  List<Book> _listBook = new List<Book>();
-  List<Book> _listBookPopular = new List<Book>();
+  List<Book> _listBook = [];
+  List<Book> _listBookPopular = [];
   String _level = 'All';
   String _group = 'All';
   String _subject = 'All';
@@ -70,7 +70,7 @@ class BookProvider extends ChangeNotifier {
   }
 
   List<String> getAllClass() {
-    List<String> listClass = new List<String>();
+    List<String> listClass = [];
     level != 'All'
         ? listClass = listBook
             .where((element) => element.level == level)
@@ -84,7 +84,7 @@ class BookProvider extends ChangeNotifier {
   }
 
   List<String> getAllSubject() {
-    List<String> listSubject = new List<String>();
+    List<String> listSubject = [];
     level != 'All'
         ? group != 'All'
             ? listSubject = listBook
@@ -139,8 +139,8 @@ class BookProvider extends ChangeNotifier {
   }
 
   Future<List<Book>> fetchAll() async {
-    _listBook = new List<Book>();
-    final response = await http.get(Constanta.GET_BOOKS);
+    _listBook = [];
+    final response = await http.get(Uri.parse(Constanta.GET_BOOKS));
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> result = map['result'];
     if (result.length > 0) {
@@ -158,8 +158,8 @@ class BookProvider extends ChangeNotifier {
   }
 
   Future<List<Book>> fetchPopular() async {
-    _listBookPopular = new List<Book>();
-    final response = await http.get(Constanta.GET_BOOKS_POPULAR);
+    _listBookPopular = [];
+    final response = await http.get(Uri.parse(Constanta.GET_BOOKS_POPULAR));
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> result = map['result'];
     if (result.length > 0) {

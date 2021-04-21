@@ -1,4 +1,5 @@
 import 'dart:io' as io;
+import 'dart:io';
 
 import 'package:bei/model/book.dart';
 import 'package:bei/pages/account_detail_page.dart';
@@ -34,9 +35,9 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   void initState() {
-    listFolder = List();
-    filteredListMyBook = List<Book>();
-    listMyBook = List<Book>();
+    listFolder = [];
+    filteredListMyBook = [];
+    listMyBook = [];
     getListFolder();
     searchController = TextEditingController();
     keyword = '';
@@ -75,7 +76,7 @@ class _AccountPageState extends State<AccountPage> {
             padding: EdgeInsets.only(
               left: paddingSmall,
               right: paddingSmall,
-              top: paddingNormal,
+              top: Platform.isIOS ? paddingMedium : paddingNormal,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -356,14 +357,14 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   getListFolder() async {
-    var directory = (await getExternalStorageDirectory()).path;
+    var directory = (await getApplicationDocumentsDirectory()).path;
     setState(() {
       listFolder = io.Directory(directory.toString()).listSync();
     });
   }
 
   searchData() {
-    filteredListMyBook = List<Book>();
+    filteredListMyBook = [];
     for (int i = 0; i < listMyBook.length; i++) {
       Book item = listMyBook[i];
       if (item.title.toLowerCase().contains(keyword.toLowerCase())) {

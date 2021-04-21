@@ -49,8 +49,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       builder: (context, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
+            top: paddingSmall,
             left: paddingSmall,
             right: paddingSmall,
+            bottom: paddingSmall,
           ),
           child: Stack(
             children: [
@@ -90,6 +92,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     child: Container(
+                      color: Colors.transparent,
                       padding: EdgeInsets.only(
                         left: paddingSmall,
                         right: paddingSmall,
@@ -119,6 +122,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     child: Container(
+                      color: Colors.transparent,
                       padding: EdgeInsets.only(
                         left: paddingSmall,
                         right: paddingSmall,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/pages/book_read.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -25,7 +27,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
       builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: paddingNormal,
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
           ),
           color: backgroundColor,
           child: Column(
@@ -33,39 +35,37 @@ class _BookmarkPageState extends State<BookmarkPage> {
               Container(
                 height: appBarHeight,
                 color: backgroundColor,
-                child: Material(
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.arrow_back,
-                              ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: paddingTiny,
+                          right: paddingTiny,
+                        ),
+                        child: InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.all(paddingTiny),
+                            child: Icon(
+                              Icons.arrow_back,
                             ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
                           ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                      Center(
-                        child: CustomText(
-                          text: languageProvider.language
-                              ? enBookmarkList
-                              : inaBookmarkList,
-                          size: regular,
-                        ),
+                    ),
+                    Center(
+                      child: CustomText(
+                        text: languageProvider.language
+                            ? enBookmarkList
+                            : inaBookmarkList,
+                        size: regular,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Divider(

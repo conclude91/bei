@@ -144,7 +144,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       size: normal,
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                         child: CustomText(
                           text: languageProvider.language ? enNo : inaNo,
                           size: normal,
@@ -154,7 +154,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           Navigator.pop(context);
                         },
                       ),
-                      FlatButton(
+                      TextButton(
                         child: CustomText(
                           text: languageProvider.language ? enYes : inaYes,
                           size: normal,

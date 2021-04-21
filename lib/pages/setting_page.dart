@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/pages/about_page.dart';
 import 'package:bei/pages/faq_page.dart';
 import 'package:bei/pages/licenses_page.dart';
@@ -25,222 +27,220 @@ class _SettingPageState extends State<SettingPage> {
         body: Container(
           color: backgroundColor,
           padding: EdgeInsets.only(
-            top: paddingNormal,
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
           ),
-          child: Material(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: appBarHeight,
-                  color: backgroundColor,
-                  child: Center(
-                    child: CustomText(
-                      text: languageProvider.language ? enSetting : inaSetting,
-                      size: regular,
-                    ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                height: appBarHeight,
+                color: backgroundColor,
+                child: Center(
+                  child: CustomText(
+                    text: languageProvider.language ? enSetting : inaSetting,
+                    size: regular,
                   ),
                 ),
-                Divider(
-                  height: 1,
-                  color: primaryColor,
-                ),
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.only(
-                      top: 0,
+              ),
+              Divider(
+                height: 1,
+                color: primaryColor,
+              ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.only(
+                    top: 0,
+                  ),
+                  shrinkWrap: true,
+                  children: [
+                    Container(
+                      height: 50,
+                      padding: EdgeInsets.only(
+                        left: paddingSmall,
+                        right: paddingSmall,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.language, size: regular),
+                              SizedBox(
+                                width: paddingSmall,
+                              ),
+                              CustomText(
+                                text: languageProvider.language
+                                    ? enLanguage
+                                    : inaLanguage,
+                                size: small,
+                              ),
+                            ],
+                          ),
+                          DropdownButton<String>(
+                            items: <String>['English', 'Indonesian']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: CustomText(
+                                  text: value,
+                                  size: small,
+                                ),
+                              );
+                            }).toList(),
+                            underline: SizedBox(),
+                            onChanged: (value) {
+                              setState(() {
+                                value == 'English'
+                                    ? languageProvider.language = true
+                                    : languageProvider.language = false;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    shrinkWrap: true,
-                    children: [
-                      Container(
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
+                    InkWell(
+                      child: Container(
                         height: 50,
                         padding: EdgeInsets.only(
                           left: paddingSmall,
                           right: paddingSmall,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.language, size: regular),
-                                SizedBox(
-                                  width: paddingSmall,
-                                ),
-                                CustomText(
-                                  text: languageProvider.language
-                                      ? enLanguage
-                                      : inaLanguage,
-                                  size: small,
-                                ),
-                              ],
+                            Icon(Icons.announcement_outlined, size: regular),
+                            SizedBox(
+                              width: paddingSmall,
                             ),
-                            DropdownButton<String>(
-                              items: <String>['English', 'Indonesian']
-                                  .map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: CustomText(
-                                    text: value,
-                                    size: small,
-                                  ),
-                                );
-                              }).toList(),
-                              underline: SizedBox(),
-                              onChanged: (value) {
-                                setState(() {
-                                  value == 'English'
-                                      ? languageProvider.language = true
-                                      : languageProvider.language = false;
-                                });
-                              },
+                            CustomText(
+                              text:
+                                  languageProvider.language ? enFAQ : inaFAQ,
+                              size: small,
                             ),
                           ],
                         ),
                       ),
-                      Divider(
-                        height: 1,
-                        color: disableTextColor,
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(
-                            left: paddingSmall,
-                            right: paddingSmall,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FAQPage(),
                           ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.announcement_outlined, size: regular),
-                              SizedBox(
-                                width: paddingSmall,
-                              ),
-                              CustomText(
-                                text:
-                                    languageProvider.language ? enFAQ : inaFAQ,
-                                size: small,
-                              ),
-                            ],
-                          ),
+                        );
+                      },
+                    ),
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FAQPage(),
+                        child: Row(
+                          children: [
+                            Icon(Icons.info_outline, size: regular),
+                            SizedBox(
+                              width: paddingSmall,
                             ),
-                          );
-                        },
-                      ),
-                      Divider(
-                        height: 1,
-                        color: disableTextColor,
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(
-                            left: paddingSmall,
-                            right: paddingSmall,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.info_outline, size: regular),
-                              SizedBox(
-                                width: paddingSmall,
-                              ),
-                              CustomText(
-                                text: languageProvider.language
-                                    ? enAbout
-                                    : inaAbout,
-                                size: small,
-                              ),
-                            ],
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AboutPage(),
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enAbout
+                                  : inaAbout,
+                              size: small,
                             ),
-                          );
-                        },
-                      ),
-                      Divider(
-                        height: 1,
-                        color: disableTextColor,
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(
-                            left: paddingSmall,
-                            right: paddingSmall,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.article_outlined, size: regular),
-                              SizedBox(
-                                width: paddingSmall,
-                              ),
-                              CustomText(
-                                text: languageProvider.language
-                                    ? enLicense
-                                    : inaLicense,
-                                size: small,
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LicensesPage(),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AboutPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.article_outlined, size: regular),
+                            SizedBox(
+                              width: paddingSmall,
                             ),
-                          );
-                        },
-                      ),
-                      Divider(
-                        height: 1,
-                        color: disableTextColor,
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(
-                            left: paddingSmall,
-                            right: paddingSmall,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.exit_to_app_outlined, size: regular),
-                              SizedBox(
-                                width: paddingSmall,
-                              ),
-                              CustomText(
-                                text: languageProvider.language
-                                    ? enSignOut
-                                    : inaSignOut,
-                                size: small,
-                              ),
-                            ],
-                          ),
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enLicense
+                                  : inaLicense,
+                              size: small,
+                            ),
+                          ],
                         ),
-                        onTap: () {
-                          showAlertSignOut();
-                        },
                       ),
-                      Divider(
-                        height: 1,
-                        color: disableTextColor,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LicensesPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: 50,
+                        padding: EdgeInsets.only(
+                          left: paddingSmall,
+                          right: paddingSmall,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.exit_to_app_outlined, size: regular),
+                            SizedBox(
+                              width: paddingSmall,
+                            ),
+                            CustomText(
+                              text: languageProvider.language
+                                  ? enSignOut
+                                  : inaSignOut,
+                              size: small,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                      onTap: () {
+                        showAlertSignOut();
+                      },
+                    ),
+                    Divider(
+                      height: 1,
+                      color: disableTextColor,
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -263,7 +263,7 @@ class _SettingPageState extends State<SettingPage> {
             size: normal,
           ),
           actions: [
-            FlatButton(
+            TextButton(
               child: CustomText(
                 text: languageProvider.language ? enNo : inaNo,
                 size: normal,
@@ -273,7 +273,7 @@ class _SettingPageState extends State<SettingPage> {
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
+            TextButton(
               child: CustomText(
                 text: languageProvider.language ? enYes : inaYes,
                 size: normal,

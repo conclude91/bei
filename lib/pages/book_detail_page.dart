@@ -39,7 +39,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   String downloadProgress = '0%';
   bool isDownloading = false;
   double percentage = 0;
-  List listFile = List();
+  List listFile = [];
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
           body: Container(
             height: double.infinity,
             padding: EdgeInsets.only(
-              top: paddingNormal,
+              top: Platform.isIOS ? paddingMedium : paddingNormal,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -182,26 +182,28 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                     size: tiny,
                                     maxLine: 5,
                                   ),
-                                  FlatButton(
-                                    color: isDownloading
-                                        ? disableColor
-                                        : primaryColor,
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: isDownloading
+                                          ? disableColor
+                                          : primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          radiusNormal,
+                                        ),
+                                        side: BorderSide(
+                                          color: isDownloading
+                                              ? disableColor
+                                              : primaryColor,
+                                        ),
+                                      ),
+                                    ),
                                     child: CustomText(
                                       text: languageProvider.language
                                           ? enRead
                                           : inaRead,
                                       size: small,
                                       color: secondaryTextColor,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        radiusNormal,
-                                      ),
-                                      side: BorderSide(
-                                        color: isDownloading
-                                            ? disableColor
-                                            : primaryColor,
-                                      ),
                                     ),
                                     onPressed: () {
                                       if (isDownloading == false) {
@@ -485,7 +487,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                 ),
                               ),
                               onTap: () async {
-                                var dir = await getExternalStorageDirectory();
+                                var dir =
+                                    await getApplicationDocumentsDirectory();
                                 String filePath =
                                     '${dir.path}/${widget.book.id.toString()}/' +
                                         listChapter[index].idDetail.toString() +
@@ -553,7 +556,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
             size: normal,
           ),
           actions: [
-            FlatButton(
+            TextButton(
               child: CustomText(
                 text: languageProvider.language ? enNo : inaNo,
                 size: normal,
@@ -563,7 +566,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
+            TextButton(
               child: CustomText(
                 text: languageProvider.language ? enYes : inaYes,
                 size: normal,
@@ -594,7 +597,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
       isDownloading = !isDownloading;
     });
 
-    var dir = await getExternalStorageDirectory();
+    var dir = await getApplicationDocumentsDirectory();
     Dio dio = Dio();
     dio.download(attachment, '${dir.path}/${widget.book.id}/$filename.pdf',
         onReceiveProgress: (actualbytes, totalbytes) {
@@ -625,7 +628,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   getListFile(idCatalogue) async {
-    var directory = (await getExternalStorageDirectory()).path;
+    var directory = (await getApplicationDocumentsDirectory()).path;
     if (await io.Directory(directory.toString() + '/$idCatalogue').exists()) {
       setState(() {
         listFile =
@@ -681,13 +684,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   Future<int> getFileSize(String url) async {
-    http.Response r = await http.head(url);
+    http.Response r = await http.head(Uri.parse(url));
     int origin = int.parse(r.headers['content-length']);
     return origin;
   }
 
   Future<Widget> showInfo(Chapter chapter) async {
-    var dir = await getExternalStorageDirectory();
+    var dir = await getApplicationDocumentsDirectory();
     String filePath = '${dir.path}/${widget.book.id.toString()}/' +
         chapter.idDetail.toString() +
         '.pdf';
@@ -739,7 +742,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       size: normal,
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                         child: CustomText(
                           text: languageProvider.language ? enNo : inaNo,
                           size: normal,
@@ -749,7 +752,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           Navigator.pop(context);
                         },
                       ),
-                      FlatButton(
+                      TextButton(
                         child: CustomText(
                           text: languageProvider.language ? enYes : inaYes,
                           size: normal,

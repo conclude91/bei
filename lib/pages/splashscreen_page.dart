@@ -38,8 +38,10 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(
+          top: paddingSmall,
           left: paddingSmall,
           right: paddingSmall,
+          bottom: paddingSmall,
         ),
         child: Stack(
           children: [

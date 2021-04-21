@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/consts/constanta.dart';
 import 'package:bei/model/book.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -38,7 +40,7 @@ class _BookReportState extends State<BookReport> {
       builder: (context, userProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: paddingNormal,
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
           ),
           child: Column(
             children: [
@@ -223,11 +225,13 @@ class _BookReportState extends State<BookReport> {
                           SizedBox(
                             height: paddingSmall,
                           ),
-                          FlatButton(
-                            height: 50,
-                            color: primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(radiusSmall),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(radiusSmall),
+                              ),
                             ),
                             child: CustomText(
                               text:

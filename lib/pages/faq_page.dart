@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -16,10 +18,7 @@ class _FAQPageState extends State<FAQPage> {
 
   @override
   void initState() {
-    listItem = List<bool>(15);
-    for (int i = 0; i < listItem.length; i++) {
-      listItem[i] = false;
-    }
+    listItem = List.filled(15, false);
     super.initState();
   }
 
@@ -29,7 +28,9 @@ class _FAQPageState extends State<FAQPage> {
       builder: (context, languageProvider, _) => Scaffold(
         body: Container(
           color: backgroundColor,
-          padding: EdgeInsets.only(top: paddingNormal),
+          padding: EdgeInsets.only(
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
+          ),
           child: Column(
             children: [
               Container(

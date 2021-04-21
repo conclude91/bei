@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
-  List<User> _listUser = List<User>();
+  List<User> _listUser = [];
   User _currentuser = User();
 
   set listUser(List<User> listUser) {
@@ -29,8 +29,8 @@ class UserProvider extends ChangeNotifier {
 
   Future<List<User>> fetchAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _listUser = List<User>();
-    final response = await http.get(Constanta.GET_USERS);
+    _listUser = [];
+    final response = await http.get(Uri.parse(Constanta.GET_USERS));
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> result = map['result'];
     if (result.length > 0) {

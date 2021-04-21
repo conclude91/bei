@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookmarkProvider extends ChangeNotifier {
-  List<Bookmark> _listBookmark = List<Bookmark>();
+  List<Bookmark> _listBookmark = [];
 
   set listBookmark(List<Bookmark> listBookmark) {
     _listBookmark = listBookmark;
@@ -15,7 +15,7 @@ class BookmarkProvider extends ChangeNotifier {
   List<Bookmark> get listBookmark => _listBookmark;
 
   Future<List<Bookmark>> fetchAll() async {
-    _listBookmark = List<Bookmark>();
+    _listBookmark = [];
     final prefs = await SharedPreferences.getInstance();
     String tempList = prefs.getString('listBookmark');
     if (tempList != null) {

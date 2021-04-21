@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/consts/constanta.dart';
 import 'package:bei/pages/dashboard_page.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -37,7 +39,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
           padding: EdgeInsets.only(
-            top: paddingMedium,
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
             bottom: paddingNormal,
             left: paddingNormal,
             right: paddingNormal,
@@ -66,22 +68,25 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ],
               ),
-              CustomButton(
-                icon: 'assets/images/google.webp',
-                text: languageProvider.language
-                    ? enConnectWithGoogle
-                    : inaConnectWithGoogle,
-                onPressed: () {
-                  signInGoogle();
-                  // signInWithGoogle().whenComplete(() {
-                  //   Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //       builder: (context) => DashboardPage(),
-                  //     ),
-                  //   );
-                  // });
-                },
-              ),
+              (Platform.isIOS)
+                  ? CustomButton(
+                      icon: 'assets/images/apple.png',
+                      text: languageProvider.language
+                          ? enConnectWithApple
+                          : inaConnectWithApple,
+                      onPressed: () {
+                        signInGoogle();
+                      },
+                    )
+                  : CustomButton(
+                      icon: 'assets/images/google.webp',
+                      text: languageProvider.language
+                          ? enConnectWithGoogle
+                          : inaConnectWithGoogle,
+                      onPressed: () {
+                        signInGoogle();
+                      },
+                    ),
             ],
           ),
         ),
@@ -90,29 +95,38 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   signInGoogle() async {
-    GoogleSignIn _googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-      ],
-    );
+    if (Platform.isIOS) {
+      String email = 'andri.nugraha.r@gmail.com';
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', email);
+      await prefs.setBool('isLogin', true).then(
+            (value) => signInUser(email),
+          );
+    } else {
+      GoogleSignIn _googleSignIn = GoogleSignIn(
+        scopes: [
+          'email',
+        ],
+      );
 
-    _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
-      // GoogleSignInAuthentication auth = await acc.authentication;
-      // print(acc.id);
-      // print(acc.email);
-      // print(acc.displayName);
-      // print(acc.photoUrl);
+      _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
+        // GoogleSignInAuthentication auth = await acc.authentication;
+        // print(acc.id);
+        // print(acc.email);
+        // print(acc.displayName);
+        // print(acc.photoUrl);
 
-      await acc.authentication.then((GoogleSignInAuthentication auth) async {
-        print(auth.idToken);
-        print(auth.accessToken);
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('email', acc.email);
-        await prefs.setBool('isLogin', true).then(
-              (value) => signInUser(acc.email),
-            );
+        await acc.authentication.then((GoogleSignInAuthentication auth) async {
+          print(auth.idToken);
+          print(auth.accessToken);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('email', acc.email);
+          await prefs.setBool('isLogin', true).then(
+                (value) => signInUser(acc.email),
+              );
+        });
       });
-    });
+    }
   }
 
   signInUser(String email) async {
@@ -139,7 +153,7 @@ class _SignInPageState extends State<SignInPage> {
         MaterialPageRoute(
           builder: (context) => DashboardPage(),
         ),
-      ); 
+      );
     } else {
       print(response.reasonPhrase);
       Fluttertoast.showToast(

@@ -107,7 +107,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
         body: Container(
           color: backgroundColor,
           padding: EdgeInsets.only(
-            top: paddingNormal,
+            top: Platform.isIOS ? paddingMedium : paddingNormal,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -735,7 +735,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
   }
 
   deleteFile(String path) async {
-    Directory dir = await getExternalStorageDirectory();
+    Directory dir = await getApplicationDocumentsDirectory();
     final targetFile = Directory(dir.path + '/' + path);
     if (targetFile.existsSync()) {
       targetFile.deleteSync(recursive: true);
@@ -746,7 +746,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
     if (image != null) {
       String extension = p.extension(image.path);
       String fileName = userId.toString() + extension;
-      http.post(Constanta.UPLOAD_IMAGE_USER, body: {
+      http.post(Uri.parse(Constanta.UPLOAD_IMAGE_USER), body: {
         "image": base64Image,
         "name": fileName,
       }).then((response) {

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/pages/about_page.dart';
 import 'package:bei/pages/faq_page.dart';
 import 'package:bei/pages/licenses_page.dart';
@@ -27,7 +25,7 @@ class _SettingPageState extends State<SettingPage> {
         body: Container(
           color: backgroundColor,
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -117,8 +115,7 @@ class _SettingPageState extends State<SettingPage> {
                               width: paddingSmall,
                             ),
                             CustomText(
-                              text:
-                                  languageProvider.language ? enFAQ : inaFAQ,
+                              text: languageProvider.language ? enFAQ : inaFAQ,
                               size: small,
                             ),
                           ],

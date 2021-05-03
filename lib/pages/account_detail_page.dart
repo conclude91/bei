@@ -107,7 +107,7 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
         body: Container(
           color: backgroundColor,
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

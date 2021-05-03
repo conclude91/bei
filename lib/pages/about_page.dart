@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -21,7 +19,7 @@ class _AboutPageState extends State<AboutPage> {
         backgroundColor: backgroundColor,
         body: Container(
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           child: Column(
             children: [

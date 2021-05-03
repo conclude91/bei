@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/model/book.dart';
 import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/provider/book_provider.dart';
@@ -46,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
       builder: (context, bookProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           child: Column(
             children: [

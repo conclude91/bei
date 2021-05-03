@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/consts/constanta.dart';
 import 'package:bei/model/book.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -40,7 +38,7 @@ class _BookReportState extends State<BookReport> {
       builder: (context, userProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           child: Column(
             children: [

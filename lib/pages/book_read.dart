@@ -48,7 +48,7 @@ class _BookReadState extends State<BookRead> {
       builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           child: Column(
             children: [

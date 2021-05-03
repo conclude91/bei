@@ -56,7 +56,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
           body: Container(
             height: double.infinity,
             padding: EdgeInsets.only(
-              top: Platform.isIOS ? paddingMedium : paddingNormal,
+              top: paddingNormal,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

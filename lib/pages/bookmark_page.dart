@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/pages/book_read.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -27,7 +25,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
       builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
         body: Container(
           padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
+            top: paddingNormal,
           ),
           color: backgroundColor,
           child: Column(
@@ -127,8 +125,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                   .listBookmark[index].titleCatalogue,
                               titleChapter: bookmarkProvider
                                   .listBookmark[index].titleChapter,
-                              filePath: bookmarkProvider
-                                  .listBookmark[index].filePath,
+                              filePath:
+                                  bookmarkProvider.listBookmark[index].filePath,
                               pageNumber:
                                   bookmarkProvider.listBookmark[index].page,
                             ),

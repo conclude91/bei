@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/pages/about_page.dart';
 import 'package:bei/pages/faq_page.dart';
 import 'package:bei/pages/licenses_page.dart';
@@ -274,12 +276,22 @@ class _SettingPageState extends State<SettingPage> {
                 color: primaryColor,
               ),
               onPressed: () async {
-                GoogleSignIn _googleSignIn = GoogleSignIn(
-                  scopes: [
-                    'email',
-                  ],
-                );
-                await _googleSignIn.disconnect().then((value) async {
+                if (Platform.isAndroid) {
+                  GoogleSignIn _googleSignIn = GoogleSignIn(
+                    scopes: [
+                      'email',
+                    ],
+                  );
+                  await _googleSignIn.disconnect().then((value) async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    await preferences.clear().then(
+                      (value) {
+                        Phoenix.rebirth(context);
+                      },
+                    );
+                  });
+                } else if (Platform.isIOS) {
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
                   await preferences.clear().then(
@@ -287,7 +299,7 @@ class _SettingPageState extends State<SettingPage> {
                       Phoenix.rebirth(context);
                     },
                   );
-                });
+                }
               },
             ),
           ],

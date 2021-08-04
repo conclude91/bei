@@ -55,6 +55,8 @@ String inaSuccessDownload = 'Buku telah berhasil diunduh';
 String inaFailedDownload = 'Gagal untuk mengunduh buku';
 String inaSuccessUpdateUser = 'Data akun berhasil diperbarui';
 String inaFailedUpdateUser = 'Gagal perbarui data akun';
+String inaIncompleteUserData =
+    'Silahkan lengkapi terlebih dahulu semua data inputan';
 String inaBookReport = 'Pengaduan Buku';
 String inaReportData = 'Data Pengaduan :';
 String inaSubjectReport = 'Subjek';
@@ -147,6 +149,7 @@ String enSuccessDownload = 'Book has been downloaded';
 String enFailedDownload = 'Failed to downloading book';
 String enSuccessUpdateUser = 'User data has been updated';
 String enFailedUpdateUser = 'Failed to update user data';
+String enIncompleteUserData = 'Please complete all input data first';
 String enBookReport = 'Book Report';
 String enReportData = 'Report Data :';
 String enSubjectReport = 'Subject';

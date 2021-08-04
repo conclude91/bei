@@ -89,6 +89,8 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
         } else {
           gender = Gender.P;
         }
+      } else {
+        gender = Gender.L;
       }
       if (userProvider.currentUser.roleId != null && roleId == null) {
         if (userProvider.currentUser.roleId == 4) {
@@ -141,7 +143,29 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                         ),
                       ),
                       onTap: () {
-                        updateUser(userProvider.currentUser.id);
+                        if (emailController.text.isNotEmpty &&
+                            nameController.text.isNotEmpty &&
+                            usernameController.text.isNotEmpty &&
+                            phoneController.text.isNotEmpty &&
+                            addressController.text.isNotEmpty &&
+                            (dateFormat.format(selectedDate) !=
+                                dateFormat.format(DateTime.now())) &&
+                            cityController.text.isNotEmpty &&
+                            roleId.toString().isNotEmpty &&
+                            schoolController.text.isNotEmpty) {
+                          updateUser(userProvider.currentUser.id);
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: Provider.of<LanguageProvider>(context,
+                                        listen: false)
+                                    .language
+                                ? enIncompleteUserData
+                                : inaIncompleteUserData,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 3,
+                          );
+                        }
                       },
                     ),
                   ],

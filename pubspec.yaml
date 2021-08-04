@@ -48,6 +48,7 @@ dependencies:
   image_picker: ^0.8.3
   filesize: ^2.0.1
   flutter_phoenix: ^1.0.0
+  sign_in_with_apple: ^3.0.0
 
 dev_dependencies:
   flutter_test:

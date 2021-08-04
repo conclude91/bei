@@ -24,11 +24,8 @@ class _FAQPageState extends State<FAQPage> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, _) => Scaffold(
-        body: Container(
-          color: backgroundColor,
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(

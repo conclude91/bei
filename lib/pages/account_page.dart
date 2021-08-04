@@ -71,279 +71,291 @@ class _AccountPageState extends State<AccountPage> {
         }
 
         return Scaffold(
-          body: Container(
-            padding: EdgeInsets.only(
-              left: paddingSmall,
-              right: paddingSmall,
-              top: paddingNormal,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 125,
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                          right: paddingTiny,
-                        ),
-                        child: CircleAvatar(
-                          radius: 45,
-                          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor,
+          body: SafeArea(
+            child: Container(
+              padding: EdgeInsets.only(
+                left: paddingSmall,
+                right: paddingSmall,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 125,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                            right: paddingTiny,
+                          ),
                           child: CircleAvatar(
-                            radius: 44,
-                            backgroundColor: disableColor,
-                            backgroundImage: userProvider.currentUser.avatar !=
-                                        null &&
-                                    userProvider.currentUser.avatar != 'avatar'
-                                ? NetworkImage(userProvider.currentUser.avatar)
-                                : userProvider.currentUser.gender != null
-                                    ? userProvider.currentUser.gender == 'L'
-                                        ? AssetImage('assets/images/male.png')
-                                        : AssetImage('assets/images/female.png')
-                                    : AssetImage('assets/images/male.png'),
+                            radius: 45,
+                            backgroundColor: backgroundColor,
+                            child: CircleAvatar(
+                              radius: 44,
+                              backgroundColor: disableColor,
+                              backgroundImage: userProvider
+                                              .currentUser.avatar !=
+                                          null &&
+                                      userProvider.currentUser.avatar !=
+                                          'avatar'
+                                  ? NetworkImage(
+                                      userProvider.currentUser.avatar)
+                                  : userProvider.currentUser.gender != null
+                                      ? userProvider.currentUser.gender == 'L'
+                                          ? AssetImage('assets/images/male.png')
+                                          : AssetImage(
+                                              'assets/images/female.png')
+                                      : AssetImage('assets/images/male.png'),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CustomText(
-                                        text: userProvider.currentUser.name,
-                                        color: primaryTextColor,
-                                        size: normal,
-                                        weight: FontWeight.bold,
-                                      ),
-                                      SizedBox(
-                                        width: paddingTiny,
-                                      ),
-                                      Icon(
-                                        userProvider.currentUser.gender != null
-                                            ? userProvider.currentUser.gender ==
-                                                    'L'
-                                                ? MdiIcons.genderMale
-                                                : MdiIcons.genderFemale
-                                            : null,
-                                        size: regular,
-                                        color: userProvider
-                                                    .currentUser.gender !=
-                                                null
-                                            ? userProvider.currentUser.gender ==
-                                                    'L'
-                                                ? Colors.blue
-                                                : Colors.pink
-                                            : primaryTextColor,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: paddingTiny,
-                                  ),
-                                  Wrap(
-                                    spacing: 5,
-                                    children: [
-                                      Icon(
-                                        Icons.email_outlined,
-                                        size: small,
-                                      ),
-                                      CustomText(
-                                        text: userProvider.currentUser.email,
-                                        color: primaryTextColor,
-                                        size: tiny,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: paddingTiny,
-                                  ),
-                                  Wrap(
-                                    spacing: 5,
-                                    children: [
-                                      Icon(Icons.phone_outlined, size: small),
-                                      CustomText(
-                                        text: userProvider.currentUser.phone ??
-                                            '',
-                                        color: primaryTextColor,
-                                        size: tiny,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: paddingTiny,
-                                  ),
-                                  Wrap(
-                                    spacing: 5,
-                                    children: [
-                                      Icon(Icons.location_on_outlined,
-                                          size: small),
-                                      CustomText(
-                                        text:
-                                            userProvider.currentUser.address ??
-                                                '',
-                                        color: primaryTextColor,
-                                        size: tiny,
-                                        maxLine: 2,
-                                      ),
-                                      CustomText(
-                                        text:
-                                            userProvider.currentUser.city ?? '',
-                                        color: primaryTextColor,
-                                        size: tiny,
-                                        maxLine: 2,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 10,
-                                    ),
-                                    child: ClipOval(
-                                      child: Material(
-                                        color: disableColor,
-                                        child: InkWell(
-                                          splashColor: backgroundColor,
-                                          child: SizedBox(
-                                            width: 35,
-                                            height: 35,
-                                            child: Icon(Icons.bookmark_outline),
-                                          ),
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    BookmarkPage(),
-                                              ),
-                                            );
-                                          },
+                        Expanded(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CustomText(
+                                          text: userProvider.currentUser.name,
+                                          color: primaryTextColor,
+                                          size: normal,
+                                          weight: FontWeight.bold,
                                         ),
+                                        SizedBox(
+                                          width: paddingTiny,
+                                        ),
+                                        Icon(
+                                          userProvider.currentUser.gender !=
+                                                  null
+                                              ? userProvider
+                                                          .currentUser.gender ==
+                                                      'L'
+                                                  ? MdiIcons.genderMale
+                                                  : MdiIcons.genderFemale
+                                              : null,
+                                          size: regular,
+                                          color:
+                                              userProvider.currentUser.gender !=
+                                                      null
+                                                  ? userProvider.currentUser
+                                                              .gender ==
+                                                          'L'
+                                                      ? Colors.blue
+                                                      : Colors.pink
+                                                  : primaryTextColor,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: paddingTiny,
+                                    ),
+                                    Wrap(
+                                      spacing: 5,
+                                      children: [
+                                        Icon(
+                                          Icons.email_outlined,
+                                          size: small,
+                                        ),
+                                        CustomText(
+                                          text: userProvider.currentUser.email,
+                                          color: primaryTextColor,
+                                          size: tiny,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: paddingTiny,
+                                    ),
+                                    Wrap(
+                                      spacing: 5,
+                                      children: [
+                                        Icon(Icons.phone_outlined, size: small),
+                                        CustomText(
+                                          text:
+                                              userProvider.currentUser.phone ??
+                                                  '',
+                                          color: primaryTextColor,
+                                          size: tiny,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: paddingTiny,
+                                    ),
+                                    Wrap(
+                                      spacing: 5,
+                                      children: [
+                                        Icon(Icons.location_on_outlined,
+                                            size: small),
+                                        CustomText(
+                                          text: userProvider
+                                                  .currentUser.address ??
+                                              '',
+                                          color: primaryTextColor,
+                                          size: tiny,
+                                          maxLine: 2,
+                                        ),
+                                        CustomText(
+                                          text: userProvider.currentUser.city ??
+                                              '',
+                                          color: primaryTextColor,
+                                          size: tiny,
+                                          maxLine: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 10,
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 10,
-                                    ),
-                                    child: ClipOval(
-                                      child: Material(
-                                        color: disableColor,
-                                        child: InkWell(
-                                          splashColor: backgroundColor,
-                                          child: SizedBox(
+                                      child: ClipOval(
+                                        child: Material(
+                                          color: disableColor,
+                                          child: InkWell(
+                                            splashColor: backgroundColor,
+                                            child: SizedBox(
                                               width: 35,
                                               height: 35,
                                               child:
-                                                  Icon(Icons.create_outlined)),
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AccountDetailPage(),
-                                              ),
-                                            );
-                                          },
+                                                  Icon(Icons.bookmark_outline),
+                                            ),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      BookmarkPage(),
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 10,
+                                      ),
+                                      child: ClipOval(
+                                        child: Material(
+                                          color: disableColor,
+                                          child: InkWell(
+                                            splashColor: backgroundColor,
+                                            child: SizedBox(
+                                                width: 35,
+                                                height: 35,
+                                                child: Icon(
+                                                    Icons.create_outlined)),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AccountDetailPage(),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(
-                  height: 1,
-                  color: primaryColor,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                  ),
-                  child: CustomText(
-                    text: languageProvider.language ? enMyBook : inaMyBook,
-                    color: primaryTextColor,
-                    size: normal,
-                  ),
-                ),
-                TextField(
-                  controller: searchController,
-                  textAlign: TextAlign.left,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 20,
-                      color: primaryTextColor,
+                      ],
                     ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.backspace_outlined,
+                  ),
+                  Divider(
+                    height: 1,
+                    color: primaryColor,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: CustomText(
+                      text: languageProvider.language ? enMyBook : inaMyBook,
+                      color: primaryTextColor,
+                      size: normal,
+                    ),
+                  ),
+                  TextField(
+                    controller: searchController,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
                         size: 20,
                         color: primaryTextColor,
                       ),
-                      onPressed: () => searchController.clear(),
-                    ),
-                    hintText: languageProvider.language ? enSearch : inaSearch,
-                    hintStyle: GoogleFonts.roboto(
-                      color: primaryTextColor,
-                      fontWeight: fontlight,
-                      fontSize: normal,
-                    ),
-                    filled: true,
-                    fillColor: disableColor,
-                    contentPadding: EdgeInsets.only(
-                      bottom: paddingSmall - 6,
-                    ),
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: primaryTextColor,
-                        width: 0.1,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.backspace_outlined,
+                          size: 20,
+                          color: primaryTextColor,
+                        ),
+                        onPressed: () => searchController.clear(),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      hintText:
+                          languageProvider.language ? enSearch : inaSearch,
+                      hintStyle: GoogleFonts.roboto(
                         color: primaryTextColor,
-                        width: 0.1,
+                        fontWeight: fontlight,
+                        fontSize: normal,
+                      ),
+                      filled: true,
+                      fillColor: disableColor,
+                      contentPadding: EdgeInsets.only(
+                        bottom: paddingSmall - 6,
+                      ),
+                      border: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: primaryTextColor,
+                          width: 0.1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: primaryTextColor,
+                          width: 0.1,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Divider(
-                  height: 1,
-                  color: primaryColor,
-                ),
-                (keyword.isEmpty) ? showOriginList() : searchData(),
-              ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Divider(
+                    height: 1,
+                    color: primaryColor,
+                  ),
+                  (keyword.isEmpty) ? showOriginList() : searchData(),
+                ],
+              ),
             ),
           ),
         );

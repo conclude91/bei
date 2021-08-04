@@ -22,11 +22,8 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, _) => Scaffold(
-        body: Container(
-          color: backgroundColor,
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

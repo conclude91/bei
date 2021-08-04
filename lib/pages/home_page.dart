@@ -37,10 +37,7 @@ class _HomePageState extends State<HomePage> {
                 )
               : Scaffold(
                   backgroundColor: backgroundColor,
-                  body: Container(
-                    padding: EdgeInsets.only(
-                      top: paddingNormal,
-                    ),
+                  body: SafeArea(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -437,8 +434,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         child: CustomText(
                                           text: languageProvider.language
-                                              ? enShowMore
-                                              : inaShowMore,
+                                              ? enAllBook
+                                              : inaAllBook,
                                           size: tiny,
                                         ),
                                       ),
@@ -536,8 +533,8 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     CustomText(
                                       text: languageProvider.language
-                                          ? enPopular
-                                          : inaPopular,
+                                          ? enRecomendedBook
+                                          : inaRecomendedBook,
                                       size: small,
                                     ),
                                   ],

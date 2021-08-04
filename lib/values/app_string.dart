@@ -1,6 +1,4 @@
 String appName = 'Bukunesia';
-String lorem =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 String inaWelcomeHi = 'Hai, Kawan !';
 String inaWelcomeMessage = 'Berapa banyak buku\nyang kamu baca hari ini ?';
@@ -39,8 +37,8 @@ String inaPrimary = 'Dasar';
 String inaJunior = 'Menengah';
 String inaSenior = 'Atas';
 String inaRecently = 'Buku Terbaru :';
-String inaPopular = 'Buku Populer :';
-String inaShowMore = 'Tampil Lebih';
+String inaRecomendedBook = 'Buku Rekomendasi :';
+String inaAllBook = 'Semua Buku';
 String inaLevel = 'Jenjang :';
 String inaClass = 'Kelas :';
 String inaSubject = 'Bidang :';
@@ -83,7 +81,7 @@ String inaTeacher = 'Guru';
 String inaLicenseContent =
     '1. Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.\n\n2. Hak cipta buku ada pada Kementerian Pendidikan dan Kebudayaan Republik Indonesia. Setiap pelanggaran terhadap hak cipta dikenakan sanksi sesuai dengan Undang-Undang RI Nomor 28 Tahun 2014 Tentang Hak Cipta. Penggunaan buku secara komersial harus mendapat izin dari pemilik hak cipta.';
 String inaAboutContent =
-    '1. Aplikasi ini dikembangkan oleh Pusat Kurikulum dan Perbukuan, Badan Penelitian dan Pengembangan dan Perbukuan, Kemendikbud.\n\n2. Aplikasi ini berisi buku teks pelajaran yang diterbitkan oleh Kemendikbud.';
+    '1. Aplikasi ini dikembangkan oleh Pusat Kurikulum dan Perbukuan, Badan Penelitian dan Pengembangan dan Perbukuan, Kemendikbudristek.\n\n2. Aplikasi ini berisi buku teks pelajaran yang diterbitkan oleh Kemendikbudristek.';
 String inaTitleOnboarding1 = 'Bukunesia Selalu Ada Untukmu';
 String inaTitleOnboarding2 = 'Bukunesia Untuk Semuanya';
 String inaOnboarding1 =
@@ -131,8 +129,8 @@ String enPrimary = 'Primary';
 String enJunior = 'Junior';
 String enSenior = 'Senior';
 String enRecently = 'Recently Added :';
-String enPopular = 'The Most Popular :';
-String enShowMore = 'Show More';
+String enRecomendedBook = 'Recomended Book :';
+String enAllBook = 'All Book';
 String enLevel = 'Level :';
 String enClass = 'Class :';
 String enSubject = 'Subject :';

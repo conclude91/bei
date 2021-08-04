@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -26,11 +24,8 @@ class _FAQPageState extends State<FAQPage> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, _) => Scaffold(
-        body: Container(
-          color: backgroundColor,
-          padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(
@@ -261,8 +256,7 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text:
-                                  'Bagaimana cara membaca bacaan yang ada di aplikasi ?',
+                              text: 'Bagaimana cara membaca di aplikasi ?',
                               size: normal,
                             ),
                             Icon(

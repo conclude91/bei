@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/pages/book_read.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -25,11 +23,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
   Widget build(BuildContext context) {
     return Consumer2<BookmarkProvider, LanguageProvider>(
       builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
-          ),
-          color: backgroundColor,
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(
@@ -127,8 +122,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                   .listBookmark[index].titleCatalogue,
                               titleChapter: bookmarkProvider
                                   .listBookmark[index].titleChapter,
-                              filePath: bookmarkProvider
-                                  .listBookmark[index].filePath,
+                              filePath:
+                                  bookmarkProvider.listBookmark[index].filePath,
                               pageNumber:
                                   bookmarkProvider.listBookmark[index].page,
                             ),

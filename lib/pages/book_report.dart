@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/consts/constanta.dart';
 import 'package:bei/model/book.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -38,48 +36,44 @@ class _BookReportState extends State<BookReport> {
   Widget build(BuildContext context) {
     return Consumer2<UserProvider, LanguageProvider>(
       builder: (context, userProvider, languageProvider, _) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(
                 height: appBarHeight,
                 color: backgroundColor,
-                child: Material(
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.arrow_back,
-                              ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: paddingTiny,
+                          right: paddingTiny,
+                        ),
+                        child: InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.all(paddingTiny),
+                            child: Icon(
+                              Icons.arrow_back,
                             ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
                           ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                      Center(
-                        child: CustomText(
-                          text: languageProvider.language
-                              ? enBookReport
-                              : inaBookReport,
-                          size: regular,
-                        ),
+                    ),
+                    Center(
+                      child: CustomText(
+                        text: languageProvider.language
+                            ? enBookReport
+                            : inaBookReport,
+                        size: regular,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Divider(

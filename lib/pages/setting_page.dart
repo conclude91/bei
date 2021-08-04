@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/pages/about_page.dart';
 import 'package:bei/pages/faq_page.dart';
 import 'package:bei/pages/licenses_page.dart';
@@ -24,11 +22,8 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, _) => Scaffold(
-        body: Container(
-          color: backgroundColor,
-          padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -117,8 +112,7 @@ class _SettingPageState extends State<SettingPage> {
                               width: paddingSmall,
                             ),
                             CustomText(
-                              text:
-                                  languageProvider.language ? enFAQ : inaFAQ,
+                              text: languageProvider.language ? enFAQ : inaFAQ,
                               size: small,
                             ),
                           ],

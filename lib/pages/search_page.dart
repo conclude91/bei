@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bei/model/book.dart';
 import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/provider/book_provider.dart';
@@ -44,113 +42,109 @@ class _SearchPageState extends State<SearchPage> {
 
     return Consumer2<BookProvider, LanguageProvider>(
       builder: (context, bookProvider, languageProvider, _) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(
-            top: Platform.isIOS ? paddingMedium : paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(
                 height: appBarHeight,
                 color: backgroundColor,
-                child: Material(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
-                        ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.arrow_back,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: paddingTiny,
+                        right: paddingTiny,
                       ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            top: paddingMicro,
-                            bottom: paddingMicro,
+                      child: InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.all(paddingTiny),
+                          child: Icon(
+                            Icons.arrow_back,
                           ),
-                          child: TextField(
-                            controller: searchController,
-                            textAlign: TextAlign.left,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.search,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: paddingMicro,
+                          bottom: paddingMicro,
+                        ),
+                        child: TextField(
+                          controller: searchController,
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.search,
+                              size: 20,
+                              color: primaryTextColor,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                Icons.backspace_outlined,
                                 size: 20,
                                 color: primaryTextColor,
                               ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.backspace_outlined,
-                                  size: 20,
-                                  color: primaryTextColor,
-                                ),
-                                onPressed: () => searchController.clear(),
-                              ),
-                              hintText: languageProvider.language
-                                  ? enSearch
-                                  : inaSearch,
-                              hintStyle: GoogleFonts.roboto(
-                                color: primaryTextColor,
-                                fontWeight: fontlight,
-                                fontSize: normal,
-                              ),
-                              filled: true,
-                              fillColor: disableColor,
-                              contentPadding: EdgeInsets.only(
-                                bottom: paddingSmall - 6,
-                              ),
-                              border: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: primaryTextColor,
-                                  width: 0.1,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: primaryTextColor,
-                                  width: 0.1,
-                                ),
-                              ),
+                              onPressed: () => searchController.clear(),
                             ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
-                        ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.filter_alt_outlined,
+                            hintText: languageProvider.language
+                                ? enSearch
+                                : inaSearch,
+                            hintStyle: GoogleFonts.roboto(
                               color: primaryTextColor,
+                              fontWeight: fontlight,
+                              fontSize: normal,
+                            ),
+                            filled: true,
+                            fillColor: disableColor,
+                            contentPadding: EdgeInsets.only(
+                              bottom: paddingSmall - 6,
+                            ),
+                            border: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: primaryTextColor,
+                                width: 0.1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: primaryTextColor,
+                                width: 0.1,
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            setState(() {
-                              advancedSearch = !advancedSearch;
-                            });
-                          },
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: paddingTiny,
+                        right: paddingTiny,
+                      ),
+                      child: InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.all(paddingTiny),
+                          child: Icon(
+                            Icons.filter_alt_outlined,
+                            color: primaryTextColor,
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            advancedSearch = !advancedSearch;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Divider(
@@ -414,6 +408,10 @@ class _SearchPageState extends State<SearchPage> {
           right: paddingSmall,
         ),
         child: ListView.separated(
+          padding: EdgeInsets.only(
+            top: paddingNormal,
+            bottom: paddingNormal,
+          ),
           shrinkWrap: true,
           itemCount: bookProvider.getFiltered().length,
           itemBuilder: (context, index) {
@@ -451,6 +449,10 @@ class _SearchPageState extends State<SearchPage> {
           right: paddingSmall,
         ),
         child: ListView.separated(
+          padding: EdgeInsets.only(
+            top: paddingNormal,
+            bottom: paddingNormal,
+          ),
           shrinkWrap: true,
           itemCount: filteredList.length,
           itemBuilder: (context, index) {

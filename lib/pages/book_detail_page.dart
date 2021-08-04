@@ -53,18 +53,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
       builder: (context, bookProvider, languageProvider, _) => WillPopScope(
         onWillPop: isDownloading ? showCancelDownload : null,
         child: Scaffold(
-          body: Container(
-            height: double.infinity,
-            padding: EdgeInsets.only(
-              top: paddingNormal,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: appBarHeight,
-                  color: backgroundColor,
-                  child: Material(
+          backgroundColor: backgroundColor,
+          body: SafeArea(
+            child: Container(
+              height: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    height: appBarHeight,
+                    color: backgroundColor,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -124,238 +122,243 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       ],
                     ),
                   ),
-                ),
-                Divider(
-                  height: 1,
-                  color: primaryColor,
-                ),
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    padding: EdgeInsets.only(
-                      top: 0,
-                    ),
-                    children: [
-                      Container(
-                        height: 210,
-                        padding: EdgeInsets.only(
-                          top: paddingTiny,
-                          bottom: paddingTiny,
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Stack(
-                          children: [
-                            CardBookGallery(
-                              book: widget.book,
-                            ),
-                            Container(
-                              height: double.infinity,
-                              margin: EdgeInsets.only(
-                                left: 130 + tiny,
+                  Divider(
+                    height: 1,
+                    color: primaryColor,
+                  ),
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      padding: EdgeInsets.only(
+                        top: 0,
+                      ),
+                      children: [
+                        Container(
+                          height: 210,
+                          padding: EdgeInsets.only(
+                            top: paddingTiny,
+                            bottom: paddingTiny,
+                            left: paddingSmall,
+                            right: paddingSmall,
+                          ),
+                          child: Stack(
+                            children: [
+                              CardBookGallery(
+                                book: widget.book,
                               ),
-                              padding: EdgeInsets.only(
-                                top: paddingTiny,
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  CustomText(
-                                    text: widget.book.title,
-                                    size: normal,
-                                    maxLine: 3,
-                                  ),
-                                  CustomText(
-                                    text: languageProvider.language
-                                        ? enWriter + ' :\n' + widget.book.writer
-                                        : inaWriter +
-                                            ' :\n' +
-                                            widget.book.writer,
-                                    size: small,
-                                    maxLine: 3,
-                                  ),
-                                  CustomText(
-                                    text: widget.book.description,
-                                    size: tiny,
-                                    maxLine: 5,
-                                  ),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: isDownloading
-                                          ? disableColor
-                                          : primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          radiusNormal,
-                                        ),
-                                        side: BorderSide(
-                                          color: isDownloading
-                                              ? disableColor
-                                              : primaryColor,
+                              Container(
+                                height: double.infinity,
+                                margin: EdgeInsets.only(
+                                  left: 130 + tiny,
+                                ),
+                                padding: EdgeInsets.only(
+                                  top: paddingTiny,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    CustomText(
+                                      text: widget.book.title,
+                                      size: normal,
+                                      maxLine: 3,
+                                    ),
+                                    CustomText(
+                                      text: languageProvider.language
+                                          ? enWriter +
+                                              ' :\n' +
+                                              widget.book.writer
+                                          : inaWriter +
+                                              ' :\n' +
+                                              widget.book.writer,
+                                      size: small,
+                                      maxLine: 3,
+                                    ),
+                                    CustomText(
+                                      text: widget.book.description,
+                                      size: tiny,
+                                      maxLine: 5,
+                                    ),
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: isDownloading
+                                            ? disableColor
+                                            : primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            radiusNormal,
+                                          ),
+                                          side: BorderSide(
+                                            color: isDownloading
+                                                ? disableColor
+                                                : primaryColor,
+                                          ),
                                         ),
                                       ),
+                                      child: CustomText(
+                                        text: languageProvider.language
+                                            ? enRead
+                                            : inaRead,
+                                        size: small,
+                                        color: secondaryTextColor,
+                                      ),
+                                      onPressed: () {
+                                        if (isDownloading == false) {
+                                          readBook();
+                                        }
+                                      },
                                     ),
-                                    child: CustomText(
-                                      text: languageProvider.language
-                                          ? enRead
-                                          : inaRead,
-                                      size: small,
-                                      color: secondaryTextColor,
-                                    ),
-                                    onPressed: () {
-                                      if (isDownloading == false) {
-                                        readBook();
-                                      }
-                                    },
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Visibility(
-                        visible: (isDownloading) ? true : false,
-                        child: Container(
+                        Visibility(
+                          visible: (isDownloading) ? true : false,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              left: paddingSmall,
+                              right: paddingSmall,
+                            ),
+                            child: Column(
+                              children: [
+                                CustomText(
+                                    text: languageProvider.language
+                                        ? enDownloading + ' : $downloadProgress'
+                                        : inaDownloading +
+                                            ' : $downloadProgress',
+                                    size: tiny),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                LinearProgressIndicator(
+                                  minHeight: 2,
+                                  value: percentage,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: paddingSmall,
+                        ),
+                        Container(
+                          height: 250,
                           padding: EdgeInsets.only(
                             left: paddingSmall,
                             right: paddingSmall,
                           ),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               CustomText(
-                                  text: languageProvider.language
-                                      ? enDownloading + ' : $downloadProgress'
-                                      : inaDownloading + ' : $downloadProgress',
-                                  size: tiny),
-                              SizedBox(
-                                height: 5,
+                                text: languageProvider.language
+                                    ? enBookDescription
+                                    : inaBookDescription,
+                                size: normal,
                               ),
-                              LinearProgressIndicator(
-                                minHeight: 2,
-                                value: percentage,
+                              Divider(
+                                color: primaryColor,
+                              ),
+                              CustomText(
+                                text: widget.book.description,
+                                size: small,
+                                maxLine: 10,
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: paddingSmall,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                            left: paddingSmall,
+                            right: paddingSmall,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              CustomText(
+                                text: languageProvider.language
+                                    ? enAnotherBook
+                                    : inaAnotherBook,
+                                size: normal,
+                              ),
+                              Divider(
+                                color: primaryColor,
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: paddingSmall,
-                      ),
-                      Container(
-                        height: 250,
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            CustomText(
-                              text: languageProvider.language
-                                  ? enBookDescription
-                                  : inaBookDescription,
-                              size: normal,
-                            ),
-                            Divider(
-                              color: primaryColor,
-                            ),
-                            CustomText(
-                              text: widget.book.description,
-                              size: small,
-                              maxLine: 10,
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: paddingSmall,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: paddingSmall,
-                          right: paddingSmall,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            CustomText(
-                              text: languageProvider.language
-                                  ? enAnotherBook
-                                  : inaAnotherBook,
-                              size: normal,
-                            ),
-                            Divider(
-                              color: primaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 225,
-                        padding: EdgeInsets.only(
-                          top: paddingTiny,
-                          bottom: paddingTiny,
-                        ),
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
+                        Container(
+                          height: 225,
                           padding: EdgeInsets.only(
-                            top: 0,
+                            top: paddingTiny,
+                            bottom: paddingTiny,
                           ),
-                          itemCount: bookProvider
-                              .getAnotherBookByLevelGroup(
-                                  widget.book.level, widget.book.group)
-                              .length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  left: index == 0 ? paddingSmall - 3 : 0,
-                                  right: index ==
-                                          bookProvider
-                                                  .getAnotherBookByLevelGroup(
-                                                      widget.book.level,
-                                                      widget.book.group)
-                                                  .length -
-                                              1
-                                      ? paddingSmall - 3
-                                      : 0,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.only(
+                              top: 0,
+                            ),
+                            itemCount: bookProvider
+                                .getAnotherBookByLevelGroup(
+                                    widget.book.level, widget.book.group)
+                                .length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    left: index == 0 ? paddingSmall - 3 : 0,
+                                    right: index ==
+                                            bookProvider
+                                                    .getAnotherBookByLevelGroup(
+                                                        widget.book.level,
+                                                        widget.book.group)
+                                                    .length -
+                                                1
+                                        ? paddingSmall - 3
+                                        : 0,
+                                  ),
+                                  child: CardBookThumbnail(
+                                    book:
+                                        bookProvider.getAnotherBookByLevelGroup(
+                                            widget.book.level,
+                                            widget.book.group)[index],
+                                  ),
                                 ),
-                                child: CardBookThumbnail(
-                                  book: bookProvider.getAnotherBookByLevelGroup(
-                                      widget.book.level,
-                                      widget.book.group)[index],
-                                ),
-                              ),
-                              onTap: () {
-                                if (isDownloading == false)
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => BookDetailPage(
-                                        book: bookProvider
-                                            .getAnotherBookByLevelGroup(
-                                                widget.book.level,
-                                                widget.book.group)[index],
+                                onTap: () {
+                                  if (isDownloading == false)
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BookDetailPage(
+                                          book: bookProvider
+                                              .getAnotherBookByLevelGroup(
+                                                  widget.book.level,
+                                                  widget.book.group)[index],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                              },
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox.shrink();
-                          },
+                                    );
+                                },
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox.shrink();
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

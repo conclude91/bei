@@ -46,105 +46,100 @@ class _BookReadState extends State<BookRead> {
   Widget build(BuildContext context) {
     return Consumer2<BookmarkProvider, LanguageProvider>(
       builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(
                 height: appBarHeight,
                 color: backgroundColor,
-                child: Material(
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.arrow_back,
-                              ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: paddingTiny,
+                          right: paddingTiny,
+                        ),
+                        child: InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.all(paddingTiny),
+                            child: Icon(
+                              Icons.arrow_back,
                             ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
                           ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny + 50,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.bookmark_outline,
-                              ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: paddingTiny,
+                          right: paddingTiny + 50,
+                        ),
+                        child: InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.all(paddingTiny),
+                            child: Icon(
+                              Icons.bookmark_outline,
                             ),
-                            onTap: () async {
-                              bookmarkProvider.listBookmark.add(
-                                Bookmark(
-                                  titleCatalogue: widget.titleCatalogue,
-                                  titleChapter: widget.titleChapter,
-                                  filePath: widget.filePath,
-                                  page: pdfViewerController.pageNumber,
-                                ),
-                              );
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setString(
-                                'listBookmark',
-                                json.encode(bookmarkProvider.listBookmark),
-                              );
-                              Fluttertoast.showToast(
-                                msg: languageProvider.language
-                                    ? enSuccessBookmark
-                                    : inaSuccessBookmark,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                              );
-                            },
                           ),
+                          onTap: () async {
+                            bookmarkProvider.listBookmark.add(
+                              Bookmark(
+                                titleCatalogue: widget.titleCatalogue,
+                                titleChapter: widget.titleChapter,
+                                filePath: widget.filePath,
+                                page: pdfViewerController.pageNumber,
+                              ),
+                            );
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString(
+                              'listBookmark',
+                              json.encode(bookmarkProvider.listBookmark),
+                            );
+                            Fluttertoast.showToast(
+                              msg: languageProvider.language
+                                  ? enSuccessBookmark
+                                  : inaSuccessBookmark,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                            );
+                          },
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.local_print_shop_outlined,
-                              ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: paddingTiny,
+                          right: paddingTiny,
+                        ),
+                        child: InkWell(
+                          child: Padding(
+                            padding: EdgeInsets.all(paddingTiny),
+                            child: Icon(
+                              Icons.local_print_shop_outlined,
                             ),
-                            onTap: () async {
-                              await Printing.layoutPdf(
-                                onLayout: (_) =>
-                                    File(widget.filePath).readAsBytesSync(),
-                                name: widget.titleChapter,
-                              );
-                            },
                           ),
+                          onTap: () async {
+                            await Printing.layoutPdf(
+                              onLayout: (_) =>
+                                  File(widget.filePath).readAsBytesSync(),
+                              name: widget.titleChapter,
+                            );
+                          },
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Divider(

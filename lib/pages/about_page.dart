@@ -17,10 +17,7 @@ class _AboutPageState extends State<AboutPage> {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, _) => Scaffold(
         backgroundColor: backgroundColor,
-        body: Container(
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
+        body: SafeArea(
           child: Column(
             children: [
               Container(

@@ -104,11 +104,8 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
       }
 
       return Scaffold(
-        body: Container(
-          color: backgroundColor,
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -668,22 +665,22 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
   }
 
   imgFromCamera() async {
-    PickedFile pickedFile =
-        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
-    if (pickedFile != null) {
+    XFile imageFile =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    if (imageFile != null) {
       setState(() {
-        image = File(pickedFile.path);
+        image = File(imageFile.path);
         base64Image = base64Encode(image.readAsBytesSync());
       });
     }
   }
 
   imgFromGallery() async {
-    PickedFile pickedFile =
-        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
-    if (pickedFile != null) {
+    XFile imageFile =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    if (imageFile != null) {
       setState(() {
-        image = File(pickedFile.path);
+        image = File(imageFile.path);
         base64Image = base64Encode(image.readAsBytesSync());
       });
     }

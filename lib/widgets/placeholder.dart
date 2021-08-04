@@ -60,7 +60,7 @@ class _PlaceHolderState extends State<PlaceHolder> {
                 left: paddingSmall + 90 + paddingSmall,
               ),
               child: CustomText(
-                text: 'Pusat Kurikulum dan Perbukuan\n\nKEMENDIKBUD',
+                text: 'Pusat Kurikulum dan Perbukuan\nKemendikbudristek',
                 color: secondaryTextColor,
                 size: regular,
               ),

@@ -23,11 +23,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
   Widget build(BuildContext context) {
     return Consumer2<BookmarkProvider, LanguageProvider>(
       builder: (context, bookmarkProvider, languageProvider, _) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(
-            top: paddingNormal,
-          ),
-          color: backgroundColor,
+        backgroundColor: backgroundColor,
+        body: SafeArea(
           child: Column(
             children: [
               Container(

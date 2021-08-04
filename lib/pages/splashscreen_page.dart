@@ -77,7 +77,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   bottom: paddingLarge,
                 ),
                 child: CustomText(
-                  text: 'Pusat Kurikulum Dan Perbukuan\nKemendikbud',
+                  text: 'Pusat Kurikulum Dan Perbukuan\nKemendikbudristek',
                   color: primaryTextColor,
                   size: medium,
                   align: TextAlign.center,

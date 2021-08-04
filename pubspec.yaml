@@ -32,20 +32,20 @@ dependencies:
   provider: ^5.0.0
   dio: ^4.0.0
   path_provider: ^2.0.2
-  syncfusion_flutter_pdf: ^19.2.49-beta
-  syncfusion_flutter_pdfviewer: ^19.2.49-beta
+  syncfusion_flutter_pdf: ^19.2.51-beta
+  syncfusion_flutter_pdfviewer: ^19.2.51-beta
   shared_preferences: ^2.0.6
   intl: ^0.17.0
-  fluttertoast: ^8.0.7
+  fluttertoast: ^8.0.8
   flutter_image: ^4.1.0
   material_design_icons_flutter: ^4.0.5955
   printing: ^5.4.3
   smooth_page_indicator: ^0.2.3
   firebase_core: ^1.4.0
   firebase_auth: ^3.0.1
-  google_sign_in: ^5.0.5
+  google_sign_in: ^5.0.7
   change_app_package_name: ^1.0.0
-  image_picker: ^0.8.2
+  image_picker: ^0.8.3
   filesize: ^2.0.1
   flutter_phoenix: ^1.0.0
 

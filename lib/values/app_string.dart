@@ -12,8 +12,8 @@ String inaLanguage = 'Bahasa';
 String inaAbout = 'Tentang';
 String inaFAQ = 'Pertanyaan Umum';
 String inaLicense = 'Lisensi';
-String inaSignOut = 'Keluar';
-String inaNotifSignOut = 'Apakah kamu ingin keluar dari aplikasi ini ?';
+String inaSignOut = 'Keluar Akun';
+String inaNotifSignOut = 'Apakah kamu ingin keluar akun dari aplikasi ini ?';
 String inaNo = 'Tidak';
 String inaYes = 'Ya';
 String inaMyBook = 'Buku Saya';
@@ -37,7 +37,7 @@ String inaPrimary = 'Dasar';
 String inaJunior = 'Menengah';
 String inaSenior = 'Atas';
 String inaRecently = 'Buku Terbaru :';
-String inaRecomendedBook = 'Buku Rekomendasi :';
+String inaRecommendedBook = 'Buku Rekomendasi :';
 String inaAllBook = 'Semua Buku';
 String inaLevel = 'Jenjang :';
 String inaClass = 'Kelas :';
@@ -81,9 +81,9 @@ String inaNoData = 'Tidak ada data';
 String inaStudent = 'Siswa';
 String inaTeacher = 'Guru';
 String inaLicenseContent =
-    '1. Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.\n\n2. Hak cipta buku ada pada Kementerian Pendidikan dan Kebudayaan Republik Indonesia. Setiap pelanggaran terhadap hak cipta dikenakan sanksi sesuai dengan Undang-Undang RI Nomor 28 Tahun 2014 Tentang Hak Cipta. Penggunaan buku secara komersial harus mendapat izin dari pemilik hak cipta.';
+    'Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.\n\nHak cipta buku ada pada Kementerian Pendidikan dan Kebudayaan Republik Indonesia. Setiap pelanggaran terhadap hak cipta dikenakan sanksi sesuai dengan Undang-Undang RI Nomor 28 Tahun 2014 Tentang Hak Cipta. Penggunaan buku secara komersial harus mendapat izin dari pemilik hak cipta.';
 String inaAboutContent =
-    '1. Aplikasi ini dikembangkan oleh Pusat Kurikulum dan Perbukuan, Badan Penelitian dan Pengembangan dan Perbukuan, Kemendikbudristek.\n\n2. Aplikasi ini berisi buku teks pelajaran yang diterbitkan oleh Kemendikbudristek.';
+    'Aplikasi ini dikembangkan oleh Pusat Kurikulum dan Perbukuan, Badan Penelitian dan Pengembangan dan Perbukuan, Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia.\n\nAplikasi ini menyediakan buku teks pelajaran terbitan Kemendikbudristek (d/h Kemendikbud) dan Kemenag (untuk buku pendidikan agama), serta buku nonteks pelajaran berupa buku pengayaan, referensi, dan panduan pendidik yang diterbitkan oleh lembaga pemerintah. Pengguna dapat mengunduh dan membaca secara gratis melalui aplikasi ini.';
 String inaTitleOnboarding1 = 'Bukunesia Selalu Ada Untukmu';
 String inaTitleOnboarding2 = 'Bukunesia Untuk Semuanya';
 String inaOnboarding1 =
@@ -131,7 +131,7 @@ String enPrimary = 'Primary';
 String enJunior = 'Junior';
 String enSenior = 'Senior';
 String enRecently = 'Recently Added :';
-String enRecomendedBook = 'Recomended Book :';
+String enRecommendedBook = 'Recomended Book :';
 String enAllBook = 'All Book';
 String enLevel = 'Level :';
 String enClass = 'Class :';
@@ -173,6 +173,10 @@ String enSkip = 'Skip';
 String enNoData = 'No data found';
 String enStudent = 'Student';
 String enTeacher = 'Teacher';
+String enLicenseContent =
+    'All the books contained in this application can be read and downloaded for free.\n\nBook copyrights are with the Ministry of Education and Culture of the Republic of Indonesia. Every violation of copyright is subject to sanctions in accordance with the Republic of Indonesia law number 28 of 2014 concerning copyright. Commercial use of the book must obtain permission from the copyright owner';
+String enAboutContent =
+    'This application was developed by the Center for Curriculum and Book Affair, Agency for Research and Development and Book Affair, Ministry of Education, Culture, Research, and Technology of the Republic of Indonesia.\n\nThis application provides textbooks published by the Ministry of Education, Culture, Research, and Technology of the Republic of Indonesia (formerly Ministry of Education and Culture of the Republic of Indonesia) and the Ministry of Religion of the Republic of Indonesia (for religious education books), as well as non-text books in the form of enrichment books, references, and educator guides published by government agencies. Users can download and read for free through this application.';
 String enTitleOnboarding1 = 'Bukunesia Always There For You';
 String enTitleOnboarding2 = 'Bukunesia For Everything';
 String enOnboarding1 =

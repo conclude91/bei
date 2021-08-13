@@ -533,8 +533,8 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     CustomText(
                                       text: languageProvider.language
-                                          ? enRecomendedBook
-                                          : inaRecomendedBook,
+                                          ? enRecommendedBook
+                                          : inaRecommendedBook,
                                       size: small,
                                     ),
                                   ],
@@ -557,7 +557,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: bookProvider.getPopular().length,
+                                  itemCount:
+                                      bookProvider.getRecommended().length,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       child: Container(
@@ -566,15 +567,15 @@ class _HomePageState extends State<HomePage> {
                                               index == 0 ? paddingSmall - 3 : 0,
                                           right: index ==
                                                   bookProvider
-                                                          .getPopular()
+                                                          .getRecommended()
                                                           .length -
                                                       1
                                               ? paddingSmall - 3
                                               : 0,
                                         ),
                                         child: CardBookThumbnail(
-                                          book:
-                                              bookProvider.getPopular()[index],
+                                          book: bookProvider
+                                              .getRecommended()[index],
                                         ),
                                       ),
                                       onTap: () {
@@ -584,7 +585,7 @@ class _HomePageState extends State<HomePage> {
                                             builder: (context) =>
                                                 BookDetailPage(
                                               book: bookProvider
-                                                  .getPopular()[index],
+                                                  .getRecommended()[index],
                                             ),
                                           ),
                                         );

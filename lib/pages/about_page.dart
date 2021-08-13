@@ -71,7 +71,9 @@ class _AboutPageState extends State<AboutPage> {
                         bottom: paddingTiny,
                       ),
                       child: CustomText(
-                        text: inaAboutContent,
+                        text: languageProvider.language
+                            ? enAboutContent
+                            : inaAboutContent,
                         size: normal,
                         align: TextAlign.justify,
                       ),

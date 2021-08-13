@@ -83,7 +83,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Apa itu Bukunesia ?',
+                              text: languageProvider.language
+                                  ? 'What is Bukunesia?'
+                                  : 'Apa itu Bukunesia?',
                               size: normal,
                             ),
                             Icon(
@@ -117,9 +119,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Bukunesia adalah aplikasi untuk membaca buku secara digital yang memberikan akses kepada penggunanya untuk dapat mengakses buku melalui mobile Device. Bukunesia menyediakan Buku Pelajaran bacaan digital berupa buku. Layanan Bukunesia dapat diakses melalui perangkat smartphone berbasis iOS dan Android.',
+                              text: languageProvider.language
+                                  ? 'Bukunesia is an application for digitally reading books that gives users access to books via mobile devices. Bukunesia provides digital-based textbooks. Bukunesia services can be accessed through iOS and Android-based smartphone devices.'
+                                  : 'Bukunesia adalah aplikasi untuk membaca buku secara digital yang memberikan akses kepada penggunanya untuk dapat mengakses buku melalui mobile device. Bukunesia menyediakan buku pelajaran berbasis digital. Layanan Bukunesia dapat diakses melalui perangkat smartphone berbasis iOS dan Android.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -140,8 +144,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text:
-                                  'Siapa saja yang bisa menjadi pengguna Bukunesia ?',
+                              text: languageProvider.language
+                                  ? 'Who can become Bukunesia users?'
+                                  : 'Siapa saja yang bisa menjadi pengguna Bukunesia?',
                               size: normal,
                             ),
                             Icon(
@@ -175,9 +180,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Siswa sekolah mulai SD sampai SMA, Guru mulai SD sampai SMA juga masyarakat umum yang memiliki kepedulian meningkatkan tingkat literasi di Indonesia. Kami siap mendukung Anda!',
+                              text: languageProvider.language
+                                  ? 'School students from elementary to high school, teachers from elementary to high school as well as the general public who have a concern for increasing literacy levels in Indonesia. We are ready to support you!'
+                                  : 'Siswa sekolah mulai SD sampai SMA, Guru mulai SD sampai SMA juga masyarakat umum yang memiliki kepedulian meningkatkan tingkat literasi di Indonesia. Kami siap mendukung anda!',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -198,8 +205,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text:
-                                  'Bagaimana cara menggunakan aplikasi Bukunesia ?',
+                              text: languageProvider.language
+                                  ? 'How to use the Bukunesia application?'
+                                  : 'Bagaimana cara menggunakan aplikasi Bukunesia?',
                               size: normal,
                             ),
                             Icon(
@@ -233,9 +241,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Unduh aplikasi di Marketplace (Playstore / Appstore), Instal aplikasi dan masuk menggunakan akun Google.',
+                              text: languageProvider.language
+                                  ? 'Download the app on Marketplace (Playstore/Appstore), install the app and sign in using your Google/Apple account.'
+                                  : 'Unduh aplikasi di Marketplace (Playstore/Appstore), instal aplikasi dan masuk menggunakan akun Google/Apple.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -256,7 +266,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Bagaimana cara membaca di aplikasi ?',
+                              text: languageProvider.language
+                                  ? 'How to read a book in Bukunesia?'
+                                  : 'Bagaimana cara membaca buku di Bukunesia?',
                               size: normal,
                             ),
                             Icon(
@@ -290,9 +302,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Klik cover atau buku yang di inginkan kemudian akan diarahkan ke detail buku, kemudian klik tombol baca aplikasi akan menampilkan Buku yang di inginkan  dan BAB dari buku yang sudah di pisah dari buku asli, kemudian klik tombol unduh di sebelah kanan, tunggu beberapa detik hingga unduhan selesai, tombol unduh yang disebelah kanan tadi akan berubah menjadi centang yang menandakan buku, atau file sudah bisa dibaca.',
+                              text: languageProvider.language
+                                  ? 'Click the cover or the book you want then you will be directed to the book details, then click the read button the application will display the desired book and chapter of the book that has been separated from the original book, then click the download button on the right, wait a few seconds for the download finished. The download button on the right will change to a checkmark indicating the book or file can be read.'
+                                  : 'Klik cover atau buku yang di inginkan kemudian akan diarahkan ke detail buku, kemudian klik tombol baca aplikasi akan menampilkan Buku yang di inginkan  dan bab dari buku yang sudah di pisah dari buku asli, kemudian klik tombol unduh di sebelah kanan, tunggu beberapa detik hingga unduhan selesai. Tombol unduh yang disebelah kanan tadi akan berubah menjadi centang yang menandakan buku, atau file sudah bisa dibaca.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -313,7 +327,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Bagaimana keluar dari aplikasi ?',
+                              text: languageProvider.language
+                                  ? 'How do i sign out of the Bukunesia application?'
+                                  : 'Bagaimana cara keluar akun dari aplikasi Bukunesia?',
                               size: normal,
                             ),
                             Icon(
@@ -347,9 +363,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Klik pengaturan di sebelah kanan bawah, kemudian pilih keluar.',
+                              text: languageProvider.language
+                                  ? 'Click settings on the bottom right, then select sign out.'
+                                  : 'Klik pengaturan di sebelah kanan bawah, kemudian pilih keluar akun.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -370,7 +388,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara unduh aplikasi Bukunesia',
+                              text: languageProvider.language
+                                  ? 'How to download the Bukunesia app'
+                                  : 'Cara unduh aplikasi Bukunesia',
                               size: normal,
                             ),
                             Icon(
@@ -404,9 +424,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Android\n1.	Buka Play Store\n2.	Search Bukunesia\n3.	Klik tombol Pasang pada Bukunesia\n\niOS\n1.	Buka App Store\n2.	Search Bukunesia\n3.	Klik tombol Dapatkan pada Bukunesia\n4.	Masukkan Apple ID Anda',
+                              text: languageProvider.language
+                                  ? 'Android\n1. Go to Play Store\n2. Search Bukunesia\n3. Click the Install button on Bukunesia\n\niOS\n1. Open the App Store\n2. Search Bukunesia\n3. Click the Get button on Bukunesia\n4. Enter your Apple ID'
+                                  : 'Android\n1.	Buka Play Store\n2.	Search Bukunesia\n3.	Klik tombol Pasang pada Bukunesia\n\niOS\n1.	Buka App Store\n2.	Search Bukunesia\n3.	Klik tombol Dapatkan pada Bukunesia\n4.	Masukkan Apple ID Anda',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -427,7 +449,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara daftar akun',
+                              text: languageProvider.language
+                                  ? 'How to register an account'
+                                  : 'Cara daftar akun',
                               size: normal,
                             ),
                             Icon(
@@ -461,9 +485,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Android/iOS\n1.	Tap Aplikasi Bukunesia dan masuk ke dalam aplikasi\n2.	Tap atau Skip informasi mengenai aplikasi\n3.	Tap Tombol Sign In di pojok kanan bawah\n4.	Tap Tombol “Sambungkan Dengan Akun Google” di bagian bawah\n5.	Pilih akun Google yang ingin digunakan\n6.	Isi data diri Anda (Nama Lengkap, Nama Pengguna, jenis Kelamin, Tanggal Lahir, Kota, Alamat, Telepon). Di icon avatar pojok kanan atas kemudian kelik tombol centang di pojok kanan atas.\n7.	Anda sudah bisa menikmati dan memanfaatkan Aplikasi Bukunesia.',
+                              text: languageProvider.language
+                                  ? 'Android/iOS\n1. Tap the Bukunesia application and enter the application\n2. Tap or Skip information about the application\n3. Tap the Sign In button in the lower right corner\n4. Tap the "Connect With Google Account" or "Connect With Apple Id" button at the bottom\n5. Select the Google account/Apple Id you want to use\n6. After entering the homepage, fill in your personal data (Full Name, User Name, Gender, Date of Birth, City, Address, Phone). In the avatar icon in the upper right corner, then click the check button in the upper right corner.\n7. You can already enjoy and take advantage of the Bukunesia application.'
+                                  : 'Android/iOS\n1. Tap aplikasi Bukunesia dan masuk ke dalam aplikasi\n2.	Tap atau Skip informasi mengenai aplikasi\n3.	Tap tombol Sign In di pojok kanan bawah\n4.	Tap tombol "Sambungkan Dengan Akun Google" atau "Sambungkan Dengan Apple ID" di bagian bawah\n5. Pilih akun Google/Apple Id yang ingin digunakan\n6.	Setelah masuk beranda, isi data diri anda (Nama Lengkap, Nama Pengguna, Jenis Kelamin, Tanggal Lahir, Kota, Alamat, Telepon). Di icon avatar pojok kanan atas kemudian kelik tombol centang di pojok kanan atas.\n7. Anda sudah bisa menikmati dan memanfaatkan aplikasi Bukunesia.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -484,7 +510,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara merubah profil',
+                              text: languageProvider.language
+                                  ? 'How to change profile data'
+                                  : 'Cara merubah data profil',
                               size: normal,
                             ),
                             Icon(
@@ -518,9 +546,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Tap symbol avatar pojok kanan atas atau masuk ke menu akun di menu utama kemudian pilih symbol edit \n2.	Rubah atau sesuaikan data diri anda\n3.	Kemudian tap symbol centang hijau untuk menyimpannya\n4.	Atau sambal silang untuk membatalkan.',
+                              text: languageProvider.language
+                                  ? '1. Tap the avatar symbol in the top right corner or go to the account menu in the main menu then select the edit symbol \n2. Change or adjust your personal data\n3. Then tap the green check symbol to save it'
+                                  : '1. Tap simbol avatar pojok kanan atas atau masuk ke menu akun di menu utama kemudian pilih simbol edit \n2.	Rubah atau sesuaikan data diri anda\n3. Kemudian tap simbol centang hijau untuk menyimpannya',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -541,7 +571,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara membaca buku',
+                              text: languageProvider.language
+                                  ? 'How to read a book'
+                                  : 'Cara membaca buku',
                               size: normal,
                             ),
                             Icon(
@@ -575,9 +607,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  'Android & IOS\n1.	Pasang Aplikasi Bukunesia di perangkat Anda\n2.	Buka Aplikasi Bukunesia yang sudah dipasang di perangkat Anda\n3.	Masuk dengan menggunakan akun Google Anda.\n4.	Masuk ke halaman dashboard atau akun untuk memilih buku yang ingin dibaca.\n5.	Tap pada buku yang ingin dibaca.\n6.	Masuk kehalaman detail buku dan tap tombol Baca.\n7.	Pilih konten yang dinginkan, \n\•	Konten yang sudah di unduh di samping kanannya akan bersimbolkan Centang Hijau dan bisa langsung dibaca\n\•	Konten yang belum diunduh di samping kanannya akan memiliki simbol Unduh yang artinya file harus diunduh terlebih dahulu sebelum bisa dibaca.\n8.	Untuk File yang harus di unduh Tunggu beberapa saat hingga unduhan selesai.\n9.	Ketika unduhan selesai aplikasi akan mengarahkan pada file yang baru diunduh',
+                              text: languageProvider.language
+                                  ? '1. Go to your dashboard or account page to select the book you want to read.\n2. Tap on the book you want to read.\n3. Go to the book details page and tap the Read button.\n4. Select the desired content, \n\• Content that has been downloaded on the right side will have a green tick symbol and can be read immediately\n\• Content that has not been downloaded on the right side will have a download symbol, which means the file must be downloaded before it can be read .\n5. For files that must be downloaded wait a few moments until the download is complete.\n6. When the download is complete the app will redirect to the newly downloaded file'
+                                  : '1.Masuk ke halaman dashboard atau akun untuk memilih buku yang ingin dibaca.\n2. Tap pada buku yang ingin dibaca.\n3. Masuk kehalaman detail buku dan tap tombol Baca.\n4. Pilih konten yang dinginkan, \n\• Konten yang sudah di unduh di samping kanannya akan bersimbolkan Centang Hijau dan bisa langsung dibaca\n\• Konten yang belum diunduh di samping kanannya akan memiliki simbol unduh yang artinya file harus diunduh terlebih dahulu sebelum bisa dibaca.\n5. Untuk file yang harus di unduh tunggu beberapa saat hingga unduhan selesai.\n6. Ketika unduhan selesai aplikasi akan mengarahkan pada file yang baru diunduh',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -598,7 +632,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara mencari buku',
+                              text: languageProvider.language
+                                  ? 'How to search books'
+                                  : 'Cara mencari buku',
                               size: normal,
                             ),
                             Icon(
@@ -632,9 +668,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Masuk ke Fitur Pencarian.\n2.	Ketikan Keyword sesuai buku yang dicari atau gunakan filter sort untuk mengkategorikan sesuai Jenjang, Kelas, atau bidang keilmuan yang ingin kita cari\n3.	Pilih buku sesuai kategori pencarian yang diinginkan. ',
+                              text: languageProvider.language
+                                  ? '1. Enter the search feature.\n2. Type in keywords according to the book you are looking for or use filter sort to categorize according to the level, class, or scientific field you want to search for\n3. Select the book according to the desired search category.'
+                                  : '1.	Masuk ke fitur pencarian.\n2.	Ketikan kata kunci sesuai buku yang dicari atau gunakan filter sort untuk mengkategorikan sesuai jenjang, kelas, atau bidang keilmuan yang ingin dicari\n3.	Pilih buku sesuai kategori pencarian yang diinginkan.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -655,7 +693,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara print buku atau halaman',
+                              text: languageProvider.language
+                                  ? 'How to print a book or page'
+                                  : 'Cara print buku atau halaman',
                               size: normal,
                             ),
                             Icon(
@@ -689,9 +729,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Masuk ke halaman buku yang telah anda unduh.\n2.	Tap tombol Print di pojok kanan atas.\n3.	Pilih Printer yang terdeteksi.\n4.	Klik Print.',
+                              text: languageProvider.language
+                                  ? '1. Go to the page of the book you have downloaded.\n2. Tap the print button in the upper right corner.\n3. Select the detected printer.\n4. Click print.'
+                                  : '1.	Masuk ke halaman buku yang telah anda unduh.\n2.	Tap tombol print di pojok kanan atas.\n3.	Pilih printer yang terdeteksi.\n4. Klik print.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -712,7 +754,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara menandai buku atau halaman',
+                              text: languageProvider.language
+                                  ? 'How to bookmark a page'
+                                  : 'Cara menandai halaman',
                               size: normal,
                             ),
                             Icon(
@@ -746,9 +790,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Masuk ke halaman buku yang telah anda unduh.\n2.	Tap tombol Bookmark di pojok kanan atas.\n3.	Pilih Bookmart dihalaman yang ingin anda tandai',
+                              text: languageProvider.language
+                                  ? '1. Go to the page of the book you have downloaded.\n2. Tap the bookmark button in the top right corner.\n3. Select a bookmark on the page you want to bookmark'
+                                  : '1.	Masuk ke halaman buku yang telah anda unduh.\n2.	Tap tombol bookmark di pojok kanan atas.\n3.	Pilih bookmark di halaman yang ingin anda tandai',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -769,7 +815,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara membaca buku yang ditandai',
+                              text: languageProvider.language
+                                  ? 'How to read bookmarked book pages'
+                                  : 'Cara membaca halaman buku yang ditandai',
                               size: normal,
                             ),
                             Icon(
@@ -803,9 +851,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Masuk menu Akun\n2.	tap Simbol Bookmark di sebelah Simbol edit disebalah kanan sejajar dengan foto avatar.\n3.	Pilih bookmart yang akan dibaca.',
+                              text: languageProvider.language
+                                  ? '1. Enter the account page\n2. Tap the bookmark symbol on the right parallel to the avatar photo.\n3. Select a bookmarked page to read.'
+                                  : '1.	Masuk halaman akun\n2. Tap simbol bookmark disebelah kanan sejajar dengan foto avatar.\n3.	Pilih halaman bookmark yang akan dibaca.',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -826,7 +876,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Cara merubah bahasa aplikasi',
+                              text: languageProvider.language
+                                  ? 'How to change app language'
+                                  : 'Cara merubah bahasa aplikasi',
                               size: normal,
                             ),
                             Icon(
@@ -860,9 +912,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Masuk menu Seting\n2.	Pilih Bahasa\n3.	Pilih Bahasa Inggris',
+                              text: languageProvider.language
+                                  ? '1. Enter the settings page\n2. Select language\n3. Select the desired language'
+                                  : '1.	Masuk halaman setting\n2. Pilih bahasa\n3.	Pilih bahasa yang diinginkan',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(
@@ -883,7 +937,9 @@ class _FAQPageState extends State<FAQPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              text: 'Pengaduan terhadap konten buku',
+                              text: languageProvider.language
+                                  ? 'Complaints against book content'
+                                  : 'Pengaduan terhadap konten buku',
                               size: normal,
                             ),
                             Icon(
@@ -917,9 +973,11 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text:
-                                  '1.	Tap icon tanda seru di pojok kanan atas\n2.	Isi judul bukunya dan pesan keluhannya\n3.	Tap tombol Kirim\n4.	Keluhan anda akan terkirim dan akan di proses oleh pihak puskurbuk',
+                              text: languageProvider.language
+                                  ? '1. Tap the exclamation mark icon in the upper right corner\n2. Fill in the title of the book and the message of the complaint\n3. Tap the send button\n4. Your complaint will be sent and will be processed by the Center for Curriculum and Books'
+                                  : '1.	Tap icon tanda seru di pojok kanan atas\n2.	Isi judul bukunya dan pesan keluhannya\n3.	Tap tombol kirim\n4.	Keluhan anda akan terkirim dan akan di proses oleh pihak Pusat Kurikulum Dan Perbukuan',
                               size: small,
+                              align: TextAlign.justify,
                             ),
                           ),
                           Divider(

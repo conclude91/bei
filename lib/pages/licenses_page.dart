@@ -72,7 +72,9 @@ class _LicensesPageState extends State<LicensesPage> {
                         bottom: paddingTiny,
                       ),
                       child: CustomText(
-                        text: inaLicenseContent,
+                        text: languageProvider.language
+                            ? enLicenseContent
+                            : inaLicenseContent,
                         size: normal,
                         align: TextAlign.justify,
                       ),

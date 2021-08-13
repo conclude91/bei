@@ -120,6 +120,16 @@ class BookProvider extends ChangeNotifier {
         : listBookPopular.take(10).toList();
   }
 
+  List<Book> getRecommended() {
+    if (listBook.length > 0) {
+      List<Book> listShuffle = getFiltered();
+      listShuffle.shuffle();
+      return listShuffle.take(10).toList();
+    } else {
+      return [];
+    }
+  }
+
   List<Book> getFiltered() {
     return listBook
         .where((element) => level != 'All' ? element.level == level : true)

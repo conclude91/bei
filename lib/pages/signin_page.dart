@@ -46,49 +46,51 @@ class _SignInPageState extends State<SignInPage> {
             right: paddingNormal,
           ),
           width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text:
-                        languageProvider.language ? enWelcomeHi : inaWelcomeHi,
-                    size: medium,
-                  ),
-                  SizedBox(
-                    height: paddingSmall,
-                  ),
-                  CustomText(
-                    text: languageProvider.language
-                        ? enWelcomeMessage
-                        : inaWelcomeMessage,
-                    size: large,
-                  ),
-                ],
-              ),
-              (Platform.isIOS)
-                  ? CustomButton(
-                      icon: 'assets/images/apple.png',
-                      text: languageProvider.language
-                          ? enConnectWithApple
-                          : inaConnectWithApple,
-                      onPressed: () {
-                        signInApple();
-                      },
-                    )
-                  : CustomButton(
-                      icon: 'assets/images/google.webp',
-                      text: languageProvider.language
-                          ? enConnectWithGoogle
-                          : inaConnectWithGoogle,
-                      onPressed: () {
-                        signInGoogle();
-                      },
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text:
+                          languageProvider.language ? enWelcomeHi : inaWelcomeHi,
+                      size: medium,
                     ),
-            ],
+                    SizedBox(
+                      height: paddingSmall,
+                    ),
+                    CustomText(
+                      text: languageProvider.language
+                          ? enWelcomeMessage
+                          : inaWelcomeMessage,
+                      size: large,
+                    ),
+                  ],
+                ),
+                (Platform.isIOS)
+                    ? CustomButton(
+                        icon: 'assets/images/apple.png',
+                        text: languageProvider.language
+                            ? enConnectWithApple
+                            : inaConnectWithApple,
+                        onPressed: () {
+                          signInApple();
+                        },
+                      )
+                    : CustomButton(
+                        icon: 'assets/images/google.webp',
+                        text: languageProvider.language
+                            ? enConnectWithGoogle
+                            : inaConnectWithGoogle,
+                        onPressed: () {
+                          signInGoogle();
+                        },
+                      ),
+              ],
+            ),
           ),
         ),
       ),

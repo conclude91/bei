@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class BookProvider extends ChangeNotifier {
   List<Book> _listBook = [];
   List<Book> _listBookPopular = [];
+  List<Book> _listBookRecommended = [];
   String _level = 'All';
   String _group = 'All';
   String _subject = 'All';
@@ -42,8 +43,14 @@ class BookProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set listBookRecommended(List<Book> listBook) {
+    _listBookRecommended = listBook;
+    notifyListeners();
+  }
+
   List<Book> get listBook => _listBook;
   List<Book> get listBookPopular => _listBookPopular;
+  List<Book> get listBookRecommended => _listBookRecommended;
   String get level => _level;
   String get group => _group;
   String get subject => _subject;
@@ -122,9 +129,16 @@ class BookProvider extends ChangeNotifier {
 
   List<Book> getRecommended() {
     if (listBook.length > 0) {
-      List<Book> listShuffle = getFiltered();
-      listShuffle.shuffle();
-      return listShuffle.take(10).toList();
+      if (listBookRecommended.length == 0) {
+        listBookRecommended = getFiltered();
+        listBookRecommended.shuffle();
+      }
+      return level != 'All'
+          ? listBookRecommended
+              .where((element) => element.level == level)
+              .take(10)
+              .toList()
+          : listBookRecommended.take(10).toList();
     } else {
       return [];
     }

@@ -2,8 +2,8 @@ String appName = 'Bukunesia';
 
 String inaWelcomeHi = 'Hai, Kawan !';
 String inaWelcomeMessage = 'Berapa banyak buku\nyang kamu baca hari ini ?';
-String inaConnectWithGoogle = 'Sambungkan Dengan Akun Google';
-String inaConnectWithApple = 'Sambungkan Dengan Apple Id';
+String inaConnectWithGoogle = 'Masuk dengan Google';
+String inaConnectWithApple = 'Masuk dengan Apple';
 String inaSuccessSignIn = 'Berhasil masuk aplikasi';
 String inaFailedSignIn = 'Gagal masuk aplikasi';
 String inaSearch = 'Cari...';
@@ -96,8 +96,8 @@ String inaWelcome = 'Selamat Datang Di Bukunesia';
 
 String enWelcomeHi = 'Hi, Friend !';
 String enWelcomeMessage = 'How many\nbook have you read today ?';
-String enConnectWithGoogle = 'Connect With Google Account';
-String enConnectWithApple = 'Connect With Apple Id';
+String enConnectWithGoogle = 'Sign in with Google';
+String enConnectWithApple = 'Sign in with Apple';
 String enSuccessSignIn = 'Sign In Successfull';
 String enFailedSignIn = 'Sign In Was Failed';
 String enSearch = 'Search...';

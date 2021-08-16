@@ -128,20 +128,12 @@ class BookProvider extends ChangeNotifier {
   }
 
   List<Book> getRecommended() {
-    if (listBook.length > 0) {
-      if (listBookRecommended.length == 0) {
-        listBookRecommended = getFiltered();
-        listBookRecommended.shuffle();
-      }
-      return level != 'All'
-          ? listBookRecommended
-              .where((element) => element.level == level)
-              .take(10)
-              .toList()
-          : listBookRecommended.take(10).toList();
-    } else {
-      return [];
-    }
+    return level != 'All'
+        ? listBookRecommended
+            .where((element) => element.level == level)
+            .take(10)
+            .toList()
+        : listBookRecommended.take(10).toList();
   }
 
   List<Book> getFiltered() {
@@ -196,5 +188,25 @@ class BookProvider extends ChangeNotifier {
     }
     listBookPopular = _listBookPopular;
     return listBookPopular;
+  }
+
+  Future<List<Book>> fetchRecommended() async {
+    _listBookRecommended = [];
+    final response = await http.get(Uri.parse(Constanta.GET_BOOKS));
+    Map<String, dynamic> map = json.decode(response.body);
+    List<dynamic> result = map['result'];
+    if (result.length > 0) {
+      for (int i = 0; i < result.length; i++) {
+        if (result[i] != null) {
+          Map<String, dynamic> map = result[i];
+          if (result[i]['type'] == 'pdf') {
+            _listBookRecommended.add(Book.fromJson(map));
+          }
+        }
+      }
+    }
+    listBookRecommended = _listBookRecommended;
+    listBookRecommended.shuffle();
+    return listBookRecommended;
   }
 }

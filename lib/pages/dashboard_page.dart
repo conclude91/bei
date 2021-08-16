@@ -25,6 +25,11 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   int currentIndex;
   PageController pageController;
+  final _pageOptions = [
+    HomePage(),
+    AccountPage(),
+    SettingPage(),
+  ];
 
   @override
   void initState() {
@@ -32,7 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
     pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<BookProvider>(context, listen: false).fetchAll();
-      Provider.of<BookProvider>(context, listen: false).fetchPopular();
+      Provider.of<BookProvider>(context, listen: false).fetchRecommended();
       Provider.of<ChapterProvider>(context, listen: false).fetchAll();
       Provider.of<UserProvider>(context, listen: false).fetchAll();
       Provider.of<BookmarkProvider>(context, listen: false).fetchAll();
@@ -55,14 +60,15 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Scaffold(
           body: SizedBox.expand(
             child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: pageController,
               onPageChanged: (index) {
                 setState(() => currentIndex = index);
               },
               children: <Widget>[
-                HomePage(),
-                AccountPage(),
-                SettingPage(),
+                _pageOptions[0],
+                _pageOptions[1],
+                _pageOptions[2],
               ],
             ),
           ),

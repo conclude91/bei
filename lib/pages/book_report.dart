@@ -227,11 +227,14 @@ class _BookReportState extends State<BookReport> {
                                     BorderRadius.circular(radiusSmall),
                               ),
                             ),
-                            child: CustomText(
-                              text:
-                                  languageProvider.language ? enSend : inaSend,
-                              color: secondaryTextColor,
-                              size: small,
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: CustomText(
+                                text:
+                                    languageProvider.language ? enSend : inaSend,
+                                color: secondaryTextColor,
+                                size: normal,
+                              ),
                             ),
                             onPressed: () {
                               if (titleController.text.isNotEmpty &&

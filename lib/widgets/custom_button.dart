@@ -24,50 +24,28 @@ class _CustomButtonState extends State<CustomButton> {
   }
 
   Widget showButton() {
-    if (widget.icon != null) {
-      return TextButton.icon(
-        style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(buttonRadius),
-          ),
-          backgroundColor: Platform.isIOS ? Colors.black : primaryColor,
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radiusSmall),
         ),
-        icon: ClipRRect(
-          borderRadius: BorderRadius.circular(iconRadius),
-          child: Container(
-            color: secondaryTextColor,
-            child: Padding(
-              padding: const EdgeInsets.all(4),
-              child: Image.asset(
-                widget.icon,
-                width: medium,
-                height: medium,
-              ),
-            ),
-          ),
+        backgroundColor: Platform.isIOS ? Colors.black : Colors.blue,
+      ),
+      icon: Padding(
+        padding: EdgeInsets.all(8),
+        child: Image.asset(
+          widget.icon,
+          width: regular,
+          height: regular,
+          color: Colors.white,
         ),
-        label: CustomText(
-          text: widget.text,
-          size: normal,
-          color: secondaryTextColor,
-        ),
-        onPressed: widget.onPressed,
-      );
-    } else {
-      return TextButton(
-        style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(buttonRadius),
-          ),
-          backgroundColor: primaryColor,
-        ),
-        child: CustomText(
-          text: widget.text,
-          size: normal,
-          color: secondaryTextColor,
-        ),
-        onPressed: widget.onPressed,
-      );
-    }
+      ),
+      label: CustomText(
+        text: widget.text,
+        size: 16,
+        color: secondaryTextColor,
+      ),
+      onPressed: widget.onPressed,
+    );
   }
 }

@@ -22,6 +22,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  bool _loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
@@ -46,49 +48,56 @@ class _SignInPageState extends State<SignInPage> {
             right: paddingNormal,
           ),
           width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text:
-                        languageProvider.language ? enWelcomeHi : inaWelcomeHi,
-                    size: medium,
-                  ),
-                  SizedBox(
-                    height: paddingSmall,
-                  ),
-                  CustomText(
-                    text: languageProvider.language
-                        ? enWelcomeMessage
-                        : inaWelcomeMessage,
-                    size: large,
-                  ),
-                ],
-              ),
-              (Platform.isIOS)
-                  ? CustomButton(
-                      icon: 'assets/images/apple.png',
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
                       text: languageProvider.language
-                          ? enConnectWithApple
-                          : inaConnectWithApple,
-                      onPressed: () {
-                        signInApple();
-                      },
-                    )
-                  : CustomButton(
-                      icon: 'assets/images/google.webp',
-                      text: languageProvider.language
-                          ? enConnectWithGoogle
-                          : inaConnectWithGoogle,
-                      onPressed: () {
-                        signInGoogle();
-                      },
+                          ? enWelcomeHi
+                          : inaWelcomeHi,
+                      size: medium,
                     ),
-            ],
+                    SizedBox(
+                      height: paddingSmall,
+                    ),
+                    CustomText(
+                      text: languageProvider.language
+                          ? enWelcomeMessage
+                          : inaWelcomeMessage,
+                      size: large,
+                    ),
+                  ],
+                ),
+                (Platform.isIOS)
+                    ? CustomButton(
+                        icon: 'assets/images/apple.png',
+                        text: languageProvider.language
+                            ? enConnectWithApple
+                            : inaConnectWithApple,
+                        onPressed: () {
+                          if (_loading == false) {
+                            signInApple();
+                          }
+                        },
+                      )
+                    : CustomButton(
+                        icon: 'assets/images/google.webp',
+                        text: languageProvider.language
+                            ? enConnectWithGoogle
+                            : inaConnectWithGoogle,
+                        onPressed: () {
+                          if (_loading == false) {
+                            signInGoogle();
+                          }
+                        },
+                      ),
+              ],
+            ),
           ),
         ),
       ),
@@ -101,12 +110,6 @@ class _SignInPageState extends State<SignInPage> {
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
-      // webAuthenticationOptions: WebAuthenticationOptions(
-      //   clientId: 'id.bukunesia.ios.signinapple',
-      //   redirectUri: Uri.parse(
-      //     'https://agate-funky-viola.glitch.me/callbacks/sign_in_with_apple',
-      //   ),
-      // ),
     ).then((credential) async {
       print(credential.email);
       print(credential.givenName);
@@ -114,26 +117,21 @@ class _SignInPageState extends State<SignInPage> {
       // print(credential.state);
       // print(credential.identityToken);
       // print(credential.authorizationCode);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       if (credential.email != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('email', credential.email);
-        await prefs.setBool('isLogin', true).then(
-              (value) => signInUser(credential.email),
-            );
+        prefs.setString('email', credential.email);
+        prefs.setBool('isLogin', true);
+        signInUser(credential.email);
       } else {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         String email = credential.givenName.toString() +
             '.' +
             credential.familyName.toString() +
             '@bukunesia.id';
-        await prefs.setString('email', email.toLowerCase());
-        await prefs.setBool('isLogin', true).then(
-              (value) => signInUser(email.toLowerCase()),
-            );
+        prefs.setString('email', email.toLowerCase());
+        prefs.setBool('isLogin', true);
+        signInUser(email.toLowerCase());
       }
     });
-    // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
-    // after they have been validated with Apple (see `Integration` section for more information on how to do this)
   }
 
   signInGoogle() async {
@@ -143,26 +141,23 @@ class _SignInPageState extends State<SignInPage> {
       ],
     );
 
-    _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
-      // GoogleSignInAuthentication auth = await acc.authentication;
-      // print(acc.id);
-      // print(acc.email);
-      // print(acc.displayName);
-      // print(acc.photoUrl);
-
-      await acc.authentication.then((GoogleSignInAuthentication auth) async {
-        print(auth.idToken);
-        print(auth.accessToken);
+    try {
+      await _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('email', acc.email);
-        await prefs.setBool('isLogin', true).then(
-              (value) => signInUser(acc.email),
-            );
+        prefs.setString('email', acc.email);
+        prefs.setBool('isLogin', true);
+        signInUser(acc.email);
       });
-    });
+    } catch (error) {
+      print(error);
+    }
   }
 
   signInUser(String email) async {
+    setState(() {
+      _loading = true;
+    });
+
     var request =
         http.MultipartRequest('POST', Uri.parse(Constanta.SIGNIN_USER));
     request.fields.addAll({
@@ -171,15 +166,17 @@ class _SignInPageState extends State<SignInPage> {
 
     await request.send().then((response) {
       if (response.statusCode == 200) {
-        print(response);
-        Fluttertoast.showToast(
-          msg: Provider.of<LanguageProvider>(context, listen: false).language
-              ? enSuccessSignIn
-              : inaSuccessSignIn,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-        );
+        setState(() {
+          _loading = false;
+        });
+        // Fluttertoast.showToast(
+        //   msg: Provider.of<LanguageProvider>(context, listen: false).language
+        //       ? enSuccessSignIn
+        //       : inaSuccessSignIn,
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.CENTER,
+        //   timeInSecForIosWeb: 1,
+        // );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

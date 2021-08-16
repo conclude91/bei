@@ -2,8 +2,8 @@ String appName = 'Bukunesia';
 
 String inaWelcomeHi = 'Hai, Kawan !';
 String inaWelcomeMessage = 'Berapa banyak buku\nyang kamu baca hari ini ?';
-String inaConnectWithGoogle = 'Sambungkan Dengan Akun Google';
-String inaConnectWithApple = 'Sambungkan Dengan Apple Id';
+String inaConnectWithGoogle = 'Masuk dengan Google';
+String inaConnectWithApple = 'Masuk dengan Apple';
 String inaSuccessSignIn = 'Berhasil masuk aplikasi';
 String inaFailedSignIn = 'Gagal masuk aplikasi';
 String inaSearch = 'Cari...';
@@ -96,8 +96,8 @@ String inaWelcome = 'Selamat Datang Di Bukunesia';
 
 String enWelcomeHi = 'Hi, Friend !';
 String enWelcomeMessage = 'How many\nbook have you read today ?';
-String enConnectWithGoogle = 'Connect With Google Account';
-String enConnectWithApple = 'Connect With Apple Id';
+String enConnectWithGoogle = 'Sign in with Google';
+String enConnectWithApple = 'Sign in with Apple';
 String enSuccessSignIn = 'Sign In Successfull';
 String enFailedSignIn = 'Sign In Was Failed';
 String enSearch = 'Search...';
@@ -174,7 +174,7 @@ String enNoData = 'No data found';
 String enStudent = 'Student';
 String enTeacher = 'Teacher';
 String enLicenseContent =
-    'All the books contained in this application can be read and downloaded for free.\n\nBook copyrights are with the Ministry of Education and Culture of the Republic of Indonesia. Every violation of copyright is subject to sanctions in accordance with the Republic of Indonesia law number 28 of 2014 concerning copyright. Commercial use of the book must obtain permission from the copyright owner';
+    'All the books contained in this application can be read and downloaded for free.\n\nBook copyrights are with the Ministry of Education, Culture, Research, and Technology of the Republic of Indonesia. Every violation of copyright is subject to sanctions in accordance with the Republic of Indonesia law number 28 of 2014 concerning copyright. Commercial use of the book must obtain permission from the copyright owner';
 String enAboutContent =
     'This application was developed by the Center for Curriculum and Book Affair, Agency for Research and Development and Book Affair, Ministry of Education, Culture, Research, and Technology of the Republic of Indonesia.\n\nThis application provides textbooks published by the Ministry of Education, Culture, Research, and Technology of the Republic of Indonesia (formerly Ministry of Education and Culture of the Republic of Indonesia) and the Ministry of Religion of the Republic of Indonesia (for religious education books), as well as non-text books in the form of enrichment books, references, and educator guides published by government agencies. Users can download and read for free through this application.';
 String enTitleOnboarding1 = 'Bukunesia Always There For You';

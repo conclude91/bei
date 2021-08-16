@@ -91,7 +91,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   bottom: paddingSmall,
                 ),
                 child: CustomText(
-                  text: 'Copyright © 2020',
+                  text: 'Bukunesia © 2020',
                   color: primaryTextColor,
                   size: small,
                 ),

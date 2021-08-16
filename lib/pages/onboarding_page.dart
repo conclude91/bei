@@ -47,13 +47,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, _) => Scaffold(
-        body: Container(
-          padding: EdgeInsets.only(
-            top: paddingSmall,
-            left: paddingSmall,
-            right: paddingSmall,
-            bottom: paddingSmall,
-          ),
+        body: SafeArea(
           child: Stack(
             children: [
               PageView.builder(
@@ -73,8 +67,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   padding: EdgeInsets.only(
-                    bottom: paddingSmall,
-                    top: paddingSmall,
+                    bottom: paddingNormal,
+                    top: paddingNormal,
                   ),
                   child: SmoothPageIndicator(
                     controller: pageController,
@@ -93,12 +87,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: GestureDetector(
                     child: Container(
                       color: Colors.transparent,
-                      padding: EdgeInsets.only(
-                        left: paddingSmall,
-                        right: paddingSmall,
-                        top: paddingSmall,
-                        bottom: paddingSmall,
-                      ),
+                      padding: EdgeInsets.all(paddingNormal),
                       margin: EdgeInsets.only(
                         bottom: paddingTiny,
                       ),
@@ -123,12 +112,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: GestureDetector(
                     child: Container(
                       color: Colors.transparent,
-                      padding: EdgeInsets.only(
-                        left: paddingSmall,
-                        right: paddingSmall,
-                        top: paddingSmall,
-                        bottom: paddingSmall,
-                      ),
+                      padding: EdgeInsets.all(paddingNormal),
                       margin: EdgeInsets.only(
                         bottom: paddingTiny,
                       ),

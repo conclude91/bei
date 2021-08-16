@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class BookProvider extends ChangeNotifier {
   List<Book> _listBook = [];
   List<Book> _listBookPopular = [];
+  List<Book> _listBookRecommended = [];
   String _level = 'All';
   String _group = 'All';
   String _subject = 'All';
@@ -42,8 +43,14 @@ class BookProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set listBookRecommended(List<Book> listBook) {
+    _listBookRecommended = listBook;
+    notifyListeners();
+  }
+
   List<Book> get listBook => _listBook;
   List<Book> get listBookPopular => _listBookPopular;
+  List<Book> get listBookRecommended => _listBookRecommended;
   String get level => _level;
   String get group => _group;
   String get subject => _subject;
@@ -121,13 +128,12 @@ class BookProvider extends ChangeNotifier {
   }
 
   List<Book> getRecommended() {
-    if (listBook.length > 0) {
-      List<Book> listShuffle = getFiltered();
-      listShuffle.shuffle();
-      return listShuffle.take(10).toList();
-    } else {
-      return [];
-    }
+    return level != 'All'
+        ? listBookRecommended
+            .where((element) => element.level == level)
+            .take(10)
+            .toList()
+        : listBookRecommended.take(10).toList();
   }
 
   List<Book> getFiltered() {
@@ -182,5 +188,25 @@ class BookProvider extends ChangeNotifier {
     }
     listBookPopular = _listBookPopular;
     return listBookPopular;
+  }
+
+  Future<List<Book>> fetchRecommended() async {
+    _listBookRecommended = [];
+    final response = await http.get(Uri.parse(Constanta.GET_BOOKS));
+    Map<String, dynamic> map = json.decode(response.body);
+    List<dynamic> result = map['result'];
+    if (result.length > 0) {
+      for (int i = 0; i < result.length; i++) {
+        if (result[i] != null) {
+          Map<String, dynamic> map = result[i];
+          if (result[i]['type'] == 'pdf') {
+            _listBookRecommended.add(Book.fromJson(map));
+          }
+        }
+      }
+    }
+    listBookRecommended = _listBookRecommended;
+    listBookRecommended.shuffle();
+    return listBookRecommended;
   }
 }

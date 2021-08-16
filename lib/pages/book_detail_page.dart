@@ -198,12 +198,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                           ),
                                         ),
                                       ),
-                                      child: CustomText(
-                                        text: languageProvider.language
-                                            ? enRead
-                                            : inaRead,
-                                        size: small,
-                                        color: secondaryTextColor,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: CustomText(
+                                          text: languageProvider.language
+                                              ? enRead
+                                              : inaRead,
+                                          size: normal,
+                                          color: secondaryTextColor,
+                                        ),
                                       ),
                                       onPressed: () {
                                         if (isDownloading == false) {
@@ -668,9 +671,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
           msg: Provider.of<LanguageProvider>(context, listen: false).language
               ? enSuccessDownload
               : inaSuccessDownload,
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 2,
         );
       } else {
         print(response.reasonPhrase);
@@ -678,9 +681,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
           msg: Provider.of<LanguageProvider>(context, listen: false).language
               ? enFailedDownload
               : inaFailedDownload,
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 2,
         );
       }
     });

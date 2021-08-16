@@ -20,6 +20,8 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  bool _isSignOt = false;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
@@ -266,7 +268,9 @@ class _SettingPageState extends State<SettingPage> {
                 color: primaryColor,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                if (_isSignOt == false) {
+                  Navigator.pop(context);
+                }
               },
             ),
             TextButton(
@@ -276,29 +280,26 @@ class _SettingPageState extends State<SettingPage> {
                 color: primaryColor,
               ),
               onPressed: () async {
-                if (Platform.isAndroid) {
-                  GoogleSignIn _googleSignIn = GoogleSignIn(
-                    scopes: [
-                      'email',
-                    ],
-                  );
-                  await _googleSignIn.disconnect().then((value) async {
-                    SharedPreferences preferences =
-                        await SharedPreferences.getInstance();
-                    await preferences.clear().then(
-                      (value) {
-                        Phoenix.rebirth(context);
-                      },
-                    );
+                if (_isSignOt == false) {
+                  setState(() {
+                    _isSignOt = true;
                   });
-                } else if (Platform.isIOS) {
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
-                  await preferences.clear().then(
-                    (value) {
+                  if (Platform.isAndroid) {
+                    GoogleSignIn _googleSignIn = GoogleSignIn(
+                      scopes: [
+                        'email',
+                      ],
+                    );
+                    await _googleSignIn.disconnect().then((value) {
+                      preferences.clear();
                       Phoenix.rebirth(context);
-                    },
-                  );
+                    });
+                  } else if (Platform.isIOS) {
+                    preferences.clear();
+                    Phoenix.rebirth(context);
+                  }
                 }
               },
             ),

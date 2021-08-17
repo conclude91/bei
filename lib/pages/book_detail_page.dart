@@ -18,6 +18,7 @@ import 'package:bei/widgets/card_book_thumbnail.dart';
 import 'package:bei/widgets/custom_text.dart';
 import 'package:dio/dio.dart';
 import 'package:filesize/filesize.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -63,60 +64,103 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   Container(
                     height: appBarHeight,
                     color: backgroundColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Stack(
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.arrow_back,
-                              ),
-                            ),
-                            onTap: () {
-                              isDownloading
-                                  ? showCancelDownload()
-                                  : Navigator.pop(context);
-                            },
+                        Align(
+                          alignment: Alignment.center,
+                          child: CustomText(
+                            text: languageProvider.language
+                                ? enBookDetail
+                                : inaBookDetail,
+                            size: regular,
                           ),
                         ),
-                        CustomText(
-                          text: languageProvider.language
-                              ? enBookDetail
-                              : inaBookDetail,
-                          size: regular,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: paddingTiny,
-                            right: paddingTiny,
-                          ),
-                          child: InkWell(
-                            child: Padding(
-                              padding: EdgeInsets.all(paddingTiny),
-                              child: Icon(
-                                Icons.announcement_outlined,
-                                color: isDownloading
-                                    ? disableColor
-                                    : primaryTextColor,
-                              ),
-                            ),
-                            onTap: () {
-                              if (isDownloading == false)
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BookReport(
-                                      book: widget.book,
+                        Align(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              (Platform.isIOS)
+                                  ? Container(
+                                      margin: EdgeInsets.only(
+                                        left: paddingTiny,
+                                      ),
+                                      child: InkWell(
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.arrow_back_ios_outlined,
+                                              color: Colors.blue,
+                                            ),
+                                            Text(
+                                              languageProvider.language
+                                                  ? enBack
+                                                  : inaBack,
+                                              style: TextStyle(
+                                                fontSize: normal,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          isDownloading
+                                              ? showCancelDownload()
+                                              : Navigator.pop(context);
+                                        },
+                                      ),
+                                    )
+                                  : Container(
+                                      margin: EdgeInsets.only(
+                                        left: paddingTiny,
+                                        right: paddingTiny,
+                                      ),
+                                      child: InkWell(
+                                        child: Padding(
+                                          padding: EdgeInsets.all(paddingTiny),
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          isDownloading
+                                              ? showCancelDownload()
+                                              : Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: paddingTiny,
+                                  right: paddingTiny,
+                                ),
+                                child: InkWell(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(paddingTiny),
+                                    child: Icon(
+                                      Icons.announcement_outlined,
+                                      color: isDownloading
+                                          ? disableColor
+                                          : (Platform.isIOS)
+                                              ? Colors.blue
+                                              : primaryTextColor,
                                     ),
                                   ),
-                                );
-                            },
+                                  onTap: () {
+                                    if (isDownloading == false)
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BookReport(
+                                            book: widget.book,
+                                          ),
+                                        ),
+                                      );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -496,7 +540,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                 var dir =
                                     await getApplicationDocumentsDirectory();
                                 String filePath =
-                                    '${dir.path}/${widget.book.id.toString()}/' +
+                                    '${dir.path}/${Provider.of<UserProvider>(context, listen: false).currentUser.id.toString()}/${widget.book.id.toString()}/' +
                                         listChapter[index].idDetail.toString() +
                                         '.pdf';
                                 int origin = await getFileSize(
@@ -545,56 +589,117 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   showAlertDownload(titleCatalogue, titleChapter, filename, attachment) {
-    showDialog(
-      context: context,
-      builder: (_) => Consumer2<UserProvider, LanguageProvider>(
-        builder: (context, userProvider, languageProvider, _) => AlertDialog(
-          title: CustomText(
-            text: languageProvider.language ? enDownload : inaDownload,
-            size: regular,
-            color: primaryColor,
-          ),
-          content: CustomText(
-            text: languageProvider.language
-                ? enNotifDownload + ' $titleChapter ?'
-                : inaNotifDownload + ' $titleChapter ?',
-            maxLine: 2,
-            size: normal,
-          ),
-          actions: [
-            TextButton(
-              child: CustomText(
-                text: languageProvider.language ? enNo : inaNo,
-                size: normal,
-                color: primaryColor,
+    (Platform.isIOS)
+        ? showDialog(
+            context: context,
+            builder: (_) => Consumer2<UserProvider, LanguageProvider>(
+              builder: (context, userProvider, languageProvider, _) =>
+                  CupertinoAlertDialog(
+                title: Text(
+                  languageProvider.language ? enDownload : inaDownload,
+                  style: TextStyle(
+                    fontSize: regular,
+                    color: primaryTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: CustomText(
+                  text: languageProvider.language
+                      ? enNotifDownload + ' $titleChapter ?'
+                      : inaNotifDownload + ' $titleChapter ?',
+                  size: small,
+                  color: primaryTextColor,
+                  maxLine: 2,
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    child: Text(
+                      languageProvider.language ? enNo : inaNo,
+                      style: TextStyle(
+                        fontSize: normal,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(
+                      languageProvider.language ? enYes : inaYes,
+                      style: TextStyle(
+                        fontSize: normal,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      downloadFile(
+                        titleCatalogue,
+                        titleChapter,
+                        filename,
+                        attachment,
+                        userProvider.currentUser.id,
+                        widget.book.id,
+                      );
+                    },
+                  ),
+                ],
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
-            TextButton(
-              child: CustomText(
-                text: languageProvider.language ? enYes : inaYes,
-                size: normal,
-                color: primaryColor,
+          )
+        : showDialog(
+            context: context,
+            builder: (_) => Consumer2<UserProvider, LanguageProvider>(
+              builder: (context, userProvider, languageProvider, _) =>
+                  AlertDialog(
+                title: CustomText(
+                  text: languageProvider.language ? enDownload : inaDownload,
+                  size: regular,
+                  color: primaryColor,
+                ),
+                content: CustomText(
+                  text: languageProvider.language
+                      ? enNotifDownload + ' $titleChapter ?'
+                      : inaNotifDownload + ' $titleChapter ?',
+                  maxLine: 2,
+                  size: normal,
+                ),
+                actions: [
+                  TextButton(
+                    child: CustomText(
+                      text: languageProvider.language ? enNo : inaNo,
+                      size: normal,
+                      color: primaryColor,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TextButton(
+                    child: CustomText(
+                      text: languageProvider.language ? enYes : inaYes,
+                      size: normal,
+                      color: primaryColor,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      downloadFile(
+                        titleCatalogue,
+                        titleChapter,
+                        filename,
+                        attachment,
+                        userProvider.currentUser.id,
+                        widget.book.id,
+                      );
+                    },
+                  ),
+                ],
               ),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                downloadFile(
-                  titleCatalogue,
-                  titleChapter,
-                  filename,
-                  attachment,
-                  userProvider.currentUser.id,
-                  widget.book.id,
-                );
-              },
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   downloadFile(titleCatalogue, titleChapter, filename, attachment, int idUser,
@@ -605,7 +710,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
     var dir = await getApplicationDocumentsDirectory();
     Dio dio = Dio();
-    dio.download(attachment, '${dir.path}/${widget.book.id}/$filename.pdf',
+    dio.download(attachment,
+        '${dir.path}/${idUser.toString()}/${widget.book.id}/$filename.pdf',
         onReceiveProgress: (actualbytes, totalbytes) {
       var tempPercentage = actualbytes / totalbytes * 100;
       if (tempPercentage < 100) {
@@ -623,7 +729,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
             builder: (context) => BookRead(
               titleCatalogue: titleCatalogue,
               titleChapter: titleChapter,
-              filePath: '${dir.path}/${widget.book.id}/$filename.pdf',
+              filePath:
+                  '${dir.path}/${idUser.toString()}/${widget.book.id}/$filename.pdf',
             ),
           ),
         );
@@ -635,10 +742,23 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   getListFile(idCatalogue) async {
     var directory = (await getApplicationDocumentsDirectory()).path;
-    if (await io.Directory(directory.toString() + '/$idCatalogue').exists()) {
+    if (await io.Directory(directory.toString() +
+            '/' +
+            Provider.of<UserProvider>(context, listen: false)
+                .currentUser
+                .id
+                .toString() +
+            '/$idCatalogue')
+        .exists()) {
       setState(() {
-        listFile =
-            io.Directory(directory.toString() + '/$idCatalogue').listSync();
+        listFile = io.Directory(directory.toString() +
+                '/' +
+                Provider.of<UserProvider>(context, listen: false)
+                    .currentUser
+                    .id
+                    .toString() +
+                '/$idCatalogue')
+            .listSync();
       });
     }
   }
@@ -647,6 +767,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     bool result = false;
     if (listFile.length > 0) {
       for (int i = 0; i < listFile.length; i++) {
+        print(listFile[i].toString());
         String filename =
             listFile[i].toString().split("/").last.replaceAll("'", "");
         String tempIdDetail = filename.substring(0, filename.indexOf('.'));
@@ -697,9 +818,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   Future<Widget> showInfo(Chapter chapter) async {
     var dir = await getApplicationDocumentsDirectory();
-    String filePath = '${dir.path}/${widget.book.id.toString()}/' +
-        chapter.idDetail.toString() +
-        '.pdf';
+    String filePath =
+        '${dir.path}/${Provider.of<UserProvider>(context, listen: false).currentUser.id.toString()}/${widget.book.id.toString()}/' +
+            chapter.idDetail.toString() +
+            '.pdf';
     int origin = await getFileSize(chapter.attachment);
     int local = await File(filePath).exists() ? File(filePath).lengthSync() : 0;
 
@@ -730,9 +852,57 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   Future<bool> showCancelDownload() async {
     return (await showDialog(
-            context: context,
-            builder: (_) => Consumer<LanguageProvider>(
-                  builder: (context, languageProvider, _) => AlertDialog(
+          context: context,
+          builder: (_) => Consumer<LanguageProvider>(
+              builder: (context, languageProvider, _) {
+            return (Platform.isIOS)
+                ? CupertinoAlertDialog(
+                    title: Text(
+                      languageProvider.language
+                          ? enDownloading
+                          : inaDownloading,
+                      style: TextStyle(
+                        fontSize: regular,
+                        color: primaryTextColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    content: CustomText(
+                      text: languageProvider.language
+                          ? enNotifCancelDownload
+                          : inaNotifCancelDownload,
+                      maxLine: 2,
+                      size: normal,
+                    ),
+                    actions: <Widget>[
+                      CupertinoDialogAction(
+                        child: Text(
+                          languageProvider.language ? enNo : inaNo,
+                          style: TextStyle(
+                            fontSize: normal,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      CupertinoDialogAction(
+                        child: Text(
+                          languageProvider.language ? enYes : inaYes,
+                          style: TextStyle(
+                            fontSize: normal,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  )
+                : AlertDialog(
                     title: CustomText(
                       text: languageProvider.language
                           ? enDownloading
@@ -770,8 +940,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         },
                       ),
                     ],
-                  ),
-                )) ??
+                  );
+          }),
+        ) ??
         false);
   }
 }

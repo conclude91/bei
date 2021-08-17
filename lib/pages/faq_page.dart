@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -33,26 +35,57 @@ class _FAQPageState extends State<FAQPage> {
                 color: backgroundColor,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
-                        ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.arrow_back,
+                    (Platform.isIOS)
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios_outlined,
+                                      color: Colors.blue,
+                                    ),
+                                    Text(
+                                      languageProvider.language
+                                          ? enBack
+                                          : inaBack,
+                                      style: TextStyle(
+                                        fontSize: normal,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          )
+                        : Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                                right: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Padding(
+                                  padding: EdgeInsets.all(paddingTiny),
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.center,
                       child: CustomText(
@@ -547,8 +580,8 @@ class _FAQPageState extends State<FAQPage> {
                             ),
                             child: CustomText(
                               text: languageProvider.language
-                                  ? '1. Tap the avatar symbol in the top right corner or go to the account menu in the main menu then select the edit symbol \n2. Change or adjust your personal data\n3. Then tap the green check symbol to save it'
-                                  : '1. Tap simbol avatar pojok kanan atas atau masuk ke menu akun di menu utama kemudian pilih simbol edit \n2.	Rubah atau sesuaikan data diri anda\n3. Kemudian tap simbol centang hijau untuk menyimpannya',
+                                  ? '1. Tap the avatar symbol in the top right corner or go to the account menu in the main menu then select the edit symbol \n2. Change or adjust your personal data\n3. Then tap the green check symbol or save button to save it'
+                                  : '1. Tap simbol avatar pojok kanan atas atau masuk ke menu akun di menu utama kemudian pilih simbol edit \n2.	Rubah atau sesuaikan data diri anda\n3. Kemudian tap simbol centang hijau atau tombol simpan untuk menyimpannya',
                               size: small,
                               align: TextAlign.justify,
                             ),

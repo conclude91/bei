@@ -105,33 +105,29 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   signInApple() async {
-    await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-    ).then((credential) async {
-      print(credential.email);
-      print(credential.givenName);
-      print(credential.familyName);
-      // print(credential.state);
-      // print(credential.identityToken);
-      // print(credential.authorizationCode);
+    String email = '';
+    try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (credential.email != null) {
-        prefs.setString('email', credential.email);
-        prefs.setBool('isLogin', true);
-        signInUser(credential.email);
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      if (appleCredential.email != null) {
+        email = appleCredential.email;
       } else {
-        String email = credential.givenName.toString() +
+        email = appleCredential.givenName.toLowerCase() +
             '.' +
-            credential.familyName.toString() +
+            appleCredential.familyName.toLowerCase() +
             '@bukunesia.id';
-        prefs.setString('email', email.toLowerCase());
-        prefs.setBool('isLogin', true);
-        signInUser(email.toLowerCase());
       }
-    });
+      prefs.setString('email', email);
+      prefs.setBool('isLogin', true);
+      signInUser(email.toLowerCase());
+    } catch (exception) {
+      print(exception);
+    }
   }
 
   signInGoogle() async {
@@ -164,36 +160,31 @@ class _SignInPageState extends State<SignInPage> {
       'email': email,
     });
 
-    await request.send().then((response) {
-      if (response.statusCode == 200) {
-        setState(() {
-          _loading = false;
-        });
-        // Fluttertoast.showToast(
-        //   msg: Provider.of<LanguageProvider>(context, listen: false).language
-        //       ? enSuccessSignIn
-        //       : inaSuccessSignIn,
-        //   toastLength: Toast.LENGTH_SHORT,
-        //   gravity: ToastGravity.CENTER,
-        //   timeInSecForIosWeb: 1,
-        // );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DashboardPage(),
-          ),
-        );
-      } else {
-        print(response.reasonPhrase);
-        Fluttertoast.showToast(
-          msg: Provider.of<LanguageProvider>(context, listen: false).language
-              ? enFailedSignIn
-              : inaFailedSignIn,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-        );
-      }
-    });
+    try {
+      await request.send().then((response) {
+        if (response.statusCode == 200) {
+          setState(() {
+            _loading = false;
+          });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DashboardPage(),
+            ),
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: Provider.of<LanguageProvider>(context, listen: false).language
+                ? enFailedSignIn
+                : inaFailedSignIn,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+          );
+        }
+      });
+    } catch (exception) {
+      print(exception);
+    }
   }
 }

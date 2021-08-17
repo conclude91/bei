@@ -424,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     InkWell(
                                       child: Container(
-                                        padding: EdgeInsets.all(5),
+                                        padding: EdgeInsets.all(7),
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: primaryColor,

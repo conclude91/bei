@@ -55,26 +55,57 @@ class _BookReadState extends State<BookRead> {
                 color: backgroundColor,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
-                        ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.arrow_back,
+                    (Platform.isIOS)
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios_outlined,
+                                      color: Colors.blue,
+                                    ),
+                                    Text(
+                                      languageProvider.language
+                                          ? enBack
+                                          : inaBack,
+                                      style: TextStyle(
+                                        fontSize: normal,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          )
+                        : Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                                right: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Padding(
+                                  padding: EdgeInsets.all(paddingTiny),
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Container(
@@ -87,6 +118,9 @@ class _BookReadState extends State<BookRead> {
                             padding: EdgeInsets.all(paddingTiny),
                             child: Icon(
                               Icons.bookmark_outline,
+                              color: (Platform.isIOS)
+                                  ? Colors.blue
+                                  : primaryTextColor,
                             ),
                           ),
                           onTap: () async {
@@ -127,6 +161,9 @@ class _BookReadState extends State<BookRead> {
                             padding: EdgeInsets.all(paddingTiny),
                             child: Icon(
                               Icons.local_print_shop_outlined,
+                              color: (Platform.isIOS)
+                                  ? Colors.blue
+                                  : primaryTextColor,
                             ),
                           ),
                           onTap: () async {

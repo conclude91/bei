@@ -8,6 +8,7 @@ import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
 import 'package:bei/values/app_string.dart';
 import 'package:bei/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,7 +21,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool _isSignOt = false;
+  bool _isProcessingSignOut = false;
 
   @override
   Widget build(BuildContext context) {
@@ -246,66 +247,139 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   showAlertSignOut() {
-    showDialog(
-      context: context,
-      builder: (_) => Consumer<LanguageProvider>(
-        builder: (context, languageProvider, _) => AlertDialog(
-          title: CustomText(
-            text: languageProvider.language ? enSignOut : inaSignOut,
-            size: regular,
-            color: primaryColor,
-          ),
-          content: CustomText(
-            text: languageProvider.language ? enNotifSignOut : inaNotifSignOut,
-            maxLine: 2,
-            size: normal,
-          ),
-          actions: [
-            TextButton(
-              child: CustomText(
-                text: languageProvider.language ? enNo : inaNo,
-                size: normal,
-                color: primaryColor,
+    (Platform.isIOS)
+        ? showDialog(
+            context: context,
+            builder: (_) => Consumer<LanguageProvider>(
+              builder: (context, languageProvider, _) => CupertinoAlertDialog(
+                title: Text(
+                  languageProvider.language ? enSignOut : inaSignOut,
+                  style: TextStyle(
+                    fontSize: regular,
+                    color: primaryTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: CustomText(
+                  text: languageProvider.language
+                      ? enNotifSignOut
+                      : inaNotifSignOut,
+                  maxLine: 2,
+                  size: normal,
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    child: Text(
+                      languageProvider.language ? enNo : inaNo,
+                      style: TextStyle(
+                        fontSize: normal,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_isProcessingSignOut == false) {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: Text(
+                      languageProvider.language ? enYes : inaYes,
+                      style: TextStyle(
+                        fontSize: normal,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    onPressed: () async {
+                      if (_isProcessingSignOut == false) {
+                        setState(() {
+                          _isProcessingSignOut = true;
+                        });
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
+                        if (Platform.isAndroid) {
+                          GoogleSignIn _googleSignIn = GoogleSignIn(
+                            scopes: [
+                              'email',
+                            ],
+                          );
+                          await _googleSignIn.disconnect().then((value) {
+                            preferences.clear();
+                            Phoenix.rebirth(context);
+                          });
+                        } else if (Platform.isIOS) {
+                          preferences.clear();
+                          Phoenix.rebirth(context);
+                        }
+                      }
+                    },
+                  ),
+                ],
               ),
-              onPressed: () {
-                if (_isSignOt == false) {
-                  Navigator.pop(context);
-                }
-              },
             ),
-            TextButton(
-              child: CustomText(
-                text: languageProvider.language ? enYes : inaYes,
-                size: normal,
-                color: primaryColor,
+          )
+        : showDialog(
+            context: context,
+            builder: (_) => Consumer<LanguageProvider>(
+              builder: (context, languageProvider, _) => AlertDialog(
+                title: CustomText(
+                  text: languageProvider.language ? enSignOut : inaSignOut,
+                  size: regular,
+                  color: primaryColor,
+                ),
+                content: CustomText(
+                  text: languageProvider.language
+                      ? enNotifSignOut
+                      : inaNotifSignOut,
+                  maxLine: 2,
+                  size: normal,
+                ),
+                actions: [
+                  TextButton(
+                    child: CustomText(
+                      text: languageProvider.language ? enNo : inaNo,
+                      size: normal,
+                      color: primaryColor,
+                    ),
+                    onPressed: () {
+                      if (_isProcessingSignOut == false) {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  TextButton(
+                    child: CustomText(
+                      text: languageProvider.language ? enYes : inaYes,
+                      size: normal,
+                      color: primaryColor,
+                    ),
+                    onPressed: () async {
+                      if (_isProcessingSignOut == false) {
+                        setState(() {
+                          _isProcessingSignOut = true;
+                        });
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
+                        if (Platform.isAndroid) {
+                          GoogleSignIn _googleSignIn = GoogleSignIn(
+                            scopes: [
+                              'email',
+                            ],
+                          );
+                          await _googleSignIn.disconnect().then((value) {
+                            preferences.clear();
+                            Phoenix.rebirth(context);
+                          });
+                        } else if (Platform.isIOS) {
+                          preferences.clear();
+                          Phoenix.rebirth(context);
+                        }
+                      }
+                    },
+                  ),
+                ],
               ),
-              onPressed: () async {
-                if (_isSignOt == false) {
-                  setState(() {
-                    _isSignOt = true;
-                  });
-                  SharedPreferences preferences =
-                      await SharedPreferences.getInstance();
-                  if (Platform.isAndroid) {
-                    GoogleSignIn _googleSignIn = GoogleSignIn(
-                      scopes: [
-                        'email',
-                      ],
-                    );
-                    await _googleSignIn.disconnect().then((value) {
-                      preferences.clear();
-                      Phoenix.rebirth(context);
-                    });
-                  } else if (Platform.isIOS) {
-                    preferences.clear();
-                    Phoenix.rebirth(context);
-                  }
-                }
-              },
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

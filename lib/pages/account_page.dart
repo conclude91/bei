@@ -222,16 +222,26 @@ class _AccountPageState extends State<AccountPage> {
                                       margin: EdgeInsets.only(
                                         top: 10,
                                       ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(35)),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                      ),
                                       child: ClipOval(
                                         child: Material(
-                                          color: disableColor,
                                           child: InkWell(
                                             splashColor: backgroundColor,
                                             child: SizedBox(
                                               width: 35,
                                               height: 35,
-                                              child:
-                                                  Icon(Icons.bookmark_outline),
+                                              child: Icon(
+                                                Icons.bookmark_outline,
+                                                color: Colors.black,
+                                              ),
                                             ),
                                             onTap: () {
                                               Navigator.push(
@@ -253,16 +263,28 @@ class _AccountPageState extends State<AccountPage> {
                                       margin: EdgeInsets.only(
                                         top: 10,
                                       ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(35)),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                      ),
                                       child: ClipOval(
                                         child: Material(
-                                          color: disableColor,
+                                          color: Colors.white,
                                           child: InkWell(
                                             splashColor: backgroundColor,
                                             child: SizedBox(
-                                                width: 35,
-                                                height: 35,
-                                                child: Icon(
-                                                    Icons.create_outlined)),
+                                              width: 35,
+                                              height: 35,
+                                              child: Icon(
+                                                Icons.create_outlined,
+                                                color: Colors.black,
+                                              ),
+                                            ),
                                             onTap: () {
                                               Navigator.push(
                                                 context,
@@ -366,7 +388,13 @@ class _AccountPageState extends State<AccountPage> {
   getListFolder() async {
     var directory = (await getApplicationDocumentsDirectory()).path;
     setState(() {
-      listFolder = io.Directory(directory.toString()).listSync();
+      listFolder = io.Directory(directory.toString() +
+              '/' +
+              Provider.of<UserProvider>(context, listen: false)
+                  .currentUser
+                  .id
+                  .toString())
+          .listSync();
     });
   }
 

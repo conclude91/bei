@@ -117,56 +117,145 @@ class _AccountDetailPageState extends State<AccountDetailPage> {
                   left: paddingTiny - 6,
                   right: paddingTiny - 6,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(
                   children: [
-                    InkWell(
-                      child: Padding(
-                        padding: EdgeInsets.all(paddingTiny),
-                        child: Icon(Icons.close),
+                    Align(
+                      alignment: Alignment.center,
+                      child: CustomText(
+                        text:
+                            languageProvider.language ? enAccount : inaAccount,
+                        color: primaryTextColor,
+                        size: regular,
                       ),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
                     ),
-                    CustomText(
-                      text: languageProvider.language ? enAccount : inaAccount,
-                      color: primaryTextColor,
-                      size: regular,
-                    ),
-                    InkWell(
-                      child: Padding(
-                        padding: EdgeInsets.all(paddingTiny),
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          (Platform.isIOS)
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                    left: paddingTiny,
+                                  ),
+                                  child: InkWell(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_back_ios_outlined,
+                                          color: Colors.blue,
+                                        ),
+                                        Text(
+                                          languageProvider.language
+                                              ? enBack
+                                              : inaBack,
+                                          style: TextStyle(
+                                            fontSize: normal,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                )
+                              : InkWell(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(paddingTiny),
+                                    child: Icon(Icons.close),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                          (Platform.isIOS)
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                    right: paddingTiny,
+                                  ),
+                                  child: InkWell(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        languageProvider.language
+                                            ? enSave
+                                            : inaSave,
+                                        style: TextStyle(
+                                          fontSize: normal,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      if (emailController.text.isNotEmpty &&
+                                          nameController.text.isNotEmpty &&
+                                          usernameController.text.isNotEmpty &&
+                                          phoneController.text.isNotEmpty &&
+                                          addressController.text.isNotEmpty &&
+                                          (dateFormat.format(selectedDate) !=
+                                              dateFormat
+                                                  .format(DateTime.now())) &&
+                                          cityController.text.isNotEmpty &&
+                                          roleId.toString().isNotEmpty &&
+                                          schoolController.text.isNotEmpty) {
+                                        updateUser(userProvider.currentUser.id);
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: Provider.of<LanguageProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .language
+                                              ? enIncompleteUserData
+                                              : inaIncompleteUserData,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 3,
+                                        );
+                                      }
+                                    },
+                                  ),
+                                )
+                              : InkWell(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(paddingTiny),
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    if (emailController.text.isNotEmpty &&
+                                        nameController.text.isNotEmpty &&
+                                        usernameController.text.isNotEmpty &&
+                                        phoneController.text.isNotEmpty &&
+                                        addressController.text.isNotEmpty &&
+                                        (dateFormat.format(selectedDate) !=
+                                            dateFormat
+                                                .format(DateTime.now())) &&
+                                        cityController.text.isNotEmpty &&
+                                        roleId.toString().isNotEmpty &&
+                                        schoolController.text.isNotEmpty) {
+                                      updateUser(userProvider.currentUser.id);
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: Provider.of<LanguageProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .language
+                                            ? enIncompleteUserData
+                                            : inaIncompleteUserData,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 3,
+                                      );
+                                    }
+                                  },
+                                ),
+                        ],
                       ),
-                      onTap: () {
-                        if (emailController.text.isNotEmpty &&
-                            nameController.text.isNotEmpty &&
-                            usernameController.text.isNotEmpty &&
-                            phoneController.text.isNotEmpty &&
-                            addressController.text.isNotEmpty &&
-                            (dateFormat.format(selectedDate) !=
-                                dateFormat.format(DateTime.now())) &&
-                            cityController.text.isNotEmpty &&
-                            roleId.toString().isNotEmpty &&
-                            schoolController.text.isNotEmpty) {
-                          updateUser(userProvider.currentUser.id);
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: Provider.of<LanguageProvider>(context,
-                                        listen: false)
-                                    .language
-                                ? enIncompleteUserData
-                                : inaIncompleteUserData,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 3,
-                          );
-                        }
-                      },
                     ),
                   ],
                 ),

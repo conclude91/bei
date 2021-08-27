@@ -14,7 +14,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -105,33 +105,34 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   signInApple() async {
-    await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-    ).then((credential) async {
-      print(credential.email);
-      print(credential.givenName);
-      print(credential.familyName);
-      // print(credential.state);
-      // print(credential.identityToken);
-      // print(credential.authorizationCode);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (credential.email != null) {
-        prefs.setString('email', credential.email);
-        prefs.setBool('isLogin', true);
-        signInUser(credential.email);
-      } else {
-        String email = credential.givenName.toString() +
-            '.' +
-            credential.familyName.toString() +
-            '@bukunesia.id';
+    String email = '';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final AuthorizationResult result = await TheAppleSignIn.performRequests([
+      AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+    ]);
+
+    switch (result.status) {
+      case AuthorizationStatus.authorized:
+        // Navigate to secret page (shhh!)
+        if (result.credential.email != null) {
+          email = result.credential.email;
+        } else {
+          email = DateTime.now().millisecondsSinceEpoch.toString() +
+              '@bukunesia.id';
+        }
+        // Store user ID
         prefs.setString('email', email.toLowerCase());
         prefs.setBool('isLogin', true);
+        print(email.toLowerCase());
         signInUser(email.toLowerCase());
-      }
-    });
+        break;
+      case AuthorizationStatus.error:
+        print("Sign in failed: ${result.error.localizedDescription}");
+        break;
+      case AuthorizationStatus.cancelled:
+        print('User cancelled');
+        break;
+    }
   }
 
   signInGoogle() async {
@@ -163,37 +164,26 @@ class _SignInPageState extends State<SignInPage> {
     request.fields.addAll({
       'email': email,
     });
-
-    await request.send().then((response) {
-      if (response.statusCode == 200) {
-        setState(() {
-          _loading = false;
-        });
-        // Fluttertoast.showToast(
-        //   msg: Provider.of<LanguageProvider>(context, listen: false).language
-        //       ? enSuccessSignIn
-        //       : inaSuccessSignIn,
-        //   toastLength: Toast.LENGTH_SHORT,
-        //   gravity: ToastGravity.CENTER,
-        //   timeInSecForIosWeb: 1,
-        // );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DashboardPage(),
-          ),
-        );
-      } else {
-        print(response.reasonPhrase);
-        Fluttertoast.showToast(
-          msg: Provider.of<LanguageProvider>(context, listen: false).language
-              ? enFailedSignIn
-              : inaFailedSignIn,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-        );
-      }
-    });
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      setState(() {
+        _loading = false;
+      });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DashboardPage(),
+        ),
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: Provider.of<LanguageProvider>(context, listen: false).language
+            ? enFailedSignIn
+            : inaFailedSignIn,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+      );
+    }
   }
 }

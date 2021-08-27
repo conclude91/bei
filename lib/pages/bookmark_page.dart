@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/pages/book_read.dart';
 import 'package:bei/provider/bookmark_provider.dart';
 import 'package:bei/provider/language_provider.dart';
@@ -32,26 +34,57 @@ class _BookmarkPageState extends State<BookmarkPage> {
                 color: backgroundColor,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
-                        ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.arrow_back,
+                    (Platform.isIOS)
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios_outlined,
+                                      color: Colors.blue,
+                                    ),
+                                    Text(
+                                      languageProvider.language
+                                          ? enBack
+                                          : inaBack,
+                                      style: TextStyle(
+                                        fontSize: normal,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          )
+                        : Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                                right: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Padding(
+                                  padding: EdgeInsets.all(paddingTiny),
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ),
                     Center(
                       child: CustomText(
                         text: languageProvider.language

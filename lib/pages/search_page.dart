@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/model/book.dart';
 import 'package:bei/pages/book_detail_page.dart';
 import 'package:bei/provider/book_provider.dart';
@@ -52,23 +54,52 @@ class _SearchPageState extends State<SearchPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: paddingTiny,
-                        right: paddingTiny,
-                      ),
-                      child: InkWell(
-                        child: Padding(
-                          padding: EdgeInsets.all(paddingTiny),
-                          child: Icon(
-                            Icons.arrow_back,
+                    (Platform.isIOS)
+                        ? Container(
+                            margin: EdgeInsets.only(
+                              left: paddingTiny,
+                              right: paddingSmall,
+                            ),
+                            child: InkWell(
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back_ios_outlined,
+                                    color: Colors.blue,
+                                  ),
+                                  Text(
+                                    languageProvider.language
+                                        ? enBack
+                                        : inaBack,
+                                    style: TextStyle(
+                                      fontSize: normal,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(
+                              left: paddingTiny,
+                              right: paddingTiny,
+                            ),
+                            child: InkWell(
+                              child: Padding(
+                                padding: EdgeInsets.all(paddingTiny),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
                     Expanded(
                       child: Container(
                         margin: EdgeInsets.only(
@@ -134,7 +165,8 @@ class _SearchPageState extends State<SearchPage> {
                           padding: EdgeInsets.all(paddingTiny),
                           child: Icon(
                             Icons.filter_alt_outlined,
-                            color: primaryTextColor,
+                            color:
+                                Platform.isIOS ? Colors.blue : primaryTextColor,
                           ),
                         ),
                         onTap: () {

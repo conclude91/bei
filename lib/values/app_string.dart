@@ -93,6 +93,8 @@ String inaOnboarding2 =
 String inaOnboarding3 =
     'Seluruh buku yang terdapat di dalam aplikasi ini dapat dibaca dan diunduh secara gratis.';
 String inaWelcome = 'Selamat Datang Di Bukunesia';
+String inaBack = 'Kembali';
+String inaSave = 'Simpan';
 
 String enWelcomeHi = 'Hi, Friend !';
 String enWelcomeMessage = 'How many\nbook have you read today ?';
@@ -184,3 +186,5 @@ String enOnboarding1 =
 String enOnboarding2 =
     'This application can be used by students, teachers, and other users.';
 String enWelcome = 'Welcome To Bukunesia';
+String enBack = 'Back';
+String enSave = 'Save';

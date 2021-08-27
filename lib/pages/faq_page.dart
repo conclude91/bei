@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bei/provider/language_provider.dart';
 import 'package:bei/themes/app_color.dart';
 import 'package:bei/values/app_dimen.dart';
@@ -33,26 +35,57 @@ class _FAQPageState extends State<FAQPage> {
                 color: backgroundColor,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: paddingTiny,
-                          right: paddingTiny,
-                        ),
-                        child: InkWell(
-                          child: Padding(
-                            padding: EdgeInsets.all(paddingTiny),
-                            child: Icon(
-                              Icons.arrow_back,
+                    (Platform.isIOS)
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios_outlined,
+                                      color: Colors.blue,
+                                    ),
+                                    Text(
+                                      languageProvider.language
+                                          ? enBack
+                                          : inaBack,
+                                      style: TextStyle(
+                                        fontSize: normal,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          )
+                        : Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                left: paddingTiny,
+                                right: paddingTiny,
+                              ),
+                              child: InkWell(
+                                child: Padding(
+                                  padding: EdgeInsets.all(paddingTiny),
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.center,
                       child: CustomText(
@@ -120,8 +153,8 @@ class _FAQPageState extends State<FAQPage> {
                             ),
                             child: CustomText(
                               text: languageProvider.language
-                                  ? 'Bukunesia is an application for digitally reading books that gives users access to books via mobile devices. Bukunesia provides digital-based textbooks. Bukunesia services can be accessed through iOS and Android-based smartphone devices.'
-                                  : 'Bukunesia adalah aplikasi untuk membaca buku secara digital yang memberikan akses kepada penggunanya untuk dapat mengakses buku melalui mobile device. Bukunesia menyediakan buku pelajaran berbasis digital. Layanan Bukunesia dapat diakses melalui perangkat smartphone berbasis iOS dan Android.',
+                                  ? 'Bukunesia is an application for digitally reading books that gives users access to books via mobile devices. Bukunesia provides digital-based textbooks.'
+                                  : 'Bukunesia adalah aplikasi untuk membaca buku secara digital yang memberikan akses kepada penggunanya untuk dapat mengakses buku melalui mobile device. Bukunesia menyediakan buku pelajaran berbasis digital.',
                               size: small,
                               align: TextAlign.justify,
                             ),
@@ -241,9 +274,13 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text: languageProvider.language
-                                  ? 'Download the app on Marketplace (Playstore/Appstore), install the app and sign in using your Google/Apple account.'
-                                  : 'Unduh aplikasi di Marketplace (Playstore/Appstore), instal aplikasi dan masuk menggunakan akun Google/Apple.',
+                              text: (Platform.isIOS)
+                                  ? languageProvider.language
+                                      ? 'Download Bukunesia on App Store, install the app and sign in with Apple.'
+                                      : 'Unduh Bukunesia di App Store, instal aplikasi dan masuk dengan Apple.'
+                                  : languageProvider.language
+                                      ? 'Download Bukunesia on Play Store, install the app and sign in with Google.'
+                                      : 'Unduh Bukunesia di Play Store, instal aplikasi dan masuk dengan Google.',
                               size: small,
                               align: TextAlign.justify,
                             ),
@@ -424,9 +461,13 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text: languageProvider.language
-                                  ? 'Android\n1. Go to Play Store\n2. Search Bukunesia\n3. Click the Install button on Bukunesia\n\niOS\n1. Open the App Store\n2. Search Bukunesia\n3. Click the Get button on Bukunesia\n4. Enter your Apple ID'
-                                  : 'Android\n1.	Buka Play Store\n2.	Search Bukunesia\n3.	Klik tombol Pasang pada Bukunesia\n\niOS\n1.	Buka App Store\n2.	Search Bukunesia\n3.	Klik tombol Dapatkan pada Bukunesia\n4.	Masukkan Apple ID Anda',
+                              text: (Platform.isIOS)
+                                  ? languageProvider.language
+                                      ? '1. Open the App Store\n2. Search Bukunesia\n3. Click the Get button on Bukunesia\n4. Enter your Apple ID'
+                                      : '1.	Buka App Store\n2.	Cari Bukunesia\n3.	Klik tombol Dapatkan pada Bukunesia\n4.	Masukkan Apple ID Anda'
+                                  : languageProvider.language
+                                      ? '1. Go to Play Store\n2. Search Bukunesia\n3. Click the Install button on Bukunesia'
+                                      : '1.	Buka Play Store\n2.	Cari Bukunesia\n3.	Klik tombol Pasang pada Bukunesia',
                               size: small,
                               align: TextAlign.justify,
                             ),
@@ -485,9 +526,13 @@ class _FAQPageState extends State<FAQPage> {
                               bottom: paddingTiny,
                             ),
                             child: CustomText(
-                              text: languageProvider.language
-                                  ? 'Android/iOS\n1. Tap the Bukunesia application and enter the application\n2. Tap or Skip information about the application\n3. Tap the Sign In button in the lower right corner\n4. Tap the "Connect With Google Account" or "Connect With Apple Id" button at the bottom\n5. Select the Google account/Apple Id you want to use\n6. After entering the homepage, fill in your personal data (Full Name, User Name, Gender, Date of Birth, City, Address, Phone). In the avatar icon in the upper right corner, then click the check button in the upper right corner.\n7. You can already enjoy and take advantage of the Bukunesia application.'
-                                  : 'Android/iOS\n1. Tap aplikasi Bukunesia dan masuk ke dalam aplikasi\n2.	Tap atau Skip informasi mengenai aplikasi\n3.	Tap tombol Sign In di pojok kanan bawah\n4.	Tap tombol "Sambungkan Dengan Akun Google" atau "Sambungkan Dengan Apple ID" di bagian bawah\n5. Pilih akun Google/Apple Id yang ingin digunakan\n6.	Setelah masuk beranda, isi data diri anda (Nama Lengkap, Nama Pengguna, Jenis Kelamin, Tanggal Lahir, Kota, Alamat, Telepon). Di icon avatar pojok kanan atas kemudian kelik tombol centang di pojok kanan atas.\n7. Anda sudah bisa menikmati dan memanfaatkan aplikasi Bukunesia.',
+                              text: (Platform.isIOS)
+                                  ? languageProvider.language
+                                      ? '1. Tap the Bukunesia application and enter the application\n2. Tap or skip information about the application\n3. Tap the Sign in button in the lower right corner\n4. Tap the "Sign in with Apple" button at the bottom\n5. Select the your Apple Id and do password validation, click continue button\n6. After entering the homepage, complete your personal data, then click the save button in the upper right corner.\n7. Your account has been successfully registered completely.'
+                                      : '1. Tap aplikasi Bukunesia dan masuk ke dalam aplikasi\n2.	Tap atau skip informasi mengenai aplikasi\n3.	Tap tombol Masuk di pojok kanan bawah\n4.	Tap tombol "Masuk dengan Apple" di bagian bawah\n5. Pilih akun Apple Id anda dan lakukan validasi password, tekan tombol continue\n6.	Setelah masuk beranda, isi data diri anda dengan lengkap, lalu klik tombol simpan di pojok kanan atas.\n7. Akun anda sudah berhasil terdaftar dengan lengkap'
+                                  : languageProvider.language
+                                      ? '1. Tap the Bukunesia application and enter the application\n2. Tap or skip information about the application\n3. Tap the Sign in button in the lower right corner\n4. Tap the "Sign in with Google" button at the bottom\n5. Select the Google you want to use\n6. After entering the homepage, complete your personal data, then click the save button in the upper right corner.\n7. Your account has been successfully registered completely.'
+                                      : '1. Tap aplikasi Bukunesia dan masuk ke dalam aplikasi\n2.	Tap atau skip informasi mengenai aplikasi\n3.	Tap tombol Masuk di pojok kanan bawah\n4.	Tap tombol "Masuk dengan Google" di bagian bawah\n5. Pilih akun Google yang ingin digunakan\n6.	Setelah masuk beranda, isi data diri anda dengan lengkap, lalu klik tombol simpan di pojok kanan atas.\n7. Akun anda sudah berhasil terdaftar dengan lengkap.',
                               size: small,
                               align: TextAlign.justify,
                             ),
@@ -547,8 +592,8 @@ class _FAQPageState extends State<FAQPage> {
                             ),
                             child: CustomText(
                               text: languageProvider.language
-                                  ? '1. Tap the avatar symbol in the top right corner or go to the account menu in the main menu then select the edit symbol \n2. Change or adjust your personal data\n3. Then tap the green check symbol to save it'
-                                  : '1. Tap simbol avatar pojok kanan atas atau masuk ke menu akun di menu utama kemudian pilih simbol edit \n2.	Rubah atau sesuaikan data diri anda\n3. Kemudian tap simbol centang hijau untuk menyimpannya',
+                                  ? '1. Tap the avatar symbol in the top right corner or go to the account menu in the main menu then select the edit symbol \n2. Change or adjust your personal data\n3. Then tap save button to save it'
+                                  : '1. Tap simbol avatar pojok kanan atas atau masuk ke menu akun di menu utama kemudian pilih simbol edit \n2.	Rubah atau sesuaikan data diri anda\n3. Kemudian tap tombol simpan untuk menyimpannya',
                               size: small,
                               align: TextAlign.justify,
                             ),
